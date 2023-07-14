@@ -1,7 +1,6 @@
 const products = {
     watches: [
         {
-            id: 1,
             article_number: 29374,
             brand: "casio",
             model: "edifice",
@@ -14,7 +13,6 @@ const products = {
             mechanism: "analog",
         },
         {
-            id: 2,
             article_number: 29375,
             brand: "casio",
             model: "edifice",
@@ -27,7 +25,6 @@ const products = {
             mechanism: "analog",
         },
         {
-            id: 3,
             article_number: 29376,
             brand: "casio",
             model: "g-shock",
@@ -40,7 +37,6 @@ const products = {
             mechanism: "analog",
         },
         {
-            id: 4,
             article_number: 29377,
             brand: "casio",
             model: "g-shock",
@@ -53,7 +49,6 @@ const products = {
             mechanism: "analog",
         },
         {
-            id: 5,
             article_number: 29378,
             brand: "casio",
             model: "g-shock",
@@ -66,7 +61,6 @@ const products = {
             mechanism: "digital",
         },
         {
-            id: 6,
             article_number: 29379,
             brand: "seiko",
             model: "5 sport",
@@ -79,7 +73,6 @@ const products = {
             mechanism: "analog",
         },
         {
-            id: 7,
             article_number: 29380,
             brand: "seiko",
             model: "presage",
@@ -92,7 +85,6 @@ const products = {
             mechanism: "analog",
         },
         {
-            id: 8,
             article_number: 29381,
             brand: "orient",
             model: "sports",
@@ -105,7 +97,6 @@ const products = {
             mechanism: "analog",
         },
         {
-            id: 9,
             article_number: 29382,
             brand: "orient",
             model: "bambino",
@@ -118,7 +109,6 @@ const products = {
             mechanism: "analog",
         },
         {
-            id: 10,
             article_number: 29383,
             brand: "orient",
             model: "bambino",
@@ -131,7 +121,6 @@ const products = {
             mechanism: "analog",
         },
         {
-            id: 11,
             article_number: 29384,
             brand: "orient",
             model: "mako",
@@ -144,7 +133,6 @@ const products = {
             mechanism: "analog",
         },
         {
-            id: 12,
             article_number: 29385,
             brand: "citizen",
             model: "eco-drive",

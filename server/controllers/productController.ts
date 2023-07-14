@@ -10,4 +10,16 @@ const getProducts = asyncHandler(async (req: Request, res: Response) => {
     res.status(200).json(products)
 })
 
-export { getProducts }
+const getProduct = asyncHandler(async (req: Request, res: Response) => {
+    if (!req.params.nameId) {
+        res.status(400).json({ message: "Please provide an id!" })
+    }
+    // Check if valid id
+    const product = await Product.findOne({ nameId: req.params.nameId }).exec()
+    if (!product) {
+        res.status(404).json({ message: "No such product found!" })
+    }
+    res.status(200).json(product)
+})
+
+export { getProduct, getProducts }
