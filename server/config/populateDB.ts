@@ -51,11 +51,13 @@ const populateDB = async () => {
     try {
         await Product.deleteMany({})
         watches.forEach(async (watch, index) => {
-            const { model_info } = watch
+            const { model_info, brand, model } = watch
+            const fullName = `${brand} ${model} ${model_info}`.toLocaleLowerCase()
             await Product.create({
                 ...watch,
                 image_urls: [...imgUrls[index]],
                 nameId: nameIds.get(model_info),
+                fullName,
             })
             // console.log(watch)
         })

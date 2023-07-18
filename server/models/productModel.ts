@@ -18,6 +18,7 @@ const productSchema = new mongoose.Schema(
         },
         dial_color: String,
         mechanism: String,
+        fullName: String,
     },
     {
         timestamps: true,

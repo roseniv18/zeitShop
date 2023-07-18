@@ -3,9 +3,16 @@ import { Request, Response } from "express"
 import Product from "../models/productModel"
 
 const getProducts = asyncHandler(async (req: Request, res: Response) => {
-    const products = await Product.find({})
+    const search: string = decodeURI(req.query.search as string)
+    let products = []
+
+    if (req.query.search) {
+        products = await Product.find({ fullName: { $regex: search, $options: "i" } })
+    } else {
+        products = await Product.find({})
+    }
     if (products.length === 0) {
-        res.json({ message: "No products found" })
+        res.status(404).send({ message: "No products found" })
     }
     res.status(200).json(products)
 })
