@@ -1,92 +1,98 @@
 import mongoose from "mongoose"
+import bcrypt from "bcryptjs"
 import Product from "./productModel"
+
+const addressSchema = new mongoose.Schema({
+    country: {
+        type: String,
+        // required: [true, "Country is required."],
+    },
+    city: {
+        type: String,
+        // required: [true, "City is required."],
+    },
+    street: {
+        type: String,
+        // required: [true, "Street is required."],
+    },
+    postal_code: {
+        type: Number,
+        // required: [true, "Postal code is required."],
+    },
+    phone: {
+        type: String,
+        // required: false,
+    },
+})
+
+const wishlistSchema = new mongoose.Schema({
+    productName: {
+        type: String,
+        // required: true,
+    },
+    image: {
+        type: String,
+        // required: true,
+    },
+    productId: {
+        type: String,
+        // required: true,
+    },
+})
+
+const reviewsSchema = new mongoose.Schema({
+    rating: {
+        type: Number,
+        // required: true,
+    },
+    productName: {
+        type: String,
+        // required: true,
+    },
+    image: {
+        type: String,
+        // required: true,
+    },
+    productId: {
+        type: String,
+        // required: true,
+    },
+    comment: {
+        type: String,
+        // required: false,
+    },
+})
 
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
-        required: ["true", "Please provide a first name."],
+        required: [true, "Please provide a first name."],
     },
     lastName: {
         type: String,
-        required: ["true", "Please provide a last name."],
+        required: [true, "Please provide a last name."],
     },
     email: {
         type: String,
-        required: ["true", "Please provide an email."],
+        unique: [true, "User with this email already exists!"],
+        required: [true, "Please provide an email."],
+        match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Incorrect email format"],
     },
     password: {
         type: String,
-        required: ["true", "Please provide a password."],
+        required: [true, "Please provide a password."],
+        minLength: 6,
+        select: false,
     },
 
-    // // ADDRESS
-    // address: {
-    //     country: {
-    //         type: String,
-    //         required: ["true", "Country is required."],
-    //     },
-    //     city: {
-    //         type: String,
-    //         required: ["true", "City is required."],
-    //     },
-    //     street: {
-    //         type: String,
-    //         required: ["true", "Street is required."],
-    //     },
-    //     postal_code: {
-    //         type: String,
-    //         required: ["true", "Postal code is required."],
-    //     },
-    //     phone: {
-    //         type: String,
-    //         required: false,
-    //     },
-    // },
-
-    // // WISHLIST
-    // wishlist: [
-    //     {
-    //         productName: {
-    //             type: String,
-    //             required: true,
-    //         },
-    //         image: {
-    //             type: String,
-    //             required: true,
-    //         },
-    //         productId: {
-    //             type: String,
-    //             required: true,
-    //         },
-    //     },
-    // ],
-
-    // // REVIEWS
-    // reviews: [
-    //     {
-    //         rating: {
-    //             type: Number,
-    //             required: true,
-    //         },
-    //         productName: {
-    //             type: String,
-    //             required: true,
-    //         },
-    //         image: {
-    //             type: String,
-    //             required: true,
-    //         },
-    //         productId: {
-    //             type: String,
-    //             required: true,
-    //         },
-    //         comment: {
-    //             type: String,
-    //             required: false,
-    //         },
-    //     },
-    // ],
+    address: addressSchema,
+    wishlist: [wishlistSchema],
+    reviews: [reviewsSchema],
 })
+
+userSchema.methods.matchPasswords = async function (password: string) {
+    return await bcrypt.compare(password, this.password)
+}
 
 const User = mongoose.model("User", userSchema)
 

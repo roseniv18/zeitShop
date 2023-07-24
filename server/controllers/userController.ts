@@ -36,11 +36,19 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
         lastName,
         email,
         password: hashedPassword,
+        address: {},
+        wishlist: [],
+        reviews: [],
     })
 
     if (user) {
         res.status(201).send({
-            message: "Success!",
+            _id: user._id,
+            firstName,
+            lastName,
+            address: user.address,
+            wishlist: user.wishlist,
+            reviews: user.reviews,
             token: generateToken(user._id.toString()),
         })
     } else {
@@ -57,11 +65,17 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
         res.status(400).send({ message: "Please fill out all fields!" })
     }
 
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email }).select("+password")
 
-    if (user && (await bcrypt.compare(password, user.password!))) {
+    // @ts-ignore
+    if (user && (await user.matchPasswords(password))) {
         res.status(200).send({
-            message: "Success!",
+            _id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            address: user.address,
+            wishlist: user.wishlist,
+            reviews: user.reviews,
             token: generateToken(user._id.toString()),
         })
     } else {
@@ -69,8 +83,27 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
     }
 })
 
+const updateContactInfo = asyncHandler(async (req: Request, res: Response) => {
+    const { _id } = req.query
+    const { city, country, street, postal_code, phone, firstName, lastName } = req.body
+    const newAddress = { city, country, street, postal_code, phone }
+
+    const user = await User.findById(_id)
+
+    if (user) {
+        const updatedUser = await User.findByIdAndUpdate(
+            _id,
+            { firstName, lastName, address: newAddress },
+            { new: true }
+        )
+        res.status(200).send(updatedUser)
+    }
+
+    res.status(400).send({ message: "No user with this ID found!" })
+})
+
 const generateToken = (id: string): string => {
     return jwt.sign({ id }, process.env.JWT_SECRET!, { expiresIn: "15d" })
 }
 
-export { registerUser, loginUser }
+export { registerUser, loginUser, updateContactInfo }
