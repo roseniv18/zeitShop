@@ -28,38 +28,42 @@ const addressSchema = new mongoose.Schema({
 const wishlistSchema = new mongoose.Schema({
     productName: {
         type: String,
-        // required: true,
+        required: [true, "Please provide product name"],
     },
     image: {
         type: String,
-        // required: true,
+        required: [true, "Please provide product image"],
     },
     productId: {
         type: String,
-        // required: true,
+        required: [true, "Please provide product id"],
     },
 })
 
 const reviewsSchema = new mongoose.Schema({
+    userName: {
+        type: String,
+        required: [true, "Please provide user name"],
+    },
     rating: {
         type: Number,
-        // required: true,
+        required: false,
     },
     productName: {
         type: String,
-        // required: true,
+        required: [true, "Please provide a product name"],
     },
     image: {
         type: String,
-        // required: true,
+        required: [true, "Please provide an image"],
     },
     productId: {
         type: String,
-        // required: true,
+        required: [true, "Please provide a product id"],
     },
     comment: {
         type: String,
-        // required: false,
+        required: false,
     },
 })
 

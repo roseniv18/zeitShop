@@ -102,8 +102,168 @@ const updateContactInfo = asyncHandler(async (req: Request, res: Response) => {
     res.status(400).send({ message: "No user with this ID found!" })
 })
 
+const addToWishlist = asyncHandler(async (req: Request, res: Response) => {
+    // User ID
+    const { _id } = req.query
+
+    const { productName, image, productId } = req.body
+
+    const user = await User.findById(_id)
+    const productExists = await User.find(
+        { "wishlist.productId": productId },
+        { "wishlist.$": 1 }
+    )
+
+    if (user) {
+        if (!productExists[0]) {
+            try {
+                const newProducts = await User.findByIdAndUpdate(
+                    {
+                        _id,
+                    },
+                    { $push: { wishlist: { productName, image, productId } } },
+                    { new: true }
+                )
+                res.status(200).send(newProducts?.wishlist || [])
+            } catch (error) {
+                res.status(500).send({ message: "Something went wrong" })
+            }
+        } else {
+            res.status(404).send({ message: "Product already exists in wishlist!" })
+        }
+    }
+
+    res.status(404).send({ message: "Error finding user!" })
+})
+
+const removeFromWishlist = asyncHandler(async (req: Request, res: Response) => {
+    // User ID and product ID
+    const { _id, productId } = req.query
+
+    const user = await User.findById(_id)
+    const productExists = await User.find(
+        {
+            "wishlist.productId": productId,
+        },
+        { "wishlist.$": 1 }
+    )
+
+    if (user) {
+        if (productExists[0]) {
+            try {
+                const deletedProduct = await User.findByIdAndUpdate(
+                    {
+                        _id,
+                    },
+                    { $pull: { wishlist: { productId } } },
+                    { new: true }
+                )
+                res.status(200).send(deletedProduct?.wishlist || [])
+            } catch (error) {
+                res.status(500).send({ message: "Something went wrong" })
+            }
+        } else {
+            res.status(404).send({ message: "Could not remove item from wishlist!" })
+        }
+    }
+
+    res.status(404).send({ message: "Error finding user!" })
+})
+
+const addReview = asyncHandler(async (req: Request, res: Response) => {
+    // User ID
+    const { _id } = req.query
+    const { rating, userName, productName, image, productId, comment } = req.body
+
+    if (!userName || !rating) {
+        res.status(404).send({ message: "Please fill out all fields!" })
+    }
+
+    const user = await User.findById(_id)
+
+    if (user) {
+        const reviewExistsInCurrentUser = user.reviews.some(
+            (review) => review.productId === productId
+        )
+        if (!reviewExistsInCurrentUser) {
+            try {
+                const newProducts = await User.findByIdAndUpdate(
+                    {
+                        _id,
+                    },
+                    {
+                        $push: {
+                            reviews: {
+                                rating,
+                                userName,
+                                productName,
+                                image,
+                                productId,
+                                comment,
+                            },
+                        },
+                    },
+                    { new: true }
+                )
+                res.status(200).send(newProducts?.reviews || [])
+            } catch (error) {
+                res.status(500).send({ message: "Something went wrong" })
+            }
+        } else {
+            res.status(404).send({ message: "Review already exists" })
+        }
+    }
+})
+
+const deleteReview = asyncHandler(async (req: Request, res: Response) => {
+    // User ID
+    const { _id, productId } = req.query
+
+    if (!_id || !productId) {
+        res.status(404).send({ message: "Please provide all necessary values" })
+    }
+
+    const user = await User.findById(_id)
+
+    if (user) {
+        const reviewExistsInCurrentUser = user.reviews.some(
+            (review) => review.productId === productId
+        )
+        if (reviewExistsInCurrentUser) {
+            try {
+                const newProducts = await User.findByIdAndUpdate(
+                    {
+                        _id,
+                    },
+                    {
+                        $pull: {
+                            reviews: {
+                                productId,
+                            },
+                        },
+                    },
+                    { new: true }
+                )
+                res.status(200).send(newProducts?.reviews || [])
+            } catch (error) {
+                res.status(500).send({ message: "Something went wrong" })
+            }
+        } else {
+            res.status(404).send({ message: "Could not delete review!" })
+        }
+    }
+})
+
 const generateToken = (id: string): string => {
     return jwt.sign({ id }, process.env.JWT_SECRET!, { expiresIn: "15d" })
 }
 
-export { registerUser, loginUser, updateContactInfo }
+export {
+    registerUser,
+    loginUser,
+    updateContactInfo,
+    addToWishlist,
+    removeFromWishlist,
+    addReview,
+    deleteReview,
+}
