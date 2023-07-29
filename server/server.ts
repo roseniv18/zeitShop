@@ -5,8 +5,10 @@ import connectDB from "./config/connectDB"
 import errorHandler from "./middleware/errorHandler"
 import productRoutes from "./routes/productRoutes"
 import userRoutes from "./routes/userRoutes"
+import stripeRoutes from "./routes/stripeRoutes"
 import populateDB from "./config/populateDB"
 import generateNameIds from "./nameIds"
+import stripe from "stripe"
 const dotenv = require("dotenv").config()
 const port = process.env.PORT || 5000
 const cors = require("cors")
@@ -19,6 +21,7 @@ app.use(errorHandler)
 app.use(express.urlencoded({ extended: true }))
 app.use("/products", productRoutes)
 app.use("/users", userRoutes)
+app.use("/checkout", stripeRoutes)
 const publicPath = path.join(__dirname, "public")
 app.use(express.static(publicPath))
 
