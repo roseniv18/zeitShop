@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema(
         model_info: String,
         price: Number,
         case_diameter: Number,
-        bracelet_material: String,
+        band_material: String,
         case_material: {
             type: [{ type: String }],
         },
