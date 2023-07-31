@@ -1,0 +1,98 @@
+main {
+    position: relative;
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.item-img {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.item-img:hover {
+    cursor: pointer;
+}
+
+.main-img {
+    max-width: 100%;
+}
+
+.carousel-img {
+    max-width: 75%;
+}
+
+.cart-item-img {
+    max-width: 50px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    height: 100%;
+    min-width: 100vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    overflow-y: visible;
+}
+
+.add-review-form {
+    position: fixed;
+    top: 5%;
+    cursor: default;
+}
+
+.about-us-img {
+    border-radius: 3px;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(189, 189, 189, 1);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(189, 189, 189, 1);
+    box-shadow: 10px 10px 5px 0px rgba(189, 189, 189, 1);
+    max-width: 300px;
+}
+
+footer {
+    margin-top: 100px;
+    width: 100%;
+    bottom: 0;
+}
+
+/* LOADING SPINNER */
+.lds-hourglass {
+    margin: 0 auto;
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.lds-hourglass:after {
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    width: 0;
+    height: 0;
+    margin: 8px;
+    box-sizing: border-box;
+    border: 32px solid rgb(0, 132, 255);
+    border-color: rgb(0, 132, 255) transparent rgb(0, 132, 255) transparent;
+    animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+    0% {
+        transform: rotate(0);
+        animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+    50% {
+        transform: rotate(900deg);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    100% {
+        transform: rotate(1800deg);
+    }
+}
