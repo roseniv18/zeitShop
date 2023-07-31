@@ -15,7 +15,7 @@ const createCheckoutSession = asyncHandler(async (req: Request, res: Response) =
                     name: item.fullName.toLocaleUpperCase(),
                     description: `${item.mechanism} ${item.dial_color} ${item.case_diameter} ${item.case_material}`,
                     images: [
-                        "http://localhost:5000/images/casio-edifice-efs-s620bl-1avuef-solar-chronograph-1.jpg",
+                        "https://zeitshop-client.onrender.com/images/casio-edifice-efs-s620bl-1avuef-solar-chronograph-1.jpg",
                     ],
                     metadata: {
                         id: item.article_number,
