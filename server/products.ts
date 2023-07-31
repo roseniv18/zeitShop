@@ -11,6 +11,7 @@ const products = {
             case_material: ["stainless_steel"],
             dial_color: "blue",
             mechanism: "analog",
+            reviews: [],
         },
         {
             article_number: 29375,
@@ -23,6 +24,7 @@ const products = {
             case_material: ["stainless_steel"],
             dial_color: "black",
             mechanism: "analog",
+            reviews: [],
         },
         {
             article_number: 29376,
@@ -35,6 +37,7 @@ const products = {
             case_material: ["stainless_steel", "resin"],
             dial_color: "black",
             mechanism: "analog",
+            reviews: [],
         },
         {
             article_number: 29377,
@@ -47,6 +50,7 @@ const products = {
             case_material: ["stainless_steel"],
             dial_color: "black",
             mechanism: "analog",
+            reviews: [],
         },
         {
             article_number: 29378,
@@ -59,6 +63,7 @@ const products = {
             case_material: ["resin"],
             dial_color: "",
             mechanism: "digital",
+            reviews: [],
         },
         {
             article_number: 29379,
@@ -71,6 +76,7 @@ const products = {
             case_material: ["stainless_steel"],
             dial_color: "brown",
             mechanism: "analog",
+            reviews: [],
         },
         {
             article_number: 29380,
@@ -83,6 +89,7 @@ const products = {
             case_material: ["stainless_steel"],
             dial_color: "blue",
             mechanism: "analog",
+            reviews: [],
         },
         {
             article_number: 29381,
@@ -95,6 +102,7 @@ const products = {
             case_material: ["stainless_steel"],
             dial_color: "red",
             mechanism: "analog",
+            reviews: [],
         },
         {
             article_number: 29382,
@@ -107,6 +115,7 @@ const products = {
             case_material: ["stainless_steel"],
             dial_color: "green",
             mechanism: "analog",
+            reviews: [],
         },
         {
             article_number: 29383,
@@ -119,6 +128,7 @@ const products = {
             case_material: ["stainless_steel", "gold_coating"],
             dial_color: "brown",
             mechanism: "analog",
+            reviews: [],
         },
         {
             article_number: 29384,
@@ -131,6 +141,7 @@ const products = {
             case_material: ["stainless_steel"],
             dial_color: "black",
             mechanism: "analog",
+            reviews: [],
         },
         {
             article_number: 29385,
@@ -143,6 +154,7 @@ const products = {
             case_material: ["stainless_steel"],
             dial_color: "blue",
             mechanism: "analog",
+            reviews: [],
         },
     ],
 }

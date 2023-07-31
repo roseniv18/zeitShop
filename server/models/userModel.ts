@@ -1,27 +1,26 @@
 import mongoose from "mongoose"
 import bcrypt from "bcryptjs"
-import Product from "./productModel"
 
 const addressSchema = new mongoose.Schema({
     country: {
         type: String,
-        // required: [true, "Country is required."],
+        required: [true, "Country is required."],
     },
     city: {
         type: String,
-        // required: [true, "City is required."],
+        required: [true, "City is required."],
     },
     street: {
         type: String,
-        // required: [true, "Street is required."],
+        required: [true, "Street is required."],
     },
     postal_code: {
         type: Number,
-        // required: [true, "Postal code is required."],
+        required: [true, "Postal code is required."],
     },
     phone: {
         type: String,
-        // required: false,
+        required: false,
     },
 })
 
@@ -37,33 +36,6 @@ const wishlistSchema = new mongoose.Schema({
     productId: {
         type: String,
         required: [true, "Please provide product id"],
-    },
-})
-
-const reviewsSchema = new mongoose.Schema({
-    userName: {
-        type: String,
-        required: [true, "Please provide user name"],
-    },
-    rating: {
-        type: Number,
-        required: false,
-    },
-    productName: {
-        type: String,
-        required: [true, "Please provide a product name"],
-    },
-    image: {
-        type: String,
-        required: [true, "Please provide an image"],
-    },
-    productId: {
-        type: String,
-        required: [true, "Please provide a product id"],
-    },
-    comment: {
-        type: String,
-        required: false,
     },
 })
 
@@ -91,7 +63,7 @@ const userSchema = new mongoose.Schema({
 
     address: addressSchema,
     wishlist: [wishlistSchema],
-    reviews: [reviewsSchema],
+    // reviews: [reviewsSchema],
 })
 
 userSchema.methods.matchPasswords = async function (password: string) {

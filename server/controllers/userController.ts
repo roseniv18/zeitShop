@@ -48,7 +48,6 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
             lastName,
             address: user.address,
             wishlist: user.wishlist,
-            reviews: user.reviews,
             token: generateToken(user._id.toString()),
         })
     } else {
@@ -75,7 +74,6 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
             lastName: user.lastName,
             address: user.address,
             wishlist: user.wishlist,
-            reviews: user.reviews,
             token: generateToken(user._id.toString()),
         })
     } else {
@@ -143,6 +141,7 @@ const removeFromWishlist = asyncHandler(async (req: Request, res: Response) => {
     const user = await User.findById(_id)
     const productExists = await User.find(
         {
+            _id,
             "wishlist.productId": productId,
         },
         { "wishlist.$": 1 }
@@ -170,100 +169,8 @@ const removeFromWishlist = asyncHandler(async (req: Request, res: Response) => {
     res.status(404).send({ message: "Error finding user!" })
 })
 
-const addReview = asyncHandler(async (req: Request, res: Response) => {
-    // User ID
-    const { _id } = req.query
-    const { rating, userName, productName, image, productId, comment } = req.body
-
-    if (!userName || !rating) {
-        res.status(404).send({ message: "Please fill out all fields!" })
-    }
-
-    const user = await User.findById(_id)
-
-    if (user) {
-        const reviewExistsInCurrentUser = user.reviews.some(
-            (review) => review.productId === productId
-        )
-        if (!reviewExistsInCurrentUser) {
-            try {
-                const newProducts = await User.findByIdAndUpdate(
-                    {
-                        _id,
-                    },
-                    {
-                        $push: {
-                            reviews: {
-                                rating,
-                                userName,
-                                productName,
-                                image,
-                                productId,
-                                comment,
-                            },
-                        },
-                    },
-                    { new: true }
-                )
-                res.status(200).send(newProducts?.reviews || [])
-            } catch (error) {
-                res.status(500).send({ message: "Something went wrong" })
-            }
-        } else {
-            res.status(404).send({ message: "Review already exists" })
-        }
-    }
-})
-
-const deleteReview = asyncHandler(async (req: Request, res: Response) => {
-    // User ID
-    const { _id, productId } = req.query
-
-    if (!_id || !productId) {
-        res.status(404).send({ message: "Please provide all necessary values" })
-    }
-
-    const user = await User.findById(_id)
-
-    if (user) {
-        const reviewExistsInCurrentUser = user.reviews.some(
-            (review) => review.productId === productId
-        )
-        if (reviewExistsInCurrentUser) {
-            try {
-                const newProducts = await User.findByIdAndUpdate(
-                    {
-                        _id,
-                    },
-                    {
-                        $pull: {
-                            reviews: {
-                                productId,
-                            },
-                        },
-                    },
-                    { new: true }
-                )
-                res.status(200).send(newProducts?.reviews || [])
-            } catch (error) {
-                res.status(500).send({ message: "Something went wrong" })
-            }
-        } else {
-            res.status(404).send({ message: "Could not delete review!" })
-        }
-    }
-})
-
 const generateToken = (id: string): string => {
     return jwt.sign({ id }, process.env.JWT_SECRET!, { expiresIn: "15d" })
 }
 
-export {
-    registerUser,
-    loginUser,
-    updateContactInfo,
-    addToWishlist,
-    removeFromWishlist,
-    addReview,
-    deleteReview,
-}
+export { registerUser, loginUser, updateContactInfo, addToWishlist, removeFromWishlist }

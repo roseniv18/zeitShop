@@ -5,8 +5,6 @@ import {
     updateContactInfo,
     addToWishlist,
     removeFromWishlist,
-    addReview,
-    deleteReview,
 } from "../controllers/userController"
 const router = express.Router()
 
@@ -16,7 +14,5 @@ router.patch("/updateContactInfo", updateContactInfo)
 router
     .post("/addToWishlist", addToWishlist)
     .delete("/removeFromWishlist", removeFromWishlist)
-
-router.post("/addReview", addReview).delete("/deleteReview", deleteReview)
 
 export default router
