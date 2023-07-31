@@ -37,7 +37,7 @@ export default function ProfileDrawerMobile({ list, listIconPairs }: PropTypes) 
 
     const handleItemClick = (item: string) => {
         setMobileOpen(!mobileOpen)
-        dispatch(setActiveTab(item))
+        dispatch(setActiveTab(item as "Personal Info" | "Reviews" | "Wishlist"))
     }
 
     const drawer = (

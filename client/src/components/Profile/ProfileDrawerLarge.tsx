@@ -75,7 +75,18 @@ const ProfileDrawerLarge = ({ list, listIconPairs }: PropTypes) => {
                                 bgcolor: text === activeTab ? "#e2e0e0" : "transparent",
                             }}
                         >
-                            <ListItemButton onClick={() => dispatch(setActiveTab(text))}>
+                            <ListItemButton
+                                onClick={() =>
+                                    dispatch(
+                                        setActiveTab(
+                                            text as
+                                                | "Personal Info"
+                                                | "Reviews"
+                                                | "Wishlist"
+                                        )
+                                    )
+                                }
+                            >
                                 <ListItemIcon>{listIconPairs.get(text)}</ListItemIcon>
                                 <ListItemText primary={text} />
                             </ListItemButton>
