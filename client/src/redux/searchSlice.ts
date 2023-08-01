@@ -31,7 +31,11 @@ export const getSearchProducts = createAsyncThunk(
 const miscSlice = createSlice({
     name: "misc",
     initialState,
-    reducers: {},
+    reducers: {
+        setSearchAlert: (state, action: PayloadAction<Alert>) => {
+            state.alert = action.payload
+        },
+    },
     extraReducers: (builder) => {
         // GET PRODUCTS BY SEARCH QUERY
         builder.addCase(getSearchProducts.pending, (state) => {
@@ -60,4 +64,4 @@ const miscSlice = createSlice({
 })
 
 export default miscSlice.reducer
-export const {} = miscSlice.actions
+export const { setSearchAlert } = miscSlice.actions

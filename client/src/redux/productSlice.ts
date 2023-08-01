@@ -48,6 +48,9 @@ const productSlice = createSlice({
     name: "products",
     initialState,
     reducers: {
+        setProductAlert: (state, action: PayloadAction<Alert>) => {
+            state.alert = action.payload
+        },
         setFilters: (state, action: PayloadAction<Filters>) => {
             state.filters = { ...action.payload }
         },
@@ -68,16 +71,26 @@ const productSlice = createSlice({
                 state.cart = [...tempCart]
             } else {
                 state.cart.push(newItem)
+                state.alert = {
+                    show: true,
+                    type: "success",
+                    msg: "Added new item!",
+                }
             }
         },
 
-        removeCartItem: (state, action) => {
-            const id = action.payload
+        removeCartItem: (state, action: PayloadAction<string>) => {
+            const id: string = action.payload
             state.cart = state.cart.filter((el) => el._id !== id)
+            state.alert = {
+                show: true,
+                type: "success",
+                msg: "Removed item from cart!",
+            }
         },
 
-        decrease: (state, action) => {
-            const id = action.payload
+        decrease: (state, action: PayloadAction<string>) => {
+            const id: string = action.payload
             let isLastItem: boolean = false
             const tempCart = state.cart.map((el) => {
                 if (el._id === id) {
@@ -99,8 +112,8 @@ const productSlice = createSlice({
                 : [...tempCart]
         },
 
-        increase: (state, action) => {
-            const id = action.payload
+        increase: (state, action: PayloadAction<string>) => {
+            const id: string = action.payload
             const tempCart = state.cart.map((el) => {
                 if (el._id === id) {
                     let newAmount = el.amount + 1
@@ -117,6 +130,11 @@ const productSlice = createSlice({
 
         clearCart: (state) => {
             state.cart = []
+            state.alert = {
+                show: true,
+                type: "info",
+                msg: "Cart is now empty.",
+            }
         },
     },
     extraReducers: (builder) => {
@@ -148,7 +166,7 @@ const productSlice = createSlice({
         builder.addCase(getProduct.pending, (state) => {
             state.isLoading = true
         })
-        builder.addCase(getProduct.fulfilled, (state, action) => {
+        builder.addCase(getProduct.fulfilled, (state, action: PayloadAction<Product>) => {
             state.isLoading = false
             state.isSuccess = true
             state.isError = false
@@ -168,5 +186,12 @@ const productSlice = createSlice({
 })
 
 export default productSlice.reducer
-export const { setFilters, addToCart, removeCartItem, decrease, increase, clearCart } =
-    productSlice.actions
+export const {
+    setProductAlert,
+    setFilters,
+    addToCart,
+    removeCartItem,
+    decrease,
+    increase,
+    clearCart,
+} = productSlice.actions

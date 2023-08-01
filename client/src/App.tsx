@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { Alert, Snackbar } from "@mui/material"
+import { useEffect } from "react"
+import { ToastContainer, toast } from "react-toastify"
 import "./App.css"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Navbar from "./components/Nav/Navbar"
@@ -20,57 +20,79 @@ import CheckoutSuccess from "./pages/CheckoutSuccess"
 import AboutUs from "./pages/AboutUs"
 import ContactUs from "./pages/ContactUs"
 import Blog from "./pages/Blog"
+import "react-toastify/dist/ReactToastify.css"
+import { Alert } from "./types/Alert"
+import { setProductAlert } from "./redux/productSlice"
+import { setSearchAlert } from "./redux/searchSlice"
+import { setUserAlert } from "./redux/userSlice"
 
 function App() {
-    const [alert, setAlert] = useState<JSX.Element>()
-    const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false)
     const { alert: productsAlert } = useAppSelector((store) => store.products)
     const { alert: userAlert } = useAppSelector((store) => store.user)
     const { alert: searchAlert } = useAppSelector((store) => store.search)
     const { cart } = useAppSelector((store) => store.products)
 
-    const handleAlertClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-        if (reason === "clickaway") {
-            return
+    const handleAlert = (alert: Alert) => {
+        if (alert.show && alert.msg) {
+            if (alert.type === "error") {
+                toast.error(alert.msg)
+            }
+            if (alert.type === "info") {
+                toast.info(alert.msg)
+            }
+            if (alert.type === "success") {
+                toast.success(alert.msg)
+            }
+            if (alert.type === "warning") {
+                toast.warning(alert.msg)
+            }
         }
-
-        setAlert(<></>)
-        setIsAlertOpen(false)
-    }
-
-    const createAlert = (msg: string) => {
-        setAlert(
-            <Snackbar
-                autoHideDuration={4000}
-                open={isAlertOpen}
-                anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                onClose={handleAlertClose}
-            >
-                <Alert severity={productsAlert.type} onClose={() => setAlert(<></>)}>
-                    {msg}
-                </Alert>
-            </Snackbar>
-        )
     }
 
     useEffect(() => {
-        if (productsAlert.show && productsAlert.msg) {
-            setIsAlertOpen(true)
-            createAlert(productsAlert.msg)
+        handleAlert(productsAlert)
+        const alertTimeout: number = setTimeout(() => {
+            setProductAlert({
+                show: false,
+                msg: "",
+                type: "info",
+            })
+        })
+
+        return () => {
+            clearTimeout(alertTimeout)
         }
     }, [productsAlert])
 
     useEffect(() => {
-        if (userAlert.show && userAlert.msg) {
-            setIsAlertOpen(true)
-            createAlert(userAlert.msg)
+        handleAlert(userAlert)
+
+        const alertTimeout: number = setTimeout(() => {
+            setUserAlert({
+                show: false,
+                msg: "",
+                type: "info",
+            })
+        })
+
+        return () => {
+            clearTimeout(alertTimeout)
         }
     }, [userAlert])
 
     useEffect(() => {
-        if (searchAlert.show && searchAlert.msg) {
-            setIsAlertOpen(true)
-            createAlert(searchAlert.msg)
+        handleAlert(searchAlert)
+
+        const alertTimeout: number = setTimeout(() => {
+            setSearchAlert({
+                show: false,
+                msg: "",
+                type: "info",
+            })
+        })
+
+        return () => {
+            clearTimeout(alertTimeout)
         }
     }, [searchAlert])
 
@@ -85,7 +107,7 @@ function App() {
                     <Header />
                     <Navbar />
                 </header>
-                {alert}
+                <ToastContainer autoClose={3500} />
                 <Routes>
                     <Route path="/" index element={<LandingPage />} />
                     <Route path="/login" element={<Login />} />

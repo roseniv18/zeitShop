@@ -12,7 +12,7 @@ export const store = configureStore({
         misc: miscSlice,
         search: searchSlice,
     },
-    devTools: false,
+    devTools: import.meta.env.NODE_ENV === "production" ? false : true,
 })
 
 export type RootState = ReturnType<typeof store.getState>

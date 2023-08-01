@@ -56,19 +56,27 @@ const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
+        setUserAlert: (state, action: PayloadAction<Alert>) => {
+            state.alert = action.payload
+        },
         logout: (state) => {
             state.user = initialUser
             if (localStorage.getItem("user")) {
                 localStorage.removeItem("user")
+                state.alert = {
+                    show: true,
+                    type: "info",
+                    msg: "You are now logged out.",
+                }
             }
         },
     },
     extraReducers: (builder) => {
         // REGISTER USER
-        builder.addCase(registerUser.pending, (state, action) => {
+        builder.addCase(registerUser.pending, (state) => {
             state.isLoading = true
         })
-        builder.addCase(registerUser.fulfilled, (state, action) => {
+        builder.addCase(registerUser.fulfilled, (state, action: PayloadAction<User>) => {
             state.isLoading = false
             state.user = action.payload
         })
@@ -85,7 +93,7 @@ const userSlice = createSlice({
         builder.addCase(loginUser.pending, (state) => {
             state.isLoading = true
         })
-        builder.addCase(loginUser.fulfilled, (state, action) => {
+        builder.addCase(loginUser.fulfilled, (state, action: PayloadAction<User>) => {
             state.isLoading = false
             state.user = action.payload
             state.alert = {
@@ -107,16 +115,19 @@ const userSlice = createSlice({
         builder.addCase(updateContactInfo.pending, (state) => {
             state.isLoading = true
         })
-        builder.addCase(updateContactInfo.fulfilled, (state, action) => {
-            state.isLoading = false
-            state.user = { ...action.payload, token: state.user.token }
-            updateLocalStorageUser(state.user)
-            state.alert = {
-                show: true,
-                type: "success",
-                msg: `Your contact info was updated!`,
+        builder.addCase(
+            updateContactInfo.fulfilled,
+            (state, action: PayloadAction<User>) => {
+                state.isLoading = false
+                state.user = { ...action.payload, token: state.user.token }
+                updateLocalStorageUser(state.user)
+                state.alert = {
+                    show: true,
+                    type: "success",
+                    msg: `Your contact info was updated!`,
+                }
             }
-        })
+        )
         builder.addCase(updateContactInfo.rejected, (state, action) => {
             state.isLoading = false
             state.alert = {
@@ -190,11 +201,14 @@ const userSlice = createSlice({
         builder.addCase(deleteReview.pending, (state) => {
             state.isLoading = true
         })
-        builder.addCase(deleteReview.fulfilled, (state, action) => {
-            state.isLoading = false
-            state.user.reviews = [...action.payload]
-            updateLocalStorageUser(state.user)
-        })
+        builder.addCase(
+            deleteReview.fulfilled,
+            (state, action: PayloadAction<Review[]>) => {
+                state.isLoading = false
+                state.user.reviews = [...action.payload]
+                updateLocalStorageUser(state.user)
+            }
+        )
         builder.addCase(deleteReview.rejected, (state, action) => {
             state.isLoading = false
             state.alert = {
@@ -207,4 +221,4 @@ const userSlice = createSlice({
 })
 
 export default userSlice.reducer
-export const { logout } = userSlice.actions
+export const { setUserAlert, logout } = userSlice.actions
