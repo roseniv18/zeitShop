@@ -1,17 +1,14 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { Product } from "../types/Product"
 import { getSearchProductsThunk } from "./thunks/products/getSearchProductsThunk"
+import { Alert } from "../types/Alert"
 
 type SearchState = {
     searchProducts: Product[]
     isLoading: boolean
     isError: boolean
     isSuccess: boolean
-    alert: {
-        show: boolean
-        type: string
-        msg: string
-    }
+    alert: Alert
 }
 
 const initialState: SearchState = {
@@ -21,7 +18,7 @@ const initialState: SearchState = {
     isSuccess: false,
     alert: {
         show: false,
-        type: "",
+        type: "info",
         msg: "",
     },
 }

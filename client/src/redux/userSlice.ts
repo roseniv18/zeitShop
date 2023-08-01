@@ -11,15 +11,12 @@ import { updateLocalStorageUser } from "../helpers/updateLocalStorageUser"
 import { addReviewThunk } from "./thunks/user/addReviewThunk"
 import { Review } from "../types/Review"
 import { deleteReviewThunk } from "./thunks/user/deleteReviewThunk"
+import { Alert } from "../types/Alert"
 
 type UserState = {
     user: User
     isLoading: boolean
-    alert: {
-        show: boolean
-        type: string
-        msg: string
-    }
+    alert: Alert
 }
 
 const getUserFromLocalStorage = (): string => {
@@ -35,7 +32,7 @@ const initialState: UserState = {
     isLoading: false,
     alert: {
         show: false,
-        type: "",
+        type: "info",
         msg: "",
     },
 }

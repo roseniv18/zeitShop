@@ -6,6 +6,7 @@ import { getProductThunk } from "./thunks/products/getProductThunk"
 import { getAllProductsThunk } from "./thunks/products/getAllProductsThunk"
 import { Filters } from "../types/Filters"
 import { initialFilters } from "./initialStates/initialFilters"
+import { Alert } from "../types/Alert"
 
 type ProductState = {
     products: Product[]
@@ -15,11 +16,7 @@ type ProductState = {
     isLoading: boolean
     isSuccess: boolean
     isError: boolean
-    alert: {
-        show: boolean
-        type: string
-        msg: string
-    }
+    alert: Alert
 }
 
 const getCartFromLocalStorage = () => {
@@ -38,7 +35,7 @@ const initialState: ProductState = {
     isError: false,
     alert: {
         show: false,
-        type: "",
+        type: "info",
         msg: "",
     },
 }

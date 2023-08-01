@@ -1,4 +1,5 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { Alert, Snackbar } from "@mui/material"
 import "./App.css"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Navbar from "./components/Nav/Navbar"
@@ -19,12 +20,59 @@ import CheckoutSuccess from "./pages/CheckoutSuccess"
 import AboutUs from "./pages/AboutUs"
 import ContactUs from "./pages/ContactUs"
 import Blog from "./pages/Blog"
-import { serverURL } from "./helpers/serverURL"
 
 function App() {
+    const [alert, setAlert] = useState<JSX.Element>()
+    const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false)
+    const { alert: productsAlert } = useAppSelector((store) => store.products)
+    const { alert: userAlert } = useAppSelector((store) => store.user)
+    const { alert: searchAlert } = useAppSelector((store) => store.search)
     const { cart } = useAppSelector((store) => store.products)
 
-    console.log(serverURL)
+    const handleAlertClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === "clickaway") {
+            return
+        }
+
+        setAlert(<></>)
+        setIsAlertOpen(false)
+    }
+
+    const createAlert = (msg: string) => {
+        setAlert(
+            <Snackbar
+                autoHideDuration={4000}
+                open={isAlertOpen}
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                onClose={handleAlertClose}
+            >
+                <Alert severity={productsAlert.type} onClose={() => setAlert(<></>)}>
+                    {msg}
+                </Alert>
+            </Snackbar>
+        )
+    }
+
+    useEffect(() => {
+        if (productsAlert.show && productsAlert.msg) {
+            setIsAlertOpen(true)
+            createAlert(productsAlert.msg)
+        }
+    }, [productsAlert])
+
+    useEffect(() => {
+        if (userAlert.show && userAlert.msg) {
+            setIsAlertOpen(true)
+            createAlert(userAlert.msg)
+        }
+    }, [userAlert])
+
+    useEffect(() => {
+        if (searchAlert.show && searchAlert.msg) {
+            setIsAlertOpen(true)
+            createAlert(searchAlert.msg)
+        }
+    }, [searchAlert])
 
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cart))
@@ -37,6 +85,7 @@ function App() {
                     <Header />
                     <Navbar />
                 </header>
+                {alert}
                 <Routes>
                     <Route path="/" index element={<LandingPage />} />
                     <Route path="/login" element={<Login />} />
