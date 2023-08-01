@@ -26,7 +26,13 @@ This is a full-stack project built with the MERN stack and TypeScript. Here's th
 
 1. Clone this repo
 2. Run **npm install** in both client and server folders
-3. Set up your server **env** variables
+3. Set up your client **env** variables
+
+```
+NODE_ENV=development
+```
+
+4. Set up your server **env** variables
 
 ```
 MONGO_URI=YOUR-MONGO-URI
@@ -34,18 +40,19 @@ JWT_SECRET=RANDOM-STRING
 STRIPE_TEST_KEY=YOUR-STRIPE-TEST-KEY
 PORT=YOUR-PORT
 CLIENT_URL=YOUR-CLIENT-URL
+NODE_ENV=development
 ```
 
 **NOTE**: The **Mongo URI** should look like this: mongodb+srv://user:pass@cluster/Products?retryWrites=true&w=majority
 
-4. Run the **populateDB()** function for populating the MongoDB with products:
+5. Run the **populateDB()** function for populating the MongoDB with products:
 
 -   Go to ./server/server.ts
 -   **Uncomment** line 31 ` // populateDB()`
 -   Run **npm run dev** in your server folder
 -   If successfull, **comment line 31 again**
 
-5. Run **npm run dev** in both server and client folders
+6. Run **npm run dev** in both server and client folders
 
 ### This is an ongoing project.
 
