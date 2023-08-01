@@ -12,7 +12,7 @@ export const store = configureStore({
         misc: miscSlice,
         search: searchSlice,
     },
-    // devTools: false,
+    devTools: false,
 })
 
 export type RootState = ReturnType<typeof store.getState>

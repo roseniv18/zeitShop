@@ -2,21 +2,23 @@ const asyncHandler = require("express-async-handler")
 const dotenv = require("dotenv").config()
 const Stripe = require("stripe")
 const stripe = Stripe(process.env.STRIPE_TEST_KEY)
-import { Product } from "../types/Products"
+import { CartProduct } from "../types/CartProduct"
 import { Request, Response } from "express"
 
 const createCheckoutSession = asyncHandler(async (req: Request, res: Response) => {
-    const { items, userId } = req.body
-    const line_items = items.map((item: any) => {
+    const { items, userId }: { items: CartProduct[]; userId: string } = req.body
+    const line_items = items.map((item: CartProduct) => {
+        const fullName: string =
+            `${item.brand} ${item.model} ${item.model_info}`.toLocaleUpperCase()
         return {
             price_data: {
                 currency: "eur",
                 product_data: {
-                    name: item.fullName.toLocaleUpperCase(),
+                    name: fullName,
                     description: `${item.mechanism} ${item.dial_color} ${item.case_diameter} ${item.case_material}`,
-                    images: [
-                        "https://zeitshop-client.onrender.com/images/casio-edifice-efs-s620bl-1avuef-solar-chronograph-1.jpg",
-                    ],
+                    images: item.image_urls.map(
+                        (img) => `${process.env.SERVER_URL}/${img}`
+                    ),
                     metadata: {
                         id: item.article_number,
                         // ... client info

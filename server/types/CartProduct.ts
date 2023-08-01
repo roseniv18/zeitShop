@@ -1,19 +1,16 @@
-export type Product = {
+export type CartProduct = {
     _id: string
     nameId: string
-    fullName: string
     article_number: string
     brand: string
     model: string
-    model_info: string
-    price: number
+    mechanism: string
     case_diameter: number
     bracelet_material: string
-    case_material: string[]
-    image_urls: string[]
     dial_color: string
-    mechanism: string
-    createdAt: string
-    updatedAt: string
-    __v: number
+    case_material: string[]
+    model_info: string
+    price: number
+    image_urls: string[]
+    amount: number
 }
