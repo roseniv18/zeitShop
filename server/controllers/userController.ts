@@ -54,7 +54,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
         res.status(400).send({ message: "Invalid user data!" })
     }
 
-    res.status(200).json({ firstName, lastName, email, password })
+    res.status(200).send({ message: `Welcome ${firstName}!` })
 })
 
 const loginUser = asyncHandler(async (req: Request, res: Response) => {

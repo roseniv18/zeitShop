@@ -79,6 +79,11 @@ const userSlice = createSlice({
         builder.addCase(registerUser.fulfilled, (state, action: PayloadAction<User>) => {
             state.isLoading = false
             state.user = action.payload
+            state.alert = {
+                show: true,
+                type: "success",
+                msg: `Welcome ${action.payload.firstName}`,
+            }
         })
         builder.addCase(registerUser.rejected, (state, action) => {
             state.isLoading = false
@@ -99,7 +104,7 @@ const userSlice = createSlice({
             state.alert = {
                 show: true,
                 type: "success",
-                msg: `Welcome back ${action.payload.email}`,
+                msg: `Welcome back ${action.payload.firstName}`,
             }
         })
         builder.addCase(loginUser.rejected, (state, action) => {
@@ -147,6 +152,11 @@ const userSlice = createSlice({
                 state.isLoading = false
                 state.user.wishlist = [...action.payload]
                 updateLocalStorageUser(state.user)
+                state.alert = {
+                    show: true,
+                    type: "success",
+                    msg: `Added item to wishlist!`,
+                }
             }
         )
         builder.addCase(addToWishlist.rejected, (state, action) => {
@@ -168,6 +178,11 @@ const userSlice = createSlice({
                 state.isLoading = false
                 state.user.wishlist = [...action.payload]
                 updateLocalStorageUser(state.user)
+                state.alert = {
+                    show: true,
+                    type: "success",
+                    msg: `Removed item from wishlist.`,
+                }
             }
         )
         builder.addCase(removeFromWishlist.rejected, (state, action) => {
