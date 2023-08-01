@@ -10,7 +10,7 @@ import { addToCart } from "../../redux/productSlice"
 import { Product } from "../../types/Product"
 import generateFullProductName from "../../helpers/generateFullProductName"
 import { Link } from "react-router-dom"
-import { addToWishlist } from "../../redux/userSlice"
+import { addToWishlist, removeFromWishlist } from "../../redux/userSlice"
 import { setIsAddingReview } from "../../redux/miscSlice"
 
 const ProductInfo = ({ product }: { product: Product }) => {
@@ -21,6 +21,13 @@ const ProductInfo = ({ product }: { product: Product }) => {
     const name = generateFullProductName(brand, model, model_info)
 
     const [rating, setRating] = useState<number | null>(0)
+
+    let isWishlisted = false
+    for (let i = 0; i < user.wishlist.length; i++) {
+        if (user.wishlist[i].productId === product._id) {
+            isWishlisted = true
+        }
+    }
 
     const handleChange = (e: any) => {
         setRating(e.target.value)
@@ -47,19 +54,34 @@ const ProductInfo = ({ product }: { product: Product }) => {
                 </Typography>
 
                 {user._id && user.token ? (
-                    <FavoriteBorderIcon
-                        sx={{ ":hover": { cursor: "pointer" } }}
-                        onClick={() =>
-                            dispatch(
-                                addToWishlist({
-                                    _id: user._id,
-                                    productName: name,
-                                    productId: product._id,
-                                    image: product.image_urls[0],
-                                })
-                            )
-                        }
-                    />
+                    isWishlisted ? (
+                        <FavoriteIcon
+                            sx={{ ":hover": { cursor: "pointer" } }}
+                            color="warning"
+                            onClick={() =>
+                                dispatch(
+                                    removeFromWishlist({
+                                        _id: user._id,
+                                        productId: product._id,
+                                    })
+                                )
+                            }
+                        />
+                    ) : (
+                        <FavoriteBorderIcon
+                            sx={{ ":hover": { cursor: "pointer" } }}
+                            onClick={() =>
+                                dispatch(
+                                    addToWishlist({
+                                        _id: user._id,
+                                        productName: name,
+                                        productId: product._id,
+                                        image: product.image_urls[0],
+                                    })
+                                )
+                            }
+                        />
+                    )
                 ) : (
                     <Link to="/login">
                         <FavoriteBorderIcon sx={{ ":hover": { cursor: "pointer" } }} />
