@@ -1,7 +1,8 @@
 import axios from "axios"
+import { serverURL } from "../helpers/serverURL"
 
 const axiosInstance = axios.create({
-    baseURL: "https://zeitshop.onrender.com",
+    baseURL: serverURL,
 })
 
 export default axiosInstance

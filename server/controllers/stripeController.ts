@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler")
 const dotenv = require("dotenv").config()
 const Stripe = require("stripe")
 const stripe = Stripe(process.env.STRIPE_TEST_KEY)
+import { serverURL } from "../helpers/serverURL"
 import { CartProduct } from "../types/CartProduct"
 import { Request, Response } from "express"
 
@@ -16,9 +17,7 @@ const createCheckoutSession = asyncHandler(async (req: Request, res: Response) =
                 product_data: {
                     name: fullName,
                     description: `${item.mechanism} ${item.dial_color} ${item.case_diameter} ${item.case_material}`,
-                    images: item.image_urls.map(
-                        (img) => `${process.env.SERVER_URL}/${img}`
-                    ),
+                    images: item.image_urls.map((img) => `${serverURL}/${img}`),
                     metadata: {
                         id: item.article_number,
                         // ... client info

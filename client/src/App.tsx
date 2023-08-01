@@ -19,9 +19,13 @@ import CheckoutSuccess from "./pages/CheckoutSuccess"
 import AboutUs from "./pages/AboutUs"
 import ContactUs from "./pages/ContactUs"
 import Blog from "./pages/Blog"
+import { serverURL } from "./helpers/serverURL"
 
 function App() {
     const { cart } = useAppSelector((store) => store.products)
+
+    console.log(serverURL)
+
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cart))
     }, [cart])
