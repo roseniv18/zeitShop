@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { useParams } from "react-router"
 import { getProduct } from "../redux/productSlice"
+import Spinner from "../components/Spinner"
 
 const Product = () => {
     const { isLoading, product } = useAppSelector((store) => store.products)
@@ -19,7 +20,7 @@ const Product = () => {
     }, [nameId])
 
     if (isLoading) {
-        return <h1>Loading...</h1>
+        return <Spinner />
     }
 
     return (

@@ -58,10 +58,37 @@ main {
     max-width: 300px;
 }
 
-footer {
+.footer {
     margin-top: 100px;
     width: 100%;
     bottom: 0;
+}
+
+.footer-2 {
+    padding: 0.42em 0;
+    background-color: #0f6fd6;
+}
+
+.rosen-ivanov {
+    font-weight: 600;
+    color: inherit;
+    text-decoration: none;
+    transition: 0.18s linear;
+}
+
+.rosen-ivanov:hover {
+    cursor: pointer;
+    color: #ecd505;
+}
+
+.footer-card-icon {
+    cursor: pointer;
+    transition: 0.18s linear;
+}
+
+.footer-card-icon:hover {
+    transform: translateY("-14px");
+    transition: 0.18s linear;
 }
 
 /* LOADING SPINNER */

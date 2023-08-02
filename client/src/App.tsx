@@ -25,6 +25,7 @@ import { Alert } from "./types/Alert"
 import { setProductAlert } from "./redux/productSlice"
 import { setSearchAlert } from "./redux/searchSlice"
 import { setUserAlert } from "./redux/userSlice"
+import Footer2 from "./components/Footer2"
 
 function App() {
     const { alert: productsAlert } = useAppSelector((store) => store.products)
@@ -127,6 +128,7 @@ function App() {
                     <Route path="*" element={<NotFound />}></Route>
                 </Routes>
                 <Footer />
+                <Footer2 />
             </Router>
         </main>
     )
