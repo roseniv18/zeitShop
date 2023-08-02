@@ -24,7 +24,7 @@ const Item = ({ product }: { product: Product }) => {
                 justifyContent: "center",
                 transition: ".18s linear",
                 maxWidth: "250px",
-                height: "100%",
+                maxHeight: "100%",
                 "&:hover": { transform: "translateY(-3px)", transition: ".18s linear" },
             }}
         >
