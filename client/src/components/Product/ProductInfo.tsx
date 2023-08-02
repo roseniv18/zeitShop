@@ -125,7 +125,7 @@ const ProductInfo = ({ product }: { product: Product }) => {
                 variant="contained"
                 sx={{ marginTop: "40px", width: "30%" }}
                 startIcon={<ShoppingCartIcon />}
-                onClick={() => dispatch(addToCart(product))}
+                onClick={() => dispatch(addToCart({ ...product, amount: 1 }))}
             >
                 Add to cart
             </Button>

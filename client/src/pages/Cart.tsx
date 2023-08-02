@@ -9,9 +9,14 @@ const Cart = () => {
 
     return (
         <>
-            <Typography variant="h2" sx={{ textAlign: "center", my: 6 }}>
-                Your Cart
-            </Typography>
+            {cart.length > 0 ? (
+                <Typography variant="h2" sx={{ textAlign: "center", my: 6 }}>
+                    Your Cart
+                </Typography>
+            ) : (
+                <></>
+            )}
+
             <Container sx={{ my: 6 }} disableGutters>
                 <Container
                     sx={{

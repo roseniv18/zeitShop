@@ -54,7 +54,7 @@ const productSlice = createSlice({
         setFilters: (state, action: PayloadAction<Filters>) => {
             state.filters = { ...action.payload }
         },
-        addToCart: (state, action) => {
+        addToCart: (state, action: PayloadAction<CartProduct>) => {
             const newItem = { ...action.payload, amount: 1 }
             const itemExists = state.cart.find((el) => el._id === newItem._id)
             if (itemExists) {

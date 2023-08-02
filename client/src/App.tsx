@@ -107,7 +107,7 @@ function App() {
                     <Header />
                     <Navbar />
                 </header>
-                <ToastContainer autoClose={3500} />
+                <ToastContainer autoClose={3500} position="bottom-right" />
                 <Routes>
                     <Route path="/" index element={<LandingPage />} />
                     <Route path="/login" element={<Login />} />

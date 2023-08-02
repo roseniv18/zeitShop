@@ -8,8 +8,9 @@ main {
 }
 
 .item-img {
-    max-width: 100%;
-    margin: 0 auto;
+    max-width: 80%;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 
 .item-img:hover {
