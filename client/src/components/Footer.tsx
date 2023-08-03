@@ -91,16 +91,20 @@ const Footer = () => {
                             gap: "10px",
                         }}
                     >
-                        <FaCcVisa color="#226be9" size={42} class="footer-card-icon" />
+                        <FaCcVisa
+                            color="#226be9"
+                            size={42}
+                            className="footer-card-icon"
+                        />
                         <FaCcMastercard
                             color="#e96822"
                             size={42}
-                            class="footer-card-icon"
+                            className="footer-card-icon"
                         />
                         <SiAmericanexpress
                             color="#61bff1"
                             size={36}
-                            class="footer-card-icon"
+                            className="footer-card-icon"
                         />
                     </Box>
                 </Box>
@@ -126,9 +130,9 @@ const Footer = () => {
                             />
                             <nav aria-label="about-us">
                                 <List>
-                                    {aboutUs.map((text) => {
+                                    {aboutUs.map((text, index) => {
                                         return (
-                                            <ListItem disablePadding>
+                                            <ListItem disablePadding key={index}>
                                                 <ListItemText primary={text}>
                                                     {text}
                                                 </ListItemText>
@@ -154,9 +158,9 @@ const Footer = () => {
                             <nav aria-label="opening-hours">
                                 <List sx={{ width: "75%" }}>
                                     <Grid container>
-                                        {Object.keys(workingHours).map((day) => {
+                                        {Object.keys(workingHours).map((day, index) => {
                                             return (
-                                                <Grid item xs={6} lg={4}>
+                                                <Grid item xs={6} lg={4} key={index}>
                                                     <ListItem
                                                         disablePadding
                                                         sx={{
@@ -202,9 +206,9 @@ const Footer = () => {
                             />
                             <nav aria-label="contact-us">
                                 <List>
-                                    {contactUs.map((el) => {
+                                    {contactUs.map((el, index) => {
                                         return (
-                                            <ListItem disablePadding>
+                                            <ListItem disablePadding key={index}>
                                                 <ListItemIcon
                                                     sx={{
                                                         minWidth: 0,
