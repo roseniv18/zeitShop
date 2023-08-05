@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../redux/store"
 import { useEffect } from "react"
 import { getProducts, setFilters } from "../redux/productSlice"
 import Spinner from "../components/Spinner"
+import { CategorySidebarMobile } from "../components/CategorySidebarMobile"
 
 const Shop = () => {
     const { products, isLoading, filters } = useAppSelector((store) => store.products)
@@ -27,6 +28,8 @@ const Shop = () => {
 
     return (
         <Container maxWidth="lg">
+            <CategorySidebarMobile />
+
             <Grid container sx={{ my: 10, justifyContent: "space-between" }}>
                 <Grid item xs={2} sx={{ display: { xs: "none", md: "block" } }}>
                     <CategorySidebar />
@@ -98,7 +101,14 @@ const Shop = () => {
                             products.length > 0 ? (
                                 products.map((product) => {
                                     return (
-                                        <Grid item xs={9} sm={5} md={4} key={product._id}>
+                                        <Grid
+                                            item
+                                            xs={9}
+                                            sm={5}
+                                            md={4}
+                                            key={product._id}
+                                            sx={{ height: "420px" }}
+                                        >
                                             <Item product={product} />
                                         </Grid>
                                     )

@@ -5,8 +5,6 @@ import StarsIcon from "@mui/icons-material/Stars"
 import ProfileDrawerMobile from "./ProfileDrawerMobile"
 import ProfileDrawerLarge from "./ProfileDrawerLarge"
 
-const drawerWidth = 240
-
 export default function ProfileDrawer() {
     const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth)
     const list: string[] = ["Personal Info", "Reviews", "Wishlist"]

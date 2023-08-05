@@ -131,19 +131,6 @@ const products = {
             reviews: [],
         },
         {
-            article_number: 29384,
-            brand: "orient",
-            model: "mako",
-            model_info: "RA-AA0008B",
-            price: 330,
-            case_diameter: 42,
-            band_material: "stainless_steel",
-            case_material: ["stainless_steel"],
-            dial_color: "black",
-            mechanism: "analog",
-            reviews: [],
-        },
-        {
             article_number: 29385,
             brand: "citizen",
             model: "eco-drive",
@@ -156,7 +143,6 @@ const products = {
             mechanism: "analog",
             reviews: [],
         },
-        // new
         {
             article_number: 29386,
             brand: "casio",

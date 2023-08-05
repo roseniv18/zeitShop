@@ -21,10 +21,10 @@ const Item = ({ product }: { product: Product }) => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                justifyContent: "center",
+                justifyContent: "space-between",
                 transition: ".18s linear",
+                height: "100%",
                 maxWidth: "250px",
-                maxHeight: "100%",
                 "&:hover": { transform: "translateY(-3px)", transition: ".18s linear" },
             }}
         >
@@ -32,7 +32,7 @@ const Item = ({ product }: { product: Product }) => {
                 onClick={() => navigate(`/product/${nameId}`)}
                 src={`${serverURL}/images/${image_urls[0]}`}
                 alt={`${brand}`}
-                className="item-img"
+                style={{ height: "200px" }}
             />
 
             <Divider />
@@ -53,6 +53,7 @@ const Item = ({ product }: { product: Product }) => {
                         fontSize: 16,
                         wordBreak: "break-all",
                     }}
+                    onClick={() => navigate(`/product/${nameId}`)}
                 >
                     {name}
                 </Typography>

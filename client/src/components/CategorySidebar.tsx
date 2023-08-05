@@ -27,7 +27,7 @@ const CategorySidebar = () => {
     ]
     const dispatch = useAppDispatch()
     const categories: Filters = {
-        brand: ["casio", "orient", "seiko", "omega", "rolex"],
+        brand: ["casio", "orient", "seiko"],
         dial_color: ["black", "white", "blue", "green", "brown"],
         case_material: ["stainless_steel", "resin", "gold", "gold coating"],
         band_material: ["stainless_steel", "resin", "leather"],
