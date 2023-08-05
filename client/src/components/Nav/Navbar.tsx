@@ -1,4 +1,4 @@
-import * as React from "react"
+import { useState } from "react"
 import {
     AppBar,
     Box,
@@ -13,14 +13,14 @@ import {
 } from "@mui/material"
 import MenuIcon from "@mui/icons-material/Menu"
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty"
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 import { Link as RouterLink } from "react-router-dom"
+import UserMenu from "./Menus/UserMenu"
+import CartMenu from "./Menus/CartMenu"
 
 const pages = ["About Us", "Products", "Blog", "Contact Us"]
 
 function Navbar() {
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
+    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget)
@@ -161,10 +161,8 @@ function Navbar() {
                     <Box
                         sx={{ display: { xs: "flex", md: "none" }, flexDirection: "row" }}
                     >
-                        <AccountCircleIcon
-                            sx={{ ":hover": { cursor: "pointer" }, marginRight: "10px" }}
-                        />
-                        <ShoppingCartIcon sx={{ ":hover": { cursor: "pointer" } }} />
+                        <UserMenu />
+                        <CartMenu />
                     </Box>
                 </Toolbar>
             </Container>

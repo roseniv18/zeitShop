@@ -27,7 +27,6 @@ app.use(express.static(publicPath))
 
 connectDB()
 
-// WARNING: any data in the Database that is not available in ./products.ts will be deleted
 // populateDB()
 
 app.listen(port, () => {
