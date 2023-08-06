@@ -6,7 +6,7 @@ export type CartProduct = {
     model: string
     mechanism: string
     case_diameter: number
-    bracelet_material: string
+    band_material: string
     dial_color: string
     case_material: string[]
     model_info: string

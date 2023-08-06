@@ -25,6 +25,7 @@ import { useAppDispatch, useAppSelector } from "../redux/store"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import CloseIcon from "@mui/icons-material/Close"
 import FilterAltIcon from "@mui/icons-material/FilterAlt"
+import { isFiltersEmpty } from "../helpers/isFiltersEmpty"
 
 type Categories = "brand" | "dial_color" | "case_material" | "band_material" | "mechanism"
 
@@ -49,10 +50,10 @@ export const CategorySidebarMobile = () => {
     const dispatch = useAppDispatch()
 
     const categories: Filters = {
-        brand: ["casio", "orient", "seiko"],
+        brand: ["casio", "orient", "seiko", "citizen"],
         dial_color: ["black", "white", "blue", "green", "brown"],
-        case_material: ["stainless_steel", "resin", "gold", "gold coating"],
-        band_material: ["stainless_steel", "resin", "leather"],
+        case_material: ["stainless_steel", "resin", "gold", "gold coating", "polymer"],
+        band_material: ["stainless_steel", "resin", "leather", "polymer", "textile"],
         mechanism: ["analog", "digital"],
         price: [0, 1000],
     }
@@ -94,25 +95,30 @@ export const CategorySidebarMobile = () => {
     }
 
     useEffect(() => {
-        const timeoutId: number = setTimeout(() => {
-            dispatch(getProducts(filters))
-        }, 200)
+        // This prevents unnecessary request on first mount
+        if (!isFiltersEmpty(filters)) {
+            const timeoutId: number = setTimeout(() => {
+                dispatch(getProducts(filters))
+            }, 200)
 
-        return () => {
-            clearTimeout(timeoutId)
+            return () => {
+                clearTimeout(timeoutId)
+            }
         }
     }, [filters])
 
     const drawer = (
-        <Container
+        <Box
             sx={{
+                position: "absolute",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 px: 6,
+                width: "100%",
             }}
         >
-            <Toolbar>
+            <Toolbar sx={{ width: "100%" }}>
                 <Typography variant="h6" noWrap component="div">
                     Filters {activeFilters ? `(${activeFilters})` : <></>}
                 </Typography>
@@ -130,7 +136,10 @@ export const CategorySidebarMobile = () => {
                         filters[catFilter as Categories].length
                     return (
                         <>
-                            <Accordion sx={{ width: "100%" }} disableGutters>
+                            <Accordion
+                                sx={{ width: { xs: "100%", md: "75%" } }}
+                                disableGutters
+                            >
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                     aria-controls={`panel${index}`}
@@ -235,7 +244,7 @@ export const CategorySidebarMobile = () => {
             >
                 CLOSE
             </Button>
-        </Container>
+        </Box>
     )
 
     const container = window !== undefined ? () => document.body : undefined
@@ -246,8 +255,7 @@ export const CategorySidebarMobile = () => {
             <AppBar
                 position="absolute"
                 sx={{
-                    width: { sm: `100%` },
-                    ml: { sm: `300px` },
+                    width: "100%",
                     top: "auto",
                     left: 0,
                     color: "primary.main",
@@ -272,12 +280,7 @@ export const CategorySidebarMobile = () => {
                         justifyContent: "center",
                     }}
                 >
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
-                        sx={{ display: { sm: "none" } }}
-                    >
+                    <IconButton color="inherit" aria-label="open drawer" edge="start">
                         <FilterAltIcon />
                     </IconButton>
                     <Typography variant="h6" sx={{ cursor: "pointer" }}>
@@ -287,7 +290,11 @@ export const CategorySidebarMobile = () => {
             </AppBar>
             <Box
                 component="nav"
-                sx={{ width: { sm: "100%" }, flexShrink: { sm: 0 }, p: 3 }}
+                sx={{
+                    width: { xs: "100%", sm: "60%", md: "50%" },
+                    flexShrink: { sm: 0 },
+                    p: 3,
+                }}
                 aria-label="mailbox folders"
             >
                 {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -300,25 +307,12 @@ export const CategorySidebarMobile = () => {
                         keepMounted: true, // Better open performance on mobile.
                     }}
                     sx={{
-                        display: { xs: "block", sm: "none" },
+                        display: "block",
                         "& .MuiDrawer-paper": {
                             boxSizing: "border-box",
-                            width: "100%",
+                            width: { xs: "100%", sm: "60%", md: "50%" },
                         },
                     }}
-                >
-                    {drawer}
-                </Drawer>
-                <Drawer
-                    variant="permanent"
-                    sx={{
-                        display: { xs: "none", sm: "block" },
-                        "& .MuiDrawer-paper": {
-                            boxSizing: "border-box",
-                            width: "100%",
-                        },
-                    }}
-                    open
                 >
                     {drawer}
                 </Drawer>

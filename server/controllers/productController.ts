@@ -4,10 +4,20 @@ import Product from "../models/productModel"
 import { initFilters } from "../helpers/initFilters"
 
 const getProducts = asyncHandler(async (req: Request, res: Response) => {
-    const search: string = decodeURI(req.query.search as string)
-    const regex: RegExp = new RegExp("^[a-zA-Z0-9- ]*$")
     let products
 
+    console.log(Object.keys(req.query))
+
+    // If no filters are given
+    if (!Object.keys(req.query)[0]) {
+        try {
+            products = await Product.find()
+        } catch (error) {
+            res.status(500).send({ message: "No products found!" })
+        }
+    }
+
+    // If there are filters but no search query
     if (!req.query.search && Object.keys(req.query)) {
         const filters = initFilters(req.query)
 
@@ -35,6 +45,12 @@ const getProducts = asyncHandler(async (req: Request, res: Response) => {
         }
         res.status(404).send({ message: "No product found" })
     }
+})
+
+const getSearchProducts = asyncHandler(async (req: Request, res: Response) => {
+    const search: string = decodeURI(req.query.search as string)
+    const regex: RegExp = new RegExp("^[a-zA-Z0-9- ]*$")
+    let products
 
     if (regex.test(search)) {
         if (req.query.search) {
@@ -63,4 +79,4 @@ const getProduct = asyncHandler(async (req: Request, res: Response) => {
     res.status(200).json(product)
 })
 
-export { getProduct, getProducts }
+export { getProduct, getProducts, getSearchProducts }

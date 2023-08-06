@@ -8,7 +8,7 @@ export const initialProduct = {
     model_info: "",
     price: 0,
     case_diameter: 0,
-    bracelet_material: "",
+    band_material: "",
     case_material: [],
     image_urls: [],
     dial_color: "",

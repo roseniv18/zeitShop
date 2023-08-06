@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../redux/store"
 import { getProducts, setFilters } from "../redux/productSlice"
 import { Filters } from "../types/Filters"
 import { BpIcon, BpCheckedIcon } from "./CustomMaterialUI/CustomCheckbox"
+import { isFiltersEmpty } from "../helpers/isFiltersEmpty"
 
 type Categories = "brand" | "dial_color" | "case_material" | "band_material" | "mechanism"
 
@@ -27,10 +28,10 @@ const CategorySidebar = () => {
     ]
     const dispatch = useAppDispatch()
     const categories: Filters = {
-        brand: ["casio", "orient", "seiko"],
+        brand: ["casio", "orient", "seiko", "citizen"],
         dial_color: ["black", "white", "blue", "green", "brown"],
-        case_material: ["stainless_steel", "resin", "gold", "gold coating"],
-        band_material: ["stainless_steel", "resin", "leather"],
+        case_material: ["stainless_steel", "resin", "gold", "gold coating", "polymer"],
+        band_material: ["stainless_steel", "resin", "leather", "polymer", "textile"],
         mechanism: ["analog", "digital"],
         price: [0, 1000],
     }
@@ -62,12 +63,15 @@ const CategorySidebar = () => {
     }
 
     useEffect(() => {
-        const timeoutId: number = setTimeout(() => {
-            dispatch(getProducts(filters))
-        }, 200)
+        // This prevents unnecessary request on first mount
+        if (!isFiltersEmpty(filters)) {
+            const timeoutId: number = setTimeout(() => {
+                dispatch(getProducts(filters))
+            }, 200)
 
-        return () => {
-            clearTimeout(timeoutId)
+            return () => {
+                clearTimeout(timeoutId)
+            }
         }
     }, [filters])
 

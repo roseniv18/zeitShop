@@ -3,7 +3,7 @@ import axiosInstance from "../../../axios/axiosInstance"
 
 export const getSearchProductsThunk = async (searchQuery: string, thunkAPI: any) => {
     try {
-        const products = await axiosInstance.get(`/products`, {
+        const products = await axiosInstance.get(`/products/getSearchProducts`, {
             params: {
                 search: searchQuery,
             },

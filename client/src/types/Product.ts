@@ -8,7 +8,7 @@ export type Product = {
     model_info: string
     price: number
     case_diameter: number
-    bracelet_material: string
+    band_material: string
     case_material: string[]
     image_urls: string[]
     dial_color: string
