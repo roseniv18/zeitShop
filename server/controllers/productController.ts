@@ -20,18 +20,9 @@ const getProducts = asyncHandler(async (req: Request, res: Response) => {
     }
 
     if (req.query.sortBy && req.query.sortOrder) {
-        if (
-            typeof req.query.sortBy === "string" &&
-            typeof req.query.sortOrder === "number"
-        ) {
-            sortBy = req.query.sortBy as string
-            sortOrder = req.query.sortOrder as number
-        } else {
-            res.status(400).send({
-                message:
-                    "Invalid sort queries. Make sure sortBy is string and sortOrder is number",
-            })
-        }
+        sortBy = req.query.sortBy as string
+        // @ts-ignore
+        sortOrder = req.query.sortOrder as number
     }
 
     // If there are filters but no search query
