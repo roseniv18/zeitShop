@@ -1,37 +1,28 @@
 import { useState } from "react"
 import CategorySidebar from "../components/CategorySidebar"
-import { Grid, Container, Typography, Stack, Chip, Box } from "@mui/material"
+import { Grid, Container, Typography } from "@mui/material"
 import Item from "../components/Item"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { useEffect } from "react"
-import { getProducts, setFilters } from "../redux/productSlice"
+import { getProducts } from "../redux/productSlice"
 import Spinner from "../components/Spinner"
 import { CategorySidebarMobile } from "../components/CategorySidebarMobile"
 import { useParams } from "react-router"
+import ActiveFilters from "../components/ActiveFilters"
+import Sort from "../components/Sort"
 
 const Shop = () => {
-    const { products, isLoading, filters } = useAppSelector((store) => store.products)
+    const { products, isLoading } = useAppSelector((store) => store.products)
     const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth)
     const dispatch = useAppDispatch()
     const { brand } = useParams()
 
-    const handleFilterDelete = (
-        filterToDelete: string,
-        category: "brand" | "dial_color" | "case_material" | "band_material" | "mechanism"
-    ) => {
-        const newFilters = {
-            ...filters,
-            [category]: filters[category].filter((el) => el !== filterToDelete),
-        }
-        dispatch(setFilters({ ...newFilters }))
-    }
-
     useEffect(() => {
         if (brand) {
-            dispatch(getProducts({ brand: [brand] }))
+            dispatch(getProducts({ filters: { brand: [brand] } }))
             return
         }
-        dispatch(getProducts())
+        dispatch(getProducts({}))
     }, [])
 
     useEffect(() => {
@@ -71,45 +62,8 @@ const Shop = () => {
                         paddingLeft: 3,
                     }}
                 >
-                    <Box
-                        sx={{
-                            position: "absolute",
-                            top: "30px",
-                            left: "95px",
-                            minHeight: "30px",
-                            height: "30px",
-                        }}
-                    >
-                        <Stack direction="row" sx={{ gap: "10px", height: "100%" }}>
-                            {Object.keys(filters).map((filter) => {
-                                return filters[filter as keyof typeof filters].map(
-                                    (f) => {
-                                        if (
-                                            filter === "brand" ||
-                                            filter === "dial_color" ||
-                                            filter === "case_material" ||
-                                            filter === "band_material" ||
-                                            filter === "mechanism"
-                                        )
-                                            return (
-                                                <Chip
-                                                    label={f}
-                                                    variant="filled"
-                                                    color="primary"
-                                                    onDelete={() =>
-                                                        handleFilterDelete(
-                                                            f as string,
-                                                            filter
-                                                        )
-                                                    }
-                                                />
-                                            )
-                                    }
-                                )
-                            })}
-                        </Stack>
-                    </Box>
-
+                    <ActiveFilters />
+                    <Sort />
                     <Grid
                         item
                         container

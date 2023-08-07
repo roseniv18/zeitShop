@@ -5,8 +5,10 @@ import { initFilters } from "../helpers/initFilters"
 
 const getProducts = asyncHandler(async (req: Request, res: Response) => {
     let products
+    let sortBy: string = "fullName"
+    let sortOrder: number = 1
 
-    console.log(Object.keys(req.query))
+    console.log(req.query)
 
     // If no filters are given
     if (!Object.keys(req.query)[0]) {
@@ -17,16 +19,30 @@ const getProducts = asyncHandler(async (req: Request, res: Response) => {
         }
     }
 
+    if (req.query.sortBy && req.query.sortOrder) {
+        if (
+            typeof req.query.sortBy === "string" &&
+            typeof req.query.sortOrder === "number"
+        ) {
+            sortBy = req.query.sortBy as string
+            sortOrder = req.query.sortOrder as number
+        } else {
+            res.status(400).send({
+                message:
+                    "Invalid sort queries. Make sure sortBy is string and sortOrder is number",
+            })
+        }
+    }
+
     // If there are filters but no search query
     if (!req.query.search && Object.keys(req.query)) {
         const filters = initFilters(req.query)
-
         if (filters.price) {
             try {
                 products = await Product.find({
                     ...filters,
                     price: { $gte: filters.price[0], $lte: filters.price[1] },
-                })
+                }).sort({ [sortBy]: sortOrder as any })
             } catch (error) {
                 res.status(500).send({ message: "Something went wrong" })
             }
@@ -34,7 +50,7 @@ const getProducts = asyncHandler(async (req: Request, res: Response) => {
             try {
                 products = await Product.find({
                     ...filters,
-                })
+                }).sort({ [sortBy]: sortOrder as any })
             } catch (error) {
                 res.status(500).send({ message: "Something went wrong" })
             }

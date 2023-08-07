@@ -2,12 +2,25 @@ import { formatError } from "../../../helpers/formatError"
 import { Filters } from "../../../types/Filters"
 import axiosInstance from "../../../axios/axiosInstance"
 import { initialFilters } from "../../initialStates/initialFilters"
+import { Sort } from "../../../types/Sort"
 
 export const getAllProductsThunk = async (
-    filters: Partial<Filters> | void,
+    { filters, sort }: { filters?: Partial<Filters>; sort?: Sort },
     thunkAPI: any
 ) => {
     let queries: any = {}
+
+    if (sort) {
+        // example vals: ["price", "desc"]
+        const vals: string[] = sort.split("-")
+        queries.sortBy = vals[0]
+        if (vals[1] === "asc") {
+            queries.sortOrder = 1
+        }
+        if (vals[1] === "desc") {
+            queries.sortOrder = -1
+        }
+    }
 
     if (filters && Object.keys(filters)) {
         if (filters.brand && filters.brand.length > 0) {

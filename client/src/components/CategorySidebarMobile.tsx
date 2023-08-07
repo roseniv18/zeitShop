@@ -35,7 +35,7 @@ const getValueText = (value: number) => {
 }
 
 export const CategorySidebarMobile = () => {
-    const [mobileOpen, setMobileOpen] = useState(true)
+    const [mobileOpen, setMobileOpen] = useState(false)
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen)
@@ -98,7 +98,7 @@ export const CategorySidebarMobile = () => {
         // This prevents unnecessary request on first mount
         if (!isFiltersEmpty(filters)) {
             const timeoutId: number = setTimeout(() => {
-                dispatch(getProducts(filters))
+                dispatch(getProducts({ filters }))
             }, 200)
 
             return () => {

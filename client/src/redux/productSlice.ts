@@ -7,12 +7,14 @@ import { getAllProductsThunk } from "./thunks/products/getAllProductsThunk"
 import { Filters } from "../types/Filters"
 import { initialFilters } from "./initialStates/initialFilters"
 import { Alert } from "../types/Alert"
+import { Sort } from "../types/Sort"
 
 type ProductState = {
     products: Product[]
     product: Product
     cart: CartProduct[]
     filters: Filters
+    sort: Sort
     isLoading: boolean
     isSuccess: boolean
     isError: boolean
@@ -30,6 +32,7 @@ const initialState: ProductState = {
     product: initialProduct,
     cart: getCartFromLocalStorage() || [],
     filters: initialFilters,
+    sort: "fullName-asc",
     isLoading: false,
     isSuccess: false,
     isError: false,
@@ -53,6 +56,9 @@ const productSlice = createSlice({
         },
         setFilters: (state, action: PayloadAction<Filters>) => {
             state.filters = { ...action.payload }
+        },
+        setSort: (state, action: PayloadAction<Sort>) => {
+            state.sort = action.payload
         },
         addToCart: (state, action: PayloadAction<CartProduct>) => {
             const newItem = { ...action.payload, amount: 1 }
@@ -189,6 +195,7 @@ export default productSlice.reducer
 export const {
     setProductAlert,
     setFilters,
+    setSort,
     addToCart,
     removeCartItem,
     decrease,

@@ -66,7 +66,7 @@ const CategorySidebar = () => {
         // This prevents unnecessary request on first mount
         if (!isFiltersEmpty(filters)) {
             const timeoutId: number = setTimeout(() => {
-                dispatch(getProducts(filters))
+                dispatch(getProducts({ filters }))
             }, 200)
 
             return () => {
