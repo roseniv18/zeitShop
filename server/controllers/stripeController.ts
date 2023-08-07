@@ -11,7 +11,6 @@ const createCheckoutSession = asyncHandler(async (req: Request, res: Response) =
     const line_items = items.map((item: CartProduct) => {
         const fullName: string =
             `${item.brand} ${item.model} ${item.model_info}`.toLocaleUpperCase()
-        console.log(serverURL)
         return {
             price_data: {
                 currency: "eur",

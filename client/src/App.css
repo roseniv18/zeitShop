@@ -57,6 +57,11 @@ main {
     max-width: 300px;
 }
 
+.brand-img {
+    max-width: 100%;
+    cursor: pointer;
+}
+
 .footer {
     margin-top: 100px;
     width: 100%;

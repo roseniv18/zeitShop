@@ -26,6 +26,7 @@ import { setProductAlert } from "./redux/productSlice"
 import { setSearchAlert } from "./redux/searchSlice"
 import { setUserAlert } from "./redux/userSlice"
 import Footer2 from "./components/Footer2"
+import Brands from "./pages/Brands"
 
 function App() {
     const { alert: productsAlert } = useAppSelector((store) => store.products)
@@ -115,6 +116,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/products/:brand?" element={<Shop />} />
                     <Route path="/product/:nameId" element={<Product />} />
+                    <Route path="/brands" element={<Brands />} />
                     <Route path="/about-us" element={<AboutUs />} />
                     <Route path="/contact-us" element={<ContactUs />} />
                     <Route path="/blog" element={<Blog />} />

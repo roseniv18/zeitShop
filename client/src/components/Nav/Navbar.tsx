@@ -17,7 +17,7 @@ import { Link as RouterLink } from "react-router-dom"
 import UserMenu from "./Menus/UserMenu"
 import CartMenu from "./Menus/CartMenu"
 
-const pages = ["About Us", "Products", "Blog", "Contact Us"]
+const pages = ["About Us", "Products", "Brands", "Blog", "Contact Us"]
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
