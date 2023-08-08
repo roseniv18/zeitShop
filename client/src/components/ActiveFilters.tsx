@@ -1,6 +1,7 @@
 import { Box, Stack, Chip } from "@mui/material"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { setFilters } from "../redux/productSlice"
+import { initialFilters } from "../redux/initialStates/initialFilters"
 
 const ActiveFilters = () => {
     const { filters } = useAppSelector((store) => store.products)
@@ -17,6 +18,14 @@ const ActiveFilters = () => {
         dispatch(setFilters({ ...newFilters }))
     }
 
+    const handlePriceReset = () => {
+        const newFilters = {
+            ...filters,
+            price: [initialFilters.price[0], initialFilters.price[1]],
+        }
+        dispatch(setFilters({ ...newFilters }))
+    }
+
     return (
         <Box
             sx={{
@@ -29,6 +38,23 @@ const ActiveFilters = () => {
         >
             <Stack direction="row" sx={{ gap: "10px", height: "100%" }}>
                 {Object.keys(filters).map((filter) => {
+                    const formattedFilter: string = filter
+                        .replace("_", " ")
+                        .toLocaleUpperCase()
+                    if (
+                        filter === "price" &&
+                        (filters.price[0] !== initialFilters.price[0] ||
+                            filters.price[1] !== initialFilters.price[1])
+                    ) {
+                        return (
+                            <Chip
+                                label={`Price: €${filters.price[0]} - €${filters.price[1]}`}
+                                variant="filled"
+                                color="primary"
+                                onDelete={handlePriceReset}
+                            />
+                        )
+                    }
                     return filters[filter as keyof typeof filters].map((f) => {
                         if (
                             filter === "brand" ||
@@ -36,10 +62,12 @@ const ActiveFilters = () => {
                             filter === "case_material" ||
                             filter === "band_material" ||
                             filter === "mechanism"
-                        )
+                        ) {
+                            // @ts-ignore
+                            const formattedFilterVal: string = f.replace("_", " ")
                             return (
                                 <Chip
-                                    label={f}
+                                    label={`${formattedFilter}: ${formattedFilterVal}`}
                                     variant="filled"
                                     color="primary"
                                     onDelete={() =>
@@ -47,6 +75,7 @@ const ActiveFilters = () => {
                                     }
                                 />
                             )
+                        }
                     })
                 })}
             </Stack>
