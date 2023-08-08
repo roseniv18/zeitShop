@@ -7,6 +7,7 @@ import SearchIcon from "@mui/icons-material/Search"
 import SearchItem from "./SearchItem"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
 import { getSearchProducts } from "../../redux/searchSlice"
+import useIsFirstRender from "../../hooks/useIsFirstRender"
 
 export default function SearchBar() {
     const { searchProducts, isLoading } = useAppSelector((store) => store.search)
@@ -15,6 +16,7 @@ export default function SearchBar() {
     const [options, setOptions] = useState<Product[]>(searchProducts)
     const [searchValue, setSearchValue] = useState<string>("")
     const [validString, setValidString] = useState<boolean>(true)
+    const isFirstRender: boolean = useIsFirstRender()
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setValidString(false)
@@ -33,12 +35,14 @@ export default function SearchBar() {
     }
 
     useEffect(() => {
-        const timeoutId: number = setTimeout(() => {
-            dispatch(getSearchProducts(searchValue))
-        }, 1000)
+        if (!isFirstRender) {
+            const timeoutId: number = setTimeout(() => {
+                dispatch(getSearchProducts(searchValue))
+            }, 1000)
 
-        return () => {
-            clearTimeout(timeoutId)
+            return () => {
+                clearTimeout(timeoutId)
+            }
         }
     }, [searchValue])
 

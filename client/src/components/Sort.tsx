@@ -11,9 +11,11 @@ import { useAppDispatch, useAppSelector } from "../redux/store"
 import { getProducts, setSort } from "../redux/productSlice"
 // Avoid duplicate declaration
 import { Sort as SortType } from "../types/Sort"
+import useIsFirstRender from "../hooks/useIsFirstRender"
 
 const Sort = () => {
     const { sort } = useAppSelector((store) => store.products)
+    const isFirstRender: boolean = useIsFirstRender()
     const dispatch = useAppDispatch()
 
     const handleChange = (e: SelectChangeEvent) => {
@@ -21,7 +23,7 @@ const Sort = () => {
     }
 
     useEffect(() => {
-        if (sort) {
+        if (sort && !isFirstRender) {
             dispatch(getProducts({ sort }))
         }
     }, [sort])

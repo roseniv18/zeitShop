@@ -8,14 +8,19 @@ import { Filters } from "../types/Filters"
 import { initialFilters } from "./initialStates/initialFilters"
 import { Alert } from "../types/Alert"
 import { Sort } from "../types/Sort"
+import { loadMoreProductsThunk } from "./thunks/products/loadMoreProductsThunk"
 
 type ProductState = {
-    products: Product[]
+    products: {
+        products: Product[]
+        totalCount: number
+    }
     product: Product
     cart: CartProduct[]
     filters: Filters
     sort: Sort
     isLoading: boolean
+    isLoadingMoreProducts: boolean
     isSuccess: boolean
     isError: boolean
     alert: Alert
@@ -28,12 +33,16 @@ const getCartFromLocalStorage = () => {
 }
 
 const initialState: ProductState = {
-    products: [],
+    products: {
+        products: [],
+        totalCount: 0,
+    },
     product: initialProduct,
     cart: getCartFromLocalStorage() || [],
     filters: initialFilters,
     sort: "fullName-asc",
     isLoading: false,
+    isLoadingMoreProducts: false,
     isSuccess: false,
     isError: false,
     alert: {
@@ -45,6 +54,10 @@ const initialState: ProductState = {
 
 // ASYNC THUNK
 export const getProducts = createAsyncThunk("products/getAll", getAllProductsThunk)
+export const loadMoreProducts = createAsyncThunk(
+    "products/loadMoreProducts",
+    loadMoreProductsThunk
+)
 export const getProduct = createAsyncThunk("products/get", getProductThunk)
 
 const productSlice = createSlice({
@@ -150,15 +163,50 @@ const productSlice = createSlice({
         })
         builder.addCase(
             getProducts.fulfilled,
-            (state, action: PayloadAction<Product[]>) => {
+            (
+                state,
+                action: PayloadAction<{ products: Product[]; totalCount: number }>
+            ) => {
                 state.isLoading = false
                 state.isSuccess = true
                 state.isError = false
-                state.products = [...action.payload]
+                state.products.products = [...action.payload.products]
+                state.products.totalCount = action.payload.totalCount
             }
         )
         builder.addCase(getProducts.rejected, (state, action) => {
             state.isLoading = false
+            state.isError = true
+            state.isSuccess = false
+            state.alert = {
+                show: true,
+                type: "error",
+                msg: action.payload as string,
+            }
+        })
+
+        // LOAD MORE PRODUCTS
+        builder.addCase(loadMoreProducts.pending, (state) => {
+            state.isLoadingMoreProducts = true
+        })
+        builder.addCase(
+            loadMoreProducts.fulfilled,
+            (
+                state,
+                action: PayloadAction<{ products: Product[]; totalCount: number }>
+            ) => {
+                state.isLoadingMoreProducts = false
+                state.isSuccess = true
+                state.isError = false
+                state.products.products = [
+                    ...state.products.products,
+                    ...action.payload.products,
+                ]
+                state.products.totalCount = action.payload.totalCount
+            }
+        )
+        builder.addCase(loadMoreProducts.rejected, (state, action) => {
+            state.isLoadingMoreProducts = false
             state.isError = true
             state.isSuccess = false
             state.alert = {

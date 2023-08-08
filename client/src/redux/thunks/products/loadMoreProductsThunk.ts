@@ -3,7 +3,7 @@ import { Filters } from "../../../types/Filters"
 import axiosInstance from "../../../axios/axiosInstance"
 import { Sort } from "../../../types/Sort"
 
-export const getAllProductsThunk = async (
+export const loadMoreProductsThunk = async (
     { filters, sort, page }: { filters?: Partial<Filters>; sort?: Sort; page?: number },
     thunkAPI: any
 ) => {
@@ -23,7 +23,7 @@ export const getAllProductsThunk = async (
         }
     }
 
-    if (filters && Object.keys(filters).length > 0) {
+    if (filters && Object.keys(filters)) {
         if (filters.brand && filters.brand.length > 0) {
             queries.brand = filters.brand.join(",")
         }

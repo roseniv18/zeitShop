@@ -5,52 +5,59 @@ import { initFilters } from "../helpers/initFilters"
 
 const getProducts = asyncHandler(async (req: Request, res: Response) => {
     let products
+    // Default sort options
     let sortBy: string = "fullName"
     let sortOrder: number = 1
 
-    console.log(req.query)
+    if (req.query.sortBy && req.query.sortOrder) {
+        sortBy = req.query.sortBy as string
+        // @ts-ignore
+        sortOrder = parseInt(req.query.sortOrder as string)
+    }
+
+    // Handle pagination
+    const page: number = parseInt(req.query.page as string) || 1
+    const limit: number = 9
+    const skip: number = (page - 1) * limit
+
+    // Initialize filters
+    const filters = initFilters(req.query)
+
+    // Initialize query based on given filters
+    const query = filters.price
+        ? {
+              ...filters,
+              price: { $gte: filters.price[0], $lte: filters.price[1] },
+          }
+        : { ...filters }
 
     // If no filters are given
     if (!Object.keys(req.query)[0]) {
         try {
-            products = await Product.find()
+            products = await Product.find().skip(skip).limit(limit)
         } catch (error) {
             res.status(500).send({ message: "No products found!" })
         }
     }
 
-    if (req.query.sortBy && req.query.sortOrder) {
-        sortBy = req.query.sortBy as string
-        // @ts-ignore
-        sortOrder = req.query.sortOrder as number
-    }
+    // Find total number of products
+    const totalCount = await Product.count(query)
 
     // If there are filters but no search query
     if (!req.query.search && Object.keys(req.query)) {
-        const filters = initFilters(req.query)
-        if (filters.price) {
-            try {
-                products = await Product.find({
-                    ...filters,
-                    price: { $gte: filters.price[0], $lte: filters.price[1] },
-                }).sort({ [sortBy]: sortOrder as any })
-            } catch (error) {
-                res.status(500).send({ message: "Something went wrong" })
-            }
-        } else {
-            try {
-                products = await Product.find({
-                    ...filters,
-                }).sort({ [sortBy]: sortOrder as any })
-            } catch (error) {
-                res.status(500).send({ message: "Something went wrong" })
-            }
+        try {
+            products = await Product.find(query)
+                .sort({ [sortBy]: sortOrder as any })
+                .skip(skip)
+                .limit(limit)
+        } catch (error) {
+            res.status(500).send({ message: "Something went wrong" })
         }
 
-        if (products) {
-            res.status(200).send(products)
+        if (products && products.length > 0) {
+            res.status(200).send({ products, totalCount })
         }
-        res.status(404).send({ message: "No product found" })
+        res.status(404).send({ message: "No products found" })
     }
 })
 

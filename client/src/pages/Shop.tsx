@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import CategorySidebar from "../components/CategorySidebar"
-import { Grid, Container, Typography } from "@mui/material"
+import { Grid, Container, Typography, Button, Box } from "@mui/material"
 import Item from "../components/Item"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { useEffect } from "react"
-import { getProducts } from "../redux/productSlice"
+import { getProducts, loadMoreProducts } from "../redux/productSlice"
 import Spinner from "../components/Spinner"
 import { CategorySidebarMobile } from "../components/CategorySidebarMobile"
 import { useParams } from "react-router"
@@ -12,8 +12,11 @@ import ActiveFilters from "../components/ActiveFilters"
 import Sort from "../components/Sort"
 
 const Shop = () => {
-    const { products, isLoading } = useAppSelector((store) => store.products)
+    const { products, isLoading, isLoadingMoreProducts, filters, sort } = useAppSelector(
+        (store) => store.products
+    )
     const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth)
+    const page = useRef<number>(2)
     const dispatch = useAppDispatch()
     const { brand } = useParams()
 
@@ -36,6 +39,12 @@ const Shop = () => {
             window.removeEventListener("resize", handleResize)
         }
     }, [])
+
+    const handleLoadMoreProducts = () => {
+        const currPage: number = page.current
+        dispatch(loadMoreProducts({ filters, sort, page: currPage }))
+        page.current += 1
+    }
 
     return (
         <Container maxWidth="lg">
@@ -75,9 +84,16 @@ const Shop = () => {
                             marginTop: 2,
                         }}
                     >
+                        <Grid item xs={12}>
+                            <Typography variant="h6">
+                                Showing {products.products.length} of{" "}
+                                {products.totalCount}
+                            </Typography>
+                        </Grid>
+
                         {!isLoading ? (
-                            products.length > 0 ? (
-                                products.map((product) => {
+                            products.products.length > 0 ? (
+                                products.products.map((product) => {
                                     return (
                                         <Grid
                                             item
@@ -96,6 +112,40 @@ const Shop = () => {
                             )
                         ) : (
                             <Spinner />
+                        )}
+
+                        {isLoadingMoreProducts ? (
+                            <Box
+                                sx={{
+                                    my: 5,
+                                    width: "100%",
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Spinner />
+                            </Box>
+                        ) : (
+                            <></>
+                        )}
+
+                        {products.products.length === products.totalCount ? (
+                            <></>
+                        ) : (
+                            <Grid xs={12} item>
+                                <Button
+                                    sx={{
+                                        margin: "0 auto",
+                                    }}
+                                    variant="contained"
+                                    size="large"
+                                    onClick={handleLoadMoreProducts}
+                                    disabled={isLoading || isLoadingMoreProducts}
+                                >
+                                    Load more
+                                </Button>
+                            </Grid>
                         )}
                     </Grid>
                 </Grid>

@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "../redux/store"
 import { getProducts, setFilters } from "../redux/productSlice"
 import { Filters } from "../types/Filters"
 import { BpIcon, BpCheckedIcon } from "./CustomMaterialUI/CustomCheckbox"
-import { isFiltersEmpty } from "../helpers/isFiltersEmpty"
+import useIsFirstRender from "../hooks/useIsFirstRender"
 
 type Categories = "brand" | "dial_color" | "case_material" | "band_material" | "mechanism"
 
@@ -27,6 +27,8 @@ const CategorySidebar = () => {
         { value: filters.price[1], label: `€ ${filters.price[1]}` },
     ]
     const dispatch = useAppDispatch()
+    const isFirstRender: boolean = useIsFirstRender()
+
     const categories: Filters = {
         brand: ["casio", "orient", "seiko", "citizen"],
         dial_color: ["black", "white", "blue", "green", "brown"],
@@ -64,7 +66,7 @@ const CategorySidebar = () => {
 
     useEffect(() => {
         // This prevents unnecessary request on first mount
-        if (!isFiltersEmpty(filters)) {
+        if (!isFirstRender) {
             const timeoutId: number = setTimeout(() => {
                 dispatch(getProducts({ filters }))
             }, 200)

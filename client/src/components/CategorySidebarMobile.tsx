@@ -25,7 +25,7 @@ import { useAppDispatch, useAppSelector } from "../redux/store"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import CloseIcon from "@mui/icons-material/Close"
 import FilterAltIcon from "@mui/icons-material/FilterAlt"
-import { isFiltersEmpty } from "../helpers/isFiltersEmpty"
+import useIsFirstRender from "../hooks/useIsFirstRender"
 
 type Categories = "brand" | "dial_color" | "case_material" | "band_material" | "mechanism"
 
@@ -36,6 +36,7 @@ const getValueText = (value: number) => {
 
 export const CategorySidebarMobile = () => {
     const [mobileOpen, setMobileOpen] = useState(false)
+    const isFirstRender: boolean = useIsFirstRender()
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen)
@@ -96,7 +97,7 @@ export const CategorySidebarMobile = () => {
 
     useEffect(() => {
         // This prevents unnecessary request on first mount
-        if (!isFiltersEmpty(filters)) {
+        if (!isFirstRender) {
             const timeoutId: number = setTimeout(() => {
                 dispatch(getProducts({ filters }))
             }, 200)
@@ -107,6 +108,7 @@ export const CategorySidebarMobile = () => {
         }
     }, [filters])
 
+    // DRAWER
     const drawer = (
         <Box
             sx={{
