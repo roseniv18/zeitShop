@@ -19,6 +19,7 @@ main {
 .header-sticky {
     top: 0;
     animation: fadeIn 0.18s linear;
+    opacity: 1;
 }
 
 .sliding-up {

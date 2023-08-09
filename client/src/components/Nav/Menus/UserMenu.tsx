@@ -39,6 +39,7 @@ const UserMenu = () => {
     return (
         <>
             <IconButton
+                id="user-btn"
                 aria-label="account of current user"
                 aria-controls="user-menu-appbar"
                 aria-haspopup="true"

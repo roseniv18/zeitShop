@@ -123,7 +123,7 @@ const ProductInfo = ({ product }: { product: Product }) => {
             </Box>
             <Button
                 variant="contained"
-                sx={{ marginTop: "40px", width: "30%" }}
+                sx={{ marginTop: "40px", width: { xs: "40%", sm: "30%" } }}
                 startIcon={<ShoppingCartIcon />}
                 onClick={() => dispatch(addToCart({ ...product, amount: 1 }))}
             >

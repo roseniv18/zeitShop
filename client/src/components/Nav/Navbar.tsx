@@ -32,6 +32,7 @@ function Navbar() {
 
     return (
         <AppBar
+            position="static"
             className={`header`}
             sx={{
                 backgroundColor: "background.default",

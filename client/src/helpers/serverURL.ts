@@ -5,7 +5,7 @@ if (import.meta.env.VITE_NODE_ENV === "development") {
 }
 
 if (import.meta.env.VITE_NODE_ENV === "production") {
-    serverURL = "https://zeitshop.onrender.com/"
+    serverURL = "https://zeitshop.onrender.com"
 }
 
 export { serverURL }
