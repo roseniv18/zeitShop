@@ -5,7 +5,7 @@ if (import.meta.env.VITE_NODE_ENV === "development") {
 }
 
 if (import.meta.env.VITE_NODE_ENV === "production") {
-    serverURL = "https://zeitshop-server.vercel.app/"
+    serverURL = "https://jealous-wig-foal.cyclic.app"
 }
 
 export { serverURL }
