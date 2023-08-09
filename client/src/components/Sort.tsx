@@ -29,16 +29,7 @@ const Sort = () => {
     }, [sort])
 
     return (
-        <Box
-            sx={{
-                position: "absolute",
-                top: "30px",
-                right: "95px",
-                minHeight: "30px",
-                height: "30px",
-                minWidth: "180px",
-            }}
-        >
+        <Box>
             <FormControl fullWidth>
                 <InputLabel id="sort-label">Sort By</InputLabel>
                 <Select

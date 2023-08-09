@@ -1,12 +1,12 @@
 import { useState, useRef } from "react"
-import CategorySidebar from "../components/CategorySidebar"
+import CategorySidebar from "../components/Sidebar/CategorySidebar"
 import { Grid, Container, Typography, Button, Box } from "@mui/material"
 import Item from "../components/Item"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { useEffect } from "react"
-import { getProducts, loadMoreProducts } from "../redux/productSlice"
+import { getProducts, loadMoreProducts, setFilters } from "../redux/productSlice"
 import Spinner from "../components/Spinner"
-import { CategorySidebarMobile } from "../components/CategorySidebarMobile"
+import { CategorySidebarMobile } from "../components/Sidebar/CategorySidebarMobile"
 import { useParams } from "react-router"
 import ActiveFilters from "../components/ActiveFilters"
 import Sort from "../components/Sort"
@@ -21,8 +21,9 @@ const Shop = () => {
     const { brand } = useParams()
 
     useEffect(() => {
+        // Fetch products based on brand
         if (brand) {
-            dispatch(getProducts({ filters: { brand: [brand] } }))
+            dispatch(setFilters({ ...filters, brand: [brand] }))
             return
         }
         dispatch(getProducts({}))
@@ -50,7 +51,11 @@ const Shop = () => {
         <Container maxWidth="lg">
             {screenWidth < 900 ? <CategorySidebarMobile /> : <></>}
 
-            <Grid container sx={{ my: 10, justifyContent: "space-between" }}>
+            <Grid
+                container
+                sx={{ my: 10, justifyContent: "space-between" }}
+                direction="row"
+            >
                 {screenWidth >= 900 ? (
                     <Grid item xs={2} sx={{ display: { xs: "none", md: "block" } }}>
                         <CategorySidebar />
@@ -62,35 +67,48 @@ const Shop = () => {
                 <Grid
                     container
                     item
-                    spacing={9}
                     xs={12}
                     md={9}
+                    spacing={9}
                     sx={{
                         position: "relative",
-                        justifyContent: { xs: "center", md: "flex-start" },
+                        justifyContent: { xs: "center", md: "start" },
+                        alignContent: "start",
                         paddingLeft: 3,
                     }}
                 >
-                    <ActiveFilters />
-                    <Sort />
+                    <Grid item container xs={12} spacing={3}>
+                        <Grid item xs={12} sm={6} md={8} lg={9}>
+                            <Typography variant="h3" sx={{ textTransform: "capitalize" }}>
+                                {brand && filters.brand.includes(brand)
+                                    ? `${brand} watches`
+                                    : "Watches"}
+                            </Typography>
+
+                            <Typography variant="body1">
+                                Showing {products.products.length} of{" "}
+                                {products.totalCount}
+                            </Typography>
+                        </Grid>
+
+                        <Grid item xs={12} sm={6} md={4} lg={3}>
+                            <Sort />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <ActiveFilters />
+                        </Grid>
+                    </Grid>
+
                     <Grid
                         item
                         container
                         spacing={3}
                         xs={12}
                         sx={{
-                            justifyContent: { xs: "center", md: "flex-start" },
-                            paddingLeft: 3,
-                            marginTop: 2,
+                            justifyContent: { xs: "center", md: "start" },
                         }}
                     >
-                        <Grid item xs={12}>
-                            <Typography variant="h6">
-                                Showing {products.products.length} of{" "}
-                                {products.totalCount}
-                            </Typography>
-                        </Grid>
-
                         {!isLoading ? (
                             products.products.length > 0 ? (
                                 products.products.map((product) => {

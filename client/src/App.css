@@ -7,6 +7,24 @@ main {
     justify-content: space-between;
 }
 
+.header-container {
+    min-height: 96px;
+}
+
+.header {
+    position: static !important;
+    transition: 0.18s linear;
+}
+
+.header-sticky {
+    top: 0;
+    animation: fadeIn 0.18s linear;
+}
+
+.sliding-up {
+    animation: fadeOut 0.18s linear;
+}
+
 .item-img {
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
@@ -114,6 +132,24 @@ main {
     border: 32px solid rgb(0, 132, 255);
     border-color: rgb(0, 132, 255) transparent rgb(0, 132, 255) transparent;
     animation: lds-hourglass 1.2s infinite;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0%;
+    }
+    to {
+        opacity: 100%;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 100%;
+    }
+    to {
+        opacity: 0%;
+    }
 }
 
 @keyframes lds-hourglass {

@@ -52,8 +52,11 @@ export default function ProductDescription() {
         createData("Brand", brand),
         createData("Model", model),
         createData("Case Diameter", `${case_diameter}mm`),
-        createData("band Material", band_material),
-        createData("Case Material", case_material.join(", ")),
+        createData("band Material", band_material.replace("_", " ")),
+        createData(
+            "Case Material",
+            case_material.map((c) => c.replace("_", " ")).join(", ")
+        ),
         createData("Dial Color", dial_color),
         createData("Mechanism", mechanism),
     ]

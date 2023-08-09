@@ -1,4 +1,13 @@
-import { Paper, Typography, Container, Divider, Rating, Box, Button } from "@mui/material"
+import {
+    Paper,
+    Typography,
+    Container,
+    Divider,
+    Rating,
+    Box,
+    Button,
+    capitalize,
+} from "@mui/material"
 import { Product } from "../types/Product"
 import { useNavigate } from "react-router-dom"
 import { serverURL } from "../helpers/serverURL"
@@ -24,7 +33,7 @@ const Item = ({ product }: { product: Product }) => {
                 justifyContent: "space-between",
                 transition: ".18s linear",
                 height: "100%",
-                maxWidth: "250px",
+                maxWidth: "100%",
                 "&:hover": { transform: "translateY(-3px)", transition: ".18s linear" },
             }}
         >
@@ -57,6 +66,9 @@ const Item = ({ product }: { product: Product }) => {
                 >
                     {name}
                 </Typography>
+                <Typography sx={{ textAlign: "center", opacity: 0.5 }}>
+                    Brand: {capitalize(brand)}
+                </Typography>
                 <Box
                     sx={{
                         display: "flex",
@@ -67,11 +79,11 @@ const Item = ({ product }: { product: Product }) => {
                 >
                     <Rating
                         name="simple-controlled"
-                        value={Math.max(Math.random() * 5, Math.random() * 5)}
+                        value={4.5}
                         precision={0.5}
                         readOnly
                     />
-                    <Typography>({Math.floor(Math.random() * 50)})</Typography>
+                    <Typography>(18)</Typography>
                 </Box>
 
                 <Typography

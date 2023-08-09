@@ -19,8 +19,10 @@ import CartMenu from "./Menus/CartMenu"
 
 const pages = ["About Us", "Products", "Brands", "Blog", "Contact Us"]
 
-function Navbar() {
+function StickyHeader() {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
+    const [isFixed, setIsFixed] = useState<boolean>(false)
+    const [posY, setPosY] = useState<number>(window.scrollY)
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget)
@@ -30,28 +32,47 @@ function Navbar() {
         setAnchorElNav(null)
     }
 
+    useEffect(() => {
+        const handleScrollY = () => {
+            setPosY(window.scrollY)
+        }
+
+        window.addEventListener("scroll", handleScrollY)
+
+        return () => {
+            window.removeEventListener("scroll", handleScrollY)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (posY > 200) {
+            setIsFixed(true)
+        } else {
+            setIsFixed(false)
+        }
+    }, [posY])
+
     return (
         <AppBar
-            className={`header`}
+            className={`${isFixed ? "header-sticky" : "header"}`}
             sx={{
-                backgroundColor: "background.default",
-                color: "primary.main",
-                minHeight: "40px",
-                height: "40px",
-                borderBottom: "1px solid #ddd",
+                backgroundColor: "primary.main",
+                color: "background.default",
+                minHeight: "50px",
+                height: "50px",
             }}
         >
-            <Container maxWidth="lg" sx={{ minHeight: "40px", height: "40px" }}>
+            <Container maxWidth="lg" sx={{ minHeight: "50px", height: "50px" }}>
                 <Toolbar
                     disableGutters
-                    sx={{ minHeight: "40px !important", height: "40px" }}
+                    sx={{ minHeight: "50px !important", height: "50px" }}
                 >
                     <Box
                         sx={{
                             flexGrow: 1,
                             display: { xs: "flex", md: "none" },
-                            minHeight: "40px",
-                            height: "40px",
+                            minHeight: "50px",
+                            height: "50px",
                         }}
                     >
                         <IconButton
@@ -140,10 +161,10 @@ function Navbar() {
                                 key={page}
                                 onClick={handleCloseNavMenu}
                                 sx={{
-                                    color: "primary.main",
+                                    color: "background.default",
                                     display: "block",
                                     ":hover": {
-                                        color: "info.main",
+                                        color: "#d8d8d8",
                                     },
                                 }}
                             >
@@ -158,9 +179,7 @@ function Navbar() {
                         ))}
                     </Box>
 
-                    <Box
-                        sx={{ display: { xs: "flex", md: "none" }, flexDirection: "row" }}
-                    >
+                    <Box sx={{ display: { xs: "flex" }, flexDirection: "row" }}>
                         <UserMenu />
                         <CartMenu />
                     </Box>
@@ -169,4 +188,4 @@ function Navbar() {
         </AppBar>
     )
 }
-export default Navbar
+export default StickyHeader

@@ -1,16 +1,14 @@
-import { Box, Stack, Chip } from "@mui/material"
+import { Box, Stack, Chip, Button, capitalize } from "@mui/material"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { setFilters } from "../redux/productSlice"
 import { initialFilters } from "../redux/initialStates/initialFilters"
+import { Categories } from "../types/Categories"
 
 const ActiveFilters = () => {
     const { filters } = useAppSelector((store) => store.products)
     const dispatch = useAppDispatch()
 
-    const handleFilterDelete = (
-        filterToDelete: string,
-        category: "brand" | "dial_color" | "case_material" | "band_material" | "mechanism"
-    ) => {
+    const handleFilterDelete = (filterToDelete: string, category: Categories) => {
         const newFilters = {
             ...filters,
             [category]: filters[category].filter((el) => el !== filterToDelete),
@@ -27,17 +25,9 @@ const ActiveFilters = () => {
     }
 
     return (
-        <Box
-            sx={{
-                position: "absolute",
-                top: "30px",
-                left: "95px",
-                minHeight: "30px",
-                height: "30px",
-            }}
-        >
-            <Stack direction="row" sx={{ gap: "10px", height: "100%" }}>
-                {Object.keys(filters).map((filter) => {
+        <Box>
+            <Stack direction="row" sx={{ gap: "10px", flexWrap: "wrap" }}>
+                {Object.keys(filters).map((filter, index) => {
                     const formattedFilter: string = filter
                         .replace("_", " ")
                         .toLocaleUpperCase()
@@ -48,6 +38,7 @@ const ActiveFilters = () => {
                     ) {
                         return (
                             <Chip
+                                key={index}
                                 label={`Price: €${filters.price[0]} - €${filters.price[1]}`}
                                 variant="filled"
                                 color="primary"
@@ -55,7 +46,7 @@ const ActiveFilters = () => {
                             />
                         )
                     }
-                    return filters[filter as keyof typeof filters].map((f) => {
+                    return filters[filter as keyof typeof filters].map((f, index) => {
                         if (
                             filter === "brand" ||
                             filter === "dial_color" ||
@@ -67,7 +58,10 @@ const ActiveFilters = () => {
                             const formattedFilterVal: string = f.replace("_", " ")
                             return (
                                 <Chip
-                                    label={`${formattedFilter}: ${formattedFilterVal}`}
+                                    key={index}
+                                    label={`${formattedFilter}: ${capitalize(
+                                        formattedFilterVal
+                                    )}`}
                                     variant="filled"
                                     color="primary"
                                     onDelete={() =>

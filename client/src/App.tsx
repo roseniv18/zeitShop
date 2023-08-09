@@ -1,5 +1,5 @@
-import { useEffect } from "react"
-import { ToastContainer, toast } from "react-toastify"
+import { useState, useEffect } from "react"
+import { ToastContainer } from "react-toastify"
 import "./App.css"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Navbar from "./components/Nav/Navbar"
@@ -21,35 +21,41 @@ import AboutUs from "./pages/AboutUs"
 import ContactUs from "./pages/ContactUs"
 import Blog from "./pages/Blog"
 import "react-toastify/dist/ReactToastify.css"
-import { Alert } from "./types/Alert"
 import { setProductAlert } from "./redux/productSlice"
 import { setSearchAlert } from "./redux/searchSlice"
 import { setUserAlert } from "./redux/userSlice"
 import Footer2 from "./components/Footer2"
 import Brands from "./pages/Brands"
+import { handleAlert } from "./helpers/handleAlert"
+import StickyHeader from "./components/Nav/StickyHeader"
 
 function App() {
     const { alert: productsAlert } = useAppSelector((store) => store.products)
     const { alert: userAlert } = useAppSelector((store) => store.user)
     const { alert: searchAlert } = useAppSelector((store) => store.search)
     const { cart } = useAppSelector((store) => store.products)
+    const [posY, setPosY] = useState<number>(window.scrollY)
+    const [isNavbarFixed, setIsNavbarFixed] = useState<boolean>(false)
 
-    const handleAlert = (alert: Alert) => {
-        if (alert.show && alert.msg) {
-            if (alert.type === "error") {
-                toast.error(alert.msg)
-            }
-            if (alert.type === "info") {
-                toast.info(alert.msg)
-            }
-            if (alert.type === "success") {
-                toast.success(alert.msg)
-            }
-            if (alert.type === "warning") {
-                toast.warning(alert.msg)
-            }
+    useEffect(() => {
+        const handleScrollY = () => {
+            setPosY(window.scrollY)
         }
-    }
+
+        window.addEventListener("scroll", handleScrollY)
+
+        return () => {
+            window.removeEventListener("scroll", handleScrollY)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (posY > 200) {
+            setIsNavbarFixed(true)
+        } else {
+            setIsNavbarFixed(false)
+        }
+    }, [posY])
 
     useEffect(() => {
         handleAlert(productsAlert)
@@ -105,10 +111,10 @@ function App() {
     return (
         <main>
             <Router>
-                <header>
-                    <Header />
-                    <Navbar />
-                </header>
+                <nav className="header-container">
+                    {isNavbarFixed ? <></> : <Header />}
+                    {isNavbarFixed ? <StickyHeader /> : <Navbar />}
+                </nav>
                 <ToastContainer autoClose={3500} position="bottom-right" />
                 <Routes>
                     <Route path="/" index element={<LandingPage />} />
