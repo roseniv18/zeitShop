@@ -29,7 +29,7 @@ const getValueText = (value: number) => {
 export const CategorySidebarMobile = () => {
     const [mobileOpen, setMobileOpen] = useState<boolean>(false)
     const isFirstRender: boolean = useIsFirstRender()
-    const { filters } = useAppSelector((store) => store.products)
+    const { filters, sort } = useAppSelector((store) => store.products)
     const dispatch = useAppDispatch()
 
     const handleDrawerToggle = () => {
@@ -61,7 +61,7 @@ export const CategorySidebarMobile = () => {
         // This prevents unnecessary request on first mount
         if (!isFirstRender) {
             const timeoutId: number = setTimeout(() => {
-                dispatch(getProducts({ filters }))
+                dispatch(getProducts({ filters, sort }))
             }, 350)
 
             return () => {

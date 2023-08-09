@@ -12,7 +12,7 @@ const getValueText = (value: number) => {
 }
 
 const CategorySidebar = () => {
-    const { filters } = useAppSelector((store) => store.products)
+    const { filters, sort } = useAppSelector((store) => store.products)
     const marks = [
         { value: filters.price[0], label: `€ ${filters.price[0]}` },
         { value: filters.price[1], label: `€ ${filters.price[1]}` },
@@ -30,7 +30,7 @@ const CategorySidebar = () => {
         // This prevents unnecessary request on first mount
         if (!isFirstRender) {
             const timeoutId: number = setTimeout(() => {
-                dispatch(getProducts({ filters }))
+                dispatch(getProducts({ filters, sort }))
             }, 350)
 
             return () => {

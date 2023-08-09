@@ -14,7 +14,7 @@ import { Sort as SortType } from "../types/Sort"
 import useIsFirstRender from "../hooks/useIsFirstRender"
 
 const Sort = () => {
-    const { sort } = useAppSelector((store) => store.products)
+    const { filters, sort } = useAppSelector((store) => store.products)
     const isFirstRender: boolean = useIsFirstRender()
     const dispatch = useAppDispatch()
 
@@ -24,7 +24,7 @@ const Sort = () => {
 
     useEffect(() => {
         if (sort && !isFirstRender) {
-            dispatch(getProducts({ sort }))
+            dispatch(getProducts({ filters, sort }))
         }
     }, [sort])
 
