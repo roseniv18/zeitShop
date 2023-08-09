@@ -69,7 +69,7 @@ const Shop = () => {
                     item
                     xs={12}
                     md={9}
-                    spacing={9}
+                    spacing={3}
                     sx={{
                         position: "relative",
                         justifyContent: { xs: "center", md: "start" },
@@ -79,13 +79,19 @@ const Shop = () => {
                 >
                     <Grid item container xs={12} spacing={3}>
                         <Grid item xs={12} sm={6} md={8} lg={9}>
-                            <Typography variant="h3" sx={{ textTransform: "capitalize" }}>
+                            <Typography
+                                variant="h3"
+                                sx={{ textTransform: "capitalize", textAlign: "left" }}
+                            >
                                 {brand && filters.brand.includes(brand)
                                     ? `${brand} watches`
                                     : "Watches"}
                             </Typography>
 
-                            <Typography variant="body1">
+                            <Typography
+                                variant="body1"
+                                sx={{ opacity: 0.75, textAlign: "left" }}
+                            >
                                 Showing {products.products.length} of{" "}
                                 {products.totalCount}
                             </Typography>

@@ -89,7 +89,7 @@ main {
 
 .footer-2 {
     padding: 0.42em 0;
-    background-color: #0f6fd6;
+    background-color: #303f9f;
 }
 
 .rosen-ivanov {
@@ -101,7 +101,7 @@ main {
 
 .rosen-ivanov:hover {
     cursor: pointer;
-    color: #ecd505;
+    color: #ffc107;
 }
 
 .footer-card-icon {
@@ -130,8 +130,8 @@ main {
     height: 0;
     margin: 8px;
     box-sizing: border-box;
-    border: 32px solid rgb(0, 132, 255);
-    border-color: rgb(0, 132, 255) transparent rgb(0, 132, 255) transparent;
+    border: 32px solid #ffc107;
+    border-color: #ffc107 transparent #ffc107 transparent;
     animation: lds-hourglass 1.2s infinite;
 }
 

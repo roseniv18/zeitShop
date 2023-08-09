@@ -52,11 +52,11 @@ const MailingList = () => {
                             right: 0,
                             bgcolor: "#fff",
                             color: "primary.main",
-                            borderLeft: "1px solid #3c5fdb",
+                            borderLeft: "1px solid #303F9F",
                             borderTopLeftRadius: 0,
                             borderBottomLeftRadius: 0,
                             "&:hover": {
-                                bgcolor: "#f7f7f7",
+                                bgcolor: "primary.light",
                                 color: "primary.dark",
                             },
                         }}

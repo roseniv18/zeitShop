@@ -144,7 +144,8 @@ function Navbar() {
                                     color: "primary.main",
                                     display: "block",
                                     ":hover": {
-                                        color: "info.main",
+                                        bgcolor: "primary.main",
+                                        color: "primary.contrastText",
                                     },
                                 }}
                             >

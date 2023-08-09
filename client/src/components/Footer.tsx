@@ -16,6 +16,7 @@ import MailingList from "./MailingList"
 import { FaCcVisa, FaCcMastercard } from "react-icons/fa"
 import { SiAmericanexpress } from "react-icons/si"
 import { useLocation } from "react-router"
+import { Link } from "react-router-dom"
 
 const Footer = () => {
     const location = useLocation()
@@ -108,7 +109,7 @@ const Footer = () => {
                         />
                     </Box>
                 </Box>
-                <Container maxWidth="lg" sx={{ py: 3, color: "#eeeeee" }}>
+                <Container maxWidth="lg" sx={{ py: 3, color: "primary.contrastText" }}>
                     {location.pathname === "/" || location.pathname === "/contact-us" ? (
                         <MailingList />
                     ) : (
@@ -116,7 +117,10 @@ const Footer = () => {
                     )}
                     <Grid container>
                         <Grid item xs={12} sm={6} md={4}>
-                            <Typography variant="h4" sx={{ color: "#fafafa" }}>
+                            <Typography
+                                variant="h4"
+                                sx={{ color: "primary.contrastText" }}
+                            >
                                 About Us
                             </Typography>
                             <Divider
@@ -133,9 +137,26 @@ const Footer = () => {
                                     {aboutUs.map((text, index) => {
                                         return (
                                             <ListItem disablePadding key={index}>
-                                                <ListItemText primary={text}>
-                                                    {text}
-                                                </ListItemText>
+                                                <Link
+                                                    to={`${text
+                                                        .replace(" ", "-")
+                                                        .toLocaleLowerCase()}`}
+                                                    style={{
+                                                        color: "inherit",
+                                                        textDecoration: "none",
+                                                    }}
+                                                >
+                                                    <ListItemText
+                                                        primary={text}
+                                                        sx={{
+                                                            transition: ".18s linear",
+                                                            "&:hover": {
+                                                                transition: ".18s linear",
+                                                                color: "secondary.main",
+                                                            },
+                                                        }}
+                                                    ></ListItemText>
+                                                </Link>
                                             </ListItem>
                                         )
                                     })}
@@ -143,14 +164,17 @@ const Footer = () => {
                             </nav>
                         </Grid>
                         <Grid item xs={12} sm={6} md={4}>
-                            <Typography variant="h4" sx={{ color: "#fafafa" }}>
+                            <Typography
+                                variant="h4"
+                                sx={{ color: "primary.contrastText" }}
+                            >
                                 Opening Hours
                             </Typography>
                             <Divider
                                 sx={{
                                     width: "200px",
                                     height: "1px",
-                                    bgcolor: "#9e9e9e",
+                                    bgcolor: "primary.light",
                                     mt: 1,
                                     mb: 3,
                                 }}
@@ -178,7 +202,7 @@ const Footer = () => {
                                                             }}
                                                             secondaryTypographyProps={{
                                                                 sx: {
-                                                                    color: "#ffffff",
+                                                                    color: "primary.contrastText",
                                                                     fontWeight: 600,
                                                                 },
                                                             }}
@@ -192,7 +216,10 @@ const Footer = () => {
                             </nav>
                         </Grid>
                         <Grid item xs={12} sm={6} md={4}>
-                            <Typography variant="h4" sx={{ color: "#fafafa" }}>
+                            <Typography
+                                variant="h4"
+                                sx={{ color: "primary.contrastText" }}
+                            >
                                 Contact Us
                             </Typography>
                             <Divider
@@ -213,7 +240,7 @@ const Footer = () => {
                                                     sx={{
                                                         minWidth: 0,
                                                         marginRight: "3px",
-                                                        color: "#fff",
+                                                        color: "secondary.main",
                                                     }}
                                                 >
                                                     {el.icon}
