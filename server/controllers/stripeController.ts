@@ -28,9 +28,9 @@ const createCheckoutSession = asyncHandler(async (req: Request, res: Response) =
             quantity: item.amount,
         }
     })
-    if (!userId) {
-        res.status(401).send({ message: "Not authorized!" })
-    }
+    // if (!userId) {
+    //     res.status(401).send({ message: "Not authorized!" })
+    // }
 
     const session = await stripe.checkout.sessions.create({
         line_items,
