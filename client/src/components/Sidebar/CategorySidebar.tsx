@@ -42,7 +42,6 @@ const CategorySidebar = () => {
     return (
         <Container
             sx={{
-                bgcolor: "transparent",
                 textAlign: "center",
                 py: 2,
             }}

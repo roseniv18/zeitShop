@@ -143,9 +143,7 @@ const Shop = () => {
                                 sx={{
                                     my: 5,
                                     width: "100%",
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    alignItems: "center",
+                                    margin: "0 auto",
                                 }}
                             >
                                 <Spinner />
@@ -157,10 +155,10 @@ const Shop = () => {
                         {products.products.length === products.totalCount ? (
                             <></>
                         ) : (
-                            <Grid xs={12} item>
+                            <Grid item sx={{ margin: "0 auto" }}>
                                 <Button
                                     sx={{
-                                        margin: "0 auto",
+                                        margin: "1em auto",
                                     }}
                                     variant="contained"
                                     size="large"

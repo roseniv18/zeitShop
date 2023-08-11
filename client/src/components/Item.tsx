@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom"
 import { serverURL } from "../helpers/serverURL"
 import { useAppDispatch } from "../redux/store"
 import { addToCart } from "../redux/productSlice"
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 
 const Item = ({ product }: { product: Product }) => {
     const { nameId, brand, model, model_info, image_urls, price } = product
@@ -41,7 +42,7 @@ const Item = ({ product }: { product: Product }) => {
                 onClick={() => navigate(`/product/${nameId}`)}
                 src={`${serverURL}/images/${image_urls[0]}`}
                 alt={`${brand}`}
-                style={{ height: "200px" }}
+                style={{ height: "200px", cursor: "pointer" }}
             />
 
             <Divider />
@@ -100,6 +101,7 @@ const Item = ({ product }: { product: Product }) => {
 
                 <Button
                     variant="outlined"
+                    startIcon={<ShoppingCartIcon />}
                     onClick={() => dispatch(addToCart({ ...product, amount: 1 }))}
                 >
                     Add to cart
