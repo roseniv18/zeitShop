@@ -1,4 +1,4 @@
-import LoginForm from "../components/Forms/LoginForm"
+import LoginForm from "../components/Forms/Login/LoginForm"
 import { Container } from "@mui/material"
 import { useAppSelector } from "../redux/store"
 import { useEffect } from "react"

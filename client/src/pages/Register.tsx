@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import RegisterForm from "../components/Forms/RegisterForm"
+import RegisterForm from "../components/Forms/Register/RegisterForm"
 import { Container } from "@mui/material"
 import { useAppSelector } from "../redux/store"
 import { useNavigate } from "react-router"
