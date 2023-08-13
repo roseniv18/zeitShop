@@ -7,9 +7,11 @@ const Brands = () => {
 
     return (
         <Container>
-            <Typography variant="h2">Brands</Typography>
+            <Typography variant="h2" sx={{ my: 3 }}>
+                Brands
+            </Typography>
             <Grid container spacing={3}>
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Box
                         className="brand-img-container"
                         sx={{
@@ -29,7 +31,7 @@ const Brands = () => {
                         />
                     </Box>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Box
                         className="brand-img-container"
                         sx={{
@@ -48,7 +50,7 @@ const Brands = () => {
                         />
                     </Box>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Box
                         className="brand-img-container"
                         sx={{
@@ -67,7 +69,7 @@ const Brands = () => {
                         />
                     </Box>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Box
                         className="brand-img-container"
                         sx={{

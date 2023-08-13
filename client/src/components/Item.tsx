@@ -22,9 +22,12 @@ const Item = ({ product }: { product: Product }) => {
 
     let name = `${brand} ${model} ${model_info}`.toLocaleUpperCase()
 
-    if (name.length > 20) {
-        name = name.substring(0, 20).concat("...")
+    const getShortName = (name: string, maxLen: number) => {
+        if (name.length > maxLen) {
+            return name.substring(0, maxLen).concat("...")
+        }
     }
+
     return (
         <Paper
             sx={{
@@ -65,7 +68,7 @@ const Item = ({ product }: { product: Product }) => {
                     }}
                     onClick={() => navigate(`/product/${nameId}`)}
                 >
-                    {name}
+                    {getShortName(name, 18)}
                 </Typography>
                 <Typography sx={{ textAlign: "center", opacity: 0.5 }}>
                     Brand: {capitalize(brand)}

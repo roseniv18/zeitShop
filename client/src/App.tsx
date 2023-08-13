@@ -29,6 +29,8 @@ import Brands from "./pages/Brands"
 import { handleAlert } from "./helpers/handleAlert"
 import StickyHeader from "./components/Nav/StickyHeader"
 
+const alertOpenDuration: number = 3500
+
 function App() {
     const { alert: productsAlert } = useAppSelector((store) => store.products)
     const { alert: userAlert } = useAppSelector((store) => store.user)
@@ -65,7 +67,7 @@ function App() {
                 msg: "",
                 type: "info",
             })
-        })
+        }, alertOpenDuration)
 
         return () => {
             clearTimeout(alertTimeout)
@@ -81,7 +83,7 @@ function App() {
                 msg: "",
                 type: "info",
             })
-        })
+        }, alertOpenDuration)
 
         return () => {
             clearTimeout(alertTimeout)
@@ -97,7 +99,7 @@ function App() {
                 msg: "",
                 type: "info",
             })
-        })
+        }, alertOpenDuration)
 
         return () => {
             clearTimeout(alertTimeout)
@@ -115,7 +117,7 @@ function App() {
                     {isNavbarFixed ? <></> : <Header />}
                     {isNavbarFixed ? <StickyHeader /> : <Navbar />}
                 </nav>
-                <ToastContainer autoClose={3500} position="bottom-right" />
+                <ToastContainer autoClose={alertOpenDuration} position="bottom-right" />
                 <Routes>
                     <Route path="/" index element={<LandingPage />} />
                     <Route path="/login" element={<Login />} />

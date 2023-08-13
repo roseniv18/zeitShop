@@ -3,7 +3,7 @@ import { Avatar, Button, CssBaseline, Grid, Box, Typography, Paper } from "@mui/
 import { Link, useNavigate } from "react-router-dom"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import { useAppDispatch, useAppSelector } from "../../../redux/store"
-import { loginUser } from "../../../redux/userSlice"
+import { loginUser, setUserAlert } from "../../../redux/userSlice"
 import { loginInputs } from "./loginInputs"
 import FormInput from "../FormInput"
 
@@ -18,17 +18,30 @@ const LoginForm = () => {
         email: "",
         password: "",
     })
+    const [errorFields, setErrorFields] = useState<string[]>([""])
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+
+    const checkForErrorFields = (fields: UserData) => {
+        return Object.keys(fields).filter(
+            (field) => !fields[field as keyof typeof fields]
+        )
+    }
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
 
         setUserData((prev) => ({ ...prev, [name]: value }))
+        // Remove error when starting to type
+        if (value && errorFields.includes(name)) {
+            setErrorFields((prev) => prev.filter((errField) => errField !== name))
+        }
     }
 
     const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        setErrorFields(checkForErrorFields(userData))
         dispatch(loginUser(userData))
     }
 
@@ -57,12 +70,13 @@ const LoginForm = () => {
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ my: 3 }}>
                     <Grid container spacing={2}>
                         {loginInputs.map((input) => {
-                            const { value } = input
+                            const { name, value } = input
                             return (
                                 <Grid item xs={12}>
                                     <FormInput
                                         {...input}
                                         value={userData[value as keyof typeof userData]}
+                                        isError={errorFields.includes(name)}
                                         handleChange={handleChange}
                                     />
                                 </Grid>

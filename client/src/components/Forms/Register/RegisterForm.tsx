@@ -27,13 +27,24 @@ const RegisterForm = () => {
         password: "",
         confirmPassword: "",
     })
+    const [errorFields, setErrorFields] = useState<string[]>([""])
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+
+    const checkForErrorFields = (fields: NewUser) => {
+        return Object.keys(fields).filter(
+            (field) => !fields[field as keyof typeof fields]
+        )
+    }
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
 
         setNewUser((prev) => ({ ...prev, [name]: value }))
+        // Remove error when starting to type
+        if (value && errorFields.includes(name)) {
+            setErrorFields((prev) => prev.filter((errField) => errField !== name))
+        }
     }
 
     const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
@@ -42,6 +53,7 @@ const RegisterForm = () => {
             setUserAlert({ type: "error", show: true, msg: "Passwords do not match!" })
             return
         }
+        setErrorFields(checkForErrorFields(newUser))
         dispatch(registerUser(newUser))
     }
 
@@ -74,10 +86,11 @@ const RegisterForm = () => {
                             const gridSize: number =
                                 name === "firstName" || name === "lastName" ? 6 : 12
                             return (
-                                <Grid item xs={gridSize}>
+                                <Grid item xs={12} md={gridSize}>
                                     <FormInput
                                         {...input}
                                         value={newUser[value as keyof typeof newUser]}
+                                        isError={errorFields.includes(name)}
                                         handleChange={handleChange}
                                     />
                                 </Grid>

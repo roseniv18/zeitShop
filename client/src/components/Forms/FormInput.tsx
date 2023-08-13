@@ -9,9 +9,19 @@ type PropsType = {
     handleChange: (e: ChangeEvent<HTMLInputElement>) => void
     value: string
     icon: JSX.Element
+    isError: boolean
 }
 
-const FormInput = ({ name, type, id, label, handleChange, value, icon }: PropsType) => {
+const FormInput = ({
+    name,
+    type,
+    id,
+    label,
+    handleChange,
+    value,
+    icon,
+    isError,
+}: PropsType) => {
     return (
         <TextField
             name={name}
@@ -25,6 +35,7 @@ const FormInput = ({ name, type, id, label, handleChange, value, icon }: PropsTy
             InputProps={{
                 startAdornment: <InputAdornment position="start">{icon}</InputAdornment>,
             }}
+            error={isError}
         />
     )
 }
