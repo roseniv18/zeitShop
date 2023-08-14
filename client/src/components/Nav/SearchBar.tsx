@@ -8,6 +8,7 @@ import SearchItem from "./SearchItem"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
 import { getSearchProducts } from "../../redux/searchSlice"
 import useIsFirstRender from "../../hooks/useIsFirstRender"
+import { Divider } from "@mui/material"
 
 export default function SearchBar() {
     const { searchProducts, isLoading } = useAppSelector((store) => store.search)
@@ -61,7 +62,7 @@ export default function SearchBar() {
             <Autocomplete
                 id="search-bar"
                 size="small"
-                sx={{ width: 300, my: 0, mx: "auto" }}
+                sx={{ width: { xs: 300, sm: 330, md: 360 }, my: 0, mx: "auto" }}
                 freeSolo
                 open={open}
                 onKeyDown={handleSubmit}
@@ -84,13 +85,21 @@ export default function SearchBar() {
                 renderOption={(props, option) => {
                     if (options && options.length > 0) {
                         return (
-                            <SearchItem
-                                key={option._id}
-                                name={option.fullName.substring(0, 15)}
-                                price={option.price}
-                                img={option.image_urls[0]}
-                                url={option.nameId}
-                            />
+                            <>
+                                <SearchItem
+                                    key={option._id}
+                                    name={option.fullName}
+                                    price={option.price}
+                                    img={option.image_urls[0]}
+                                    url={option.nameId}
+                                />
+                                {/* DON'T DISPLAY DIVIDER AFTER LAST ITEM */}
+                                {option._id !== options[options.length - 1]._id ? (
+                                    <Divider />
+                                ) : (
+                                    <></>
+                                )}
+                            </>
                         )
                     }
                 }}

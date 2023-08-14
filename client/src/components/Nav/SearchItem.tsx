@@ -14,7 +14,19 @@ const SearchItem = ({
     url: string
 }) => {
     return (
-        <Container disableGutters sx={{ px: 1 }}>
+        <Container
+            disableGutters
+            sx={{
+                px: 1,
+                transition: ".18s linear",
+                minHeight: "120px",
+                alignItems: "center",
+                "&:hover": {
+                    bgcolor: "primary.light",
+                    transition: ".18s linear",
+                },
+            }}
+        >
             <Link
                 to={`/product/${url}`}
                 style={{ color: "inherit", textDecoration: "none" }}
@@ -23,10 +35,11 @@ const SearchItem = ({
                     sx={{
                         display: "flex",
                         flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
+                        alignItems: "start",
+                        py: 1,
                         width: "100%",
                         cursor: "pointer",
+                        gap: "18px",
                     }}
                 >
                     <img
@@ -35,10 +48,27 @@ const SearchItem = ({
                         alt=""
                         className="cart-item-img"
                     />
-                    <Typography overflow="auto" fontWeight={500}>
-                        {name}
-                    </Typography>
-                    <Typography>€ {price.toFixed(2)}</Typography>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                            alignItems: "start",
+                            py: 0,
+                        }}
+                    >
+                        <Typography
+                            overflow="auto"
+                            fontWeight={400}
+                            variant="h6"
+                            sx={{ textTransform: "capitalize", p: 0 }}
+                        >
+                            {name}
+                        </Typography>
+                        <Typography sx={{ fontWeight: 600 }}>
+                            € {price.toFixed(2)}
+                        </Typography>
+                    </Box>
                 </Box>
             </Link>
         </Container>
