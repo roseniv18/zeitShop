@@ -104,7 +104,7 @@ const addToWishlist = asyncHandler(async (req: Request, res: Response) => {
     // User ID
     const { _id } = req.query
 
-    const { productName, image, productId } = req.body
+    const { productName, image, productId, nameId } = req.body
 
     const user = await User.findById(_id)
     const productExists = await User.find(
@@ -119,7 +119,7 @@ const addToWishlist = asyncHandler(async (req: Request, res: Response) => {
                     {
                         _id,
                     },
-                    { $push: { wishlist: { productName, image, productId } } },
+                    { $push: { wishlist: { nameId, productName, image, productId } } },
                     { new: true }
                 )
                 res.status(200).send(newProducts?.wishlist || [])

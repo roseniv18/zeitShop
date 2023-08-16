@@ -13,6 +13,7 @@ export const initialUser = {
     },
     wishlist: [
         {
+            nameId: "",
             productName: "",
             image: "",
             productId: "",

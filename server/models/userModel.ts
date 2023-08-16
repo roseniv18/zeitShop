@@ -25,6 +25,7 @@ const addressSchema = new mongoose.Schema({
 })
 
 const wishlistSchema = new mongoose.Schema({
+    nameId: String,
     productName: {
         type: String,
         required: [true, "Please provide product name"],

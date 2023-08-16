@@ -1,7 +1,7 @@
 import { Box, Typography, Container, Button, Rating } from "@mui/material"
-import { useAppDispatch, useAppSelector } from "../../redux/store"
-import { deleteReview } from "../../redux/userSlice"
-import { serverURL } from "../../helpers/serverURL"
+import { useAppDispatch, useAppSelector } from "../../../redux/store"
+import { deleteReview } from "../../../redux/userSlice"
+import { serverURL } from "../../../helpers/serverURL"
 
 const Reviews = ({ drawerWidth }: { drawerWidth: number }) => {
     const { user } = useAppSelector((store) => store.user)

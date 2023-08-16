@@ -14,9 +14,10 @@ import { serverURL } from "../helpers/serverURL"
 import { useAppDispatch } from "../redux/store"
 import { addToCart } from "../redux/productSlice"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
+import FavoriteIcon from "./FavoriteIcon"
 
 const Item = ({ product }: { product: Product }) => {
-    const { nameId, brand, model, model_info, image_urls, price } = product
+    const { _id, nameId, brand, model, model_info, image_urls, price } = product
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
@@ -38,7 +39,17 @@ const Item = ({ product }: { product: Product }) => {
                 transition: ".18s linear",
                 height: "100%",
                 maxWidth: "100%",
-                "&:hover": { transform: "translateY(-3px)", transition: ".18s linear" },
+                "&:hover": {
+                    transform: "translateY(-3px)",
+                    transition: ".18s linear",
+                    "& .favorite-icon": {
+                        position: "absolute",
+                        right: "9px",
+                        top: "3px",
+                        transition: ".18s linear",
+                        display: "block !important",
+                    },
+                },
             }}
         >
             <img
@@ -47,6 +58,17 @@ const Item = ({ product }: { product: Product }) => {
                 alt={`${brand}`}
                 style={{ height: "200px", cursor: "pointer" }}
             />
+
+            <Box
+                className="favorite-icon"
+                style={{ display: "none", transition: ".18s linear" }}
+            >
+                <FavoriteIcon
+                    productId={_id}
+                    productName={name}
+                    thumbnail={image_urls[0]}
+                />
+            </Box>
 
             <Divider />
             <Container
@@ -103,7 +125,7 @@ const Item = ({ product }: { product: Product }) => {
                 </Typography>
 
                 <Button
-                    variant="outlined"
+                    variant="contained"
                     startIcon={<ShoppingCartIcon />}
                     onClick={() => dispatch(addToCart({ ...product, amount: 1 }))}
                 >

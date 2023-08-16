@@ -1,3 +1,6 @@
+import { Review } from "./Review"
+import { WishListProduct } from "./WishlistProduct"
+
 export type User = {
     _id: string
     firstName: string
@@ -10,19 +13,7 @@ export type User = {
         postal_code: number
         phone: string
     }
-    wishlist: {
-        productName: string
-        image: string
-        productId: string
-    }[]
-    reviews: {
-        userName: string
-        rating: number
-        productName: string
-        image: string
-        productId: string
-        comment: string
-    }[]
-
+    wishlist: WishListProduct[]
+    reviews: Review[]
     token: string
 }
