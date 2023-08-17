@@ -7,12 +7,11 @@ const Wishlist = ({ drawerWidth }: { drawerWidth: number }) => {
 
     return (
         <Box
-            component="main"
             sx={{
                 bgcolor: "transparent",
                 py: 6,
                 px: { xs: 3, md: 10 },
-                width: `calc(100%- ${drawerWidth}px)`,
+                width: { xs: `calc(100%- ${drawerWidth}px)`, xl: "100%" },
             }}
         >
             <Box
@@ -20,6 +19,9 @@ const Wishlist = ({ drawerWidth }: { drawerWidth: number }) => {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
+                    justifyContent: "center",
+                    gap: "36px",
+                    width: "100%",
                 }}
             >
                 <Typography variant="h3" sx={{ mb: 3 }}>
@@ -31,7 +33,7 @@ const Wishlist = ({ drawerWidth }: { drawerWidth: number }) => {
                             display: "flex",
                             flexDirection: "column",
                             gap: "18px",
-                            width: "100%",
+                            width: "450px",
                         }}
                     >
                         {user.wishlist.map((el) => {

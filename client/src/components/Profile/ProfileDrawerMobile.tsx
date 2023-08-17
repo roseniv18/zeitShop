@@ -49,7 +49,7 @@ export default function ProfileDrawerMobile({ list, listIconPairs }: PropTypes) 
             </Toolbar>
             <Divider />
             <List>
-                {list.map((text, index) => (
+                {list.map((text) => (
                     <ListItem
                         key={text}
                         disablePadding
@@ -66,7 +66,7 @@ export default function ProfileDrawerMobile({ list, listIconPairs }: PropTypes) 
             </List>
             <Divider />
             <List>
-                {["Logout"].map((text, index) => (
+                {["Logout"].map((text) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton onClick={() => logout()}>
                             <ListItemIcon>

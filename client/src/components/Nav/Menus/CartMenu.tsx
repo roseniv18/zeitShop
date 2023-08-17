@@ -61,10 +61,27 @@ const CartMenu = () => {
             >
                 <Container maxWidth="sm" disableGutters>
                     {cart.map((item) => {
-                        const { brand, model, model_info, image_urls, _id } = item
+                        const {
+                            brand,
+                            model,
+                            model_info,
+                            image_urls,
+                            _id,
+                            amount,
+                            price,
+                        } = item
                         const img = image_urls[0]
-                        const name = generateFullProductName(brand, model, model_info, 24)
-                        return <CartMenuItem name={name} img={img} id={_id} key={_id} />
+                        const name = generateFullProductName(brand, model, model_info)
+                        return (
+                            <CartMenuItem
+                                name={name}
+                                img={img}
+                                id={_id}
+                                amount={amount}
+                                price={price}
+                                key={_id}
+                            />
+                        )
                     })}
 
                     <MenuItem>
