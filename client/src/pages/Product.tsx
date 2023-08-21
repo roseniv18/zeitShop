@@ -43,10 +43,9 @@ const Product = () => {
                 variant="outlined"
                 sx={{
                     position: "absolute",
-                    top: "-30px",
-                    left: "-50px",
+                    top: "-3%",
                     gap: "12px",
-                    display: "flex",
+                    display: { xs: "none", lg: "flex" },
                     flexDirection: "row",
                     alignItems: "center",
                 }}

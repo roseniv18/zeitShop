@@ -183,6 +183,10 @@ const productSlice = createSlice({
                 type: "error",
                 msg: action.payload as string,
             }
+            state.products = {
+                products: [],
+                totalCount: 0,
+            }
         })
 
         // LOAD MORE PRODUCTS

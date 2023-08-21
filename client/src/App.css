@@ -48,7 +48,7 @@ main {
 }
 
 .overlay {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     display: flex;
@@ -64,7 +64,7 @@ main {
 
 .add-review-form {
     position: fixed;
-    top: 5%;
+    top: 10%;
     cursor: default;
 }
 
