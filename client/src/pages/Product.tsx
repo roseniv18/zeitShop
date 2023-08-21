@@ -1,16 +1,17 @@
 import ProductGallery from "../components/Product/ProductGallery"
-import { Container } from "@mui/material"
+import { Button, Container } from "@mui/material"
 import ProductInfo from "../components/Product/ProductInfo"
 import ProductTabs from "../components/Product/ProductTabs"
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../redux/store"
-import { useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import { getProduct } from "../redux/productSlice"
 import Spinner from "../components/Spinner"
 
 const Product = () => {
     const { isLoading, product } = useAppSelector((store) => store.products)
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const { nameId } = useParams()
 
     useEffect(() => {
@@ -27,6 +28,7 @@ const Product = () => {
         <Container
             disableGutters
             sx={{
+                position: "relative",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -36,6 +38,21 @@ const Product = () => {
             }}
             maxWidth="lg"
         >
+            <Button
+                onClick={() => navigate(-1)}
+                variant="outlined"
+                sx={{
+                    position: "absolute",
+                    top: "-30px",
+                    left: "-50px",
+                    gap: "12px",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                }}
+            >
+                <span style={{ fontWeight: 600 }}>&#8592;</span> Back
+            </Button>
             <Container
                 sx={{ display: "flex", flexDirection: { xs: "column", md: "row" } }}
             >

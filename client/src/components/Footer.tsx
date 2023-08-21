@@ -118,7 +118,7 @@ const Footer = () => {
                     <Grid container>
                         <Grid item xs={12} sm={6} md={4}>
                             <Typography
-                                variant="h4"
+                                variant="h5"
                                 sx={{ color: "primary.contrastText" }}
                             >
                                 About Us
@@ -165,7 +165,7 @@ const Footer = () => {
                         </Grid>
                         <Grid item xs={12} sm={6} md={4}>
                             <Typography
-                                variant="h4"
+                                variant="h5"
                                 sx={{ color: "primary.contrastText" }}
                             >
                                 Opening Hours
@@ -217,7 +217,7 @@ const Footer = () => {
                         </Grid>
                         <Grid item xs={12} sm={6} md={4}>
                             <Typography
-                                variant="h4"
+                                variant="h5"
                                 sx={{ color: "primary.contrastText" }}
                             >
                                 Contact Us

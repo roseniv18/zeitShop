@@ -26,7 +26,7 @@ const Shop = () => {
             dispatch(setFilters({ ...filters, brand: [brand] }))
             return
         }
-        dispatch(getProducts({ sort }))
+        dispatch(getProducts({ filters, sort }))
     }, [])
 
     useEffect(() => {
