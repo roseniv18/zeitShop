@@ -8,7 +8,7 @@ const Hero = () => {
             maxWidth={false}
             sx={{
                 height: { xs: "100%", lg: "86vh" },
-                background: `url(${serverURL}/images/bg.jpg)`,
+                background: `url(${serverURL}/images/bg.avif)`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "bottom",
