@@ -22,7 +22,9 @@ const Reviews = ({ reviewingProduct }: { reviewingProduct: Product }) => {
             </Button>
             {isAddingReview ? (
                 <Overlay
-                    children={<AddReviewForm reviewingProduct={reviewingProduct} />}
+                    children={
+                        <AddReviewForm reviewingProduct={reviewingProduct} rating={0} />
+                    }
                 />
             ) : (
                 <></>
