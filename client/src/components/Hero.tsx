@@ -1,13 +1,14 @@
 import { Typography, Container, Button } from "@mui/material"
-import bg from "../assets/bg.jpg"
 import { Link } from "react-router-dom"
+import { serverURL } from "../helpers/serverURL"
+
 const Hero = () => {
     return (
         <Container
             maxWidth={false}
             sx={{
                 height: { xs: "100%", lg: "86vh" },
-                background: `url(${bg})`,
+                background: `url(${serverURL}/images/bg.avif)`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "bottom",
