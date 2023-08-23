@@ -3,7 +3,7 @@ import { Avatar, Button, CssBaseline, Grid, Box, Typography, Paper } from "@mui/
 import { Link, useNavigate } from "react-router-dom"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import { useAppDispatch, useAppSelector } from "../../../redux/store"
-import { loginUser, setUserAlert } from "../../../redux/userSlice"
+import { loginUser } from "../../../redux/userSlice"
 import { loginInputs } from "./loginInputs"
 import FormInput from "../FormInput"
 

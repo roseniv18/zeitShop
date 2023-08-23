@@ -1,4 +1,3 @@
-import { useState } from "react"
 import {
     Container,
     Avatar,
@@ -11,7 +10,7 @@ import {
 import user from "../assets/users/2.jpg"
 
 const Review = () => {
-    const [value, setValue] = useState<number | null>(4.6)
+    let value = 4.6
 
     return (
         <Container

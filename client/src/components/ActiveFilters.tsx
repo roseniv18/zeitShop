@@ -1,4 +1,4 @@
-import { Box, Stack, Chip, Button, capitalize } from "@mui/material"
+import { Box, Stack, Chip, capitalize } from "@mui/material"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { setFilters } from "../redux/productSlice"
 import { initialFilters } from "../redux/initialStates/initialFilters"
