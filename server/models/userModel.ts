@@ -24,6 +24,30 @@ const addressSchema = new mongoose.Schema({
     },
 })
 
+const reviewsSchema = new mongoose.Schema({
+    userName: String,
+    productName: {
+        type: String,
+        required: [true, "Please provide product name"],
+    },
+    image: {
+        type: String,
+        required: [true, "Please provide product image"],
+    },
+    productId: {
+        type: String,
+        required: [true, "Please provide product id"],
+    },
+    rating: {
+        type: Number,
+        required: [true, "Please provide a rating"],
+    },
+    comment: {
+        type: String,
+        required: false,
+    },
+})
+
 const wishlistSchema = new mongoose.Schema({
     nameId: String,
     productName: {
@@ -64,7 +88,7 @@ const userSchema = new mongoose.Schema({
 
     address: addressSchema,
     wishlist: [wishlistSchema],
-    // reviews: [reviewsSchema],
+    reviews: [reviewsSchema],
 })
 
 userSchema.methods.matchPasswords = async function (password: string) {

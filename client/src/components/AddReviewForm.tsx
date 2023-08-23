@@ -15,14 +15,20 @@ import StarsIcon from "@mui/icons-material/Stars"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { setIsAddingReview } from "../redux/miscSlice"
 import { Review } from "../types/Review"
-import { addReview } from "../redux/userSlice"
+import { addReview, setUserAlert } from "../redux/userSlice"
 import { Product } from "../types/Product"
 
-const AddReviewForm = ({ reviewingProduct }: { reviewingProduct: Product }) => {
+const AddReviewForm = ({
+    reviewingProduct,
+    rating,
+}: {
+    reviewingProduct: Product
+    rating: number
+}) => {
     const { user } = useAppSelector((store) => store.user)
     const { firstName, lastName } = user
     const [review, setReview] = useState<Partial<Review>>({
-        rating: 0,
+        rating,
         userName: `${firstName} ${lastName}`,
         comment: "",
     })
@@ -39,9 +45,25 @@ const AddReviewForm = ({ reviewingProduct }: { reviewingProduct: Product }) => {
 
     const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (!review.userName || !review.rating) {
+        if (!user || !user.token) {
+            navigate("/login")
             return
         }
+
+        if (!review.rating || review.rating < 1) {
+            dispatch(
+                setUserAlert({ type: "error", msg: "Rating is required!", show: true })
+            )
+            return
+        }
+
+        if (!review.userName) {
+            dispatch(
+                setUserAlert({ type: "error", msg: "Username is required!", show: true })
+            )
+            return
+        }
+
         if (user && user.token) {
             const { rating, userName, comment } = review
             const newReview = {
@@ -55,8 +77,6 @@ const AddReviewForm = ({ reviewingProduct }: { reviewingProduct: Product }) => {
             dispatch(addReview({ _id: user._id, review: { ...newReview } }))
             return
         }
-
-        navigate("/login")
     }
 
     return (
@@ -115,7 +135,6 @@ const AddReviewForm = ({ reviewingProduct }: { reviewingProduct: Product }) => {
 
                         <Grid item xs={12}>
                             <TextField
-                                required
                                 fullWidth
                                 name="comment"
                                 label="Your comment"

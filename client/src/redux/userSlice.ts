@@ -202,6 +202,11 @@ const userSlice = createSlice({
             state.isLoading = false
             state.user.reviews = [...action.payload]
             updateLocalStorageUser(state.user)
+            state.alert = {
+                show: true,
+                type: "success",
+                msg: `Successfully added review!`,
+            }
         })
         builder.addCase(addReview.rejected, (state, action) => {
             state.isLoading = false
@@ -222,6 +227,11 @@ const userSlice = createSlice({
                 state.isLoading = false
                 state.user.reviews = [...action.payload]
                 updateLocalStorageUser(state.user)
+                state.alert = {
+                    show: true,
+                    type: "success",
+                    msg: `Successfully deleted review!`,
+                }
             }
         )
         builder.addCase(deleteReview.rejected, (state, action) => {

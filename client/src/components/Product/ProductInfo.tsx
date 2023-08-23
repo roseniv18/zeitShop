@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Container, Typography, Box, Button, Rating } from "@mui/material"
 import Overlay from "../Overlay"
 import AddReviewForm from "../AddReviewForm"
@@ -17,18 +17,46 @@ const ProductInfo = ({ product }: { product: Product }) => {
     const name = generateFullProductName(brand, model, model_info)
 
     const [rating, setRating] = useState<number | null>(0)
+    const [reviewOverlay, setReviewOverlay] = useState<JSX.Element>(
+        <Overlay
+            children={<AddReviewForm reviewingProduct={product} rating={rating || 0} />}
+        />
+    )
 
     const handleChange = (e: any) => {
         setRating(e.target.value)
     }
 
+    useEffect(() => {
+        if (isAddingReview) {
+            setReviewOverlay(
+                <Overlay
+                    children={
+                        <AddReviewForm reviewingProduct={product} rating={rating || 0} />
+                    }
+                />
+            )
+        } else {
+            setReviewOverlay(<></>)
+        }
+
+        return () => {
+            setReviewOverlay(<></>)
+        }
+    }, [rating, isAddingReview])
+
     return (
         <Container sx={{ display: "flex", flexDirection: "column", p: 0 }}>
-            {isAddingReview ? (
-                <Overlay children={<AddReviewForm reviewingProduct={product} />} />
+            {isAddingReview && reviewOverlay}
+            {/* {isAddingReview ? (
+                <Overlay
+                    children={
+                        <AddReviewForm reviewingProduct={product} rating={rating || 0} />
+                    }
+                />
             ) : (
                 <></>
-            )}
+            )} */}
             <Box
                 sx={{
                     display: "flex",
