@@ -253,6 +253,32 @@ const deleteReview = asyncHandler(async (req: Request, res: Response) => {
     res.status(404).send({ message: "Error finding user!" })
 })
 
+const getReviews = asyncHandler(async (req: Request, res: Response) => {
+    // Provided product id
+    const { _id } = req.query
+
+    if (_id) {
+        try {
+            const usersWithReviews = await User.find(
+                { "reviews.productId": _id },
+                "reviews"
+            )
+
+            const productReviews = usersWithReviews.flatMap((user) =>
+                user.reviews.filter((review) => review.productId === _id)
+            )
+
+            res.status(200).send(productReviews)
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({
+                message: `Error getting reviews: Internal Server Error`,
+            })
+        }
+    }
+    res.status(400).send({ message: "Please provide a product id!" })
+})
+
 const generateToken = (id: string): string => {
     return jwt.sign({ id }, process.env.JWT_SECRET!, { expiresIn: "15d" })
 }
@@ -265,4 +291,5 @@ export {
     removeFromWishlist,
     addReview,
     deleteReview,
+    getReviews,
 }

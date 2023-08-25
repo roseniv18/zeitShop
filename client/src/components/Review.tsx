@@ -9,9 +9,13 @@ import {
 } from "@mui/material"
 import user from "../assets/users/2.jpg"
 
-const Review = () => {
-    let value = 4.6
+type PropTypes = {
+    userName: string
+    rating: number
+    comment?: string
+}
 
+const Review = ({ userName, rating, comment }: PropTypes) => {
     return (
         <Container
             sx={{
@@ -24,17 +28,10 @@ const Review = () => {
             <Avatar alt="Travis Howard" src={user} />
             <List sx={{ display: "flex", flexDirection: "column" }}>
                 <ListItem>
-                    <ListItemText
-                        primary="Heading"
-                        secondary="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-                    magnam placeat quis voluptatem nihil blanditiis, ipsum reiciendis
-                    nemo. Et ipsum esse magni, possimus sed tenetur est, reprehenderit,
-                    repellat blanditiis nemo fugit tempore veniam unde fuga iure tempora
-                    deserunt facere maxime?"
-                    />
+                    <ListItemText primary={userName} secondary={comment ? comment : ""} />
                 </ListItem>
                 <ListItem>
-                    <Rating name="read-only" value={value} precision={0.5} readOnly />
+                    <Rating name="read-only" value={rating} precision={0.5} readOnly />
                 </ListItem>
                 <Divider />
             </List>

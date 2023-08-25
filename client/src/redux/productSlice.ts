@@ -9,6 +9,8 @@ import { initialFilters } from "./initialStates/initialFilters"
 import { Alert } from "../types/Alert"
 import { Sort } from "../types/Sort"
 import { loadMoreProductsThunk } from "./thunks/products/loadMoreProductsThunk"
+import { Review } from "../types/Review"
+import { getReviewsThunk } from "./thunks/products/getReviewsThunk"
 
 type ProductState = {
     products: {
@@ -16,6 +18,7 @@ type ProductState = {
         totalCount: number
     }
     product: Product
+    productReviews: Review[]
     cart: CartProduct[]
     filters: Filters
     sort: Sort
@@ -38,6 +41,7 @@ const initialState: ProductState = {
         totalCount: 0,
     },
     product: initialProduct,
+    productReviews: [],
     cart: getCartFromLocalStorage() || [],
     filters: initialFilters,
     sort: "fullName-asc",
@@ -59,6 +63,7 @@ export const loadMoreProducts = createAsyncThunk(
     loadMoreProductsThunk
 )
 export const getProduct = createAsyncThunk("products/get", getProductThunk)
+export const getReviews = createAsyncThunk("products/getReviews", getReviewsThunk)
 
 const productSlice = createSlice({
     name: "products",
@@ -220,7 +225,7 @@ const productSlice = createSlice({
             }
         })
 
-        // GET
+        // GET PRODUCT
         builder.addCase(getProduct.pending, (state) => {
             state.isLoading = true
         })
@@ -234,6 +239,31 @@ const productSlice = createSlice({
             state.isLoading = false
             state.isError = true
             state.isSuccess = false
+            state.alert = {
+                show: true,
+                type: "error",
+                msg: action.payload as string,
+            }
+        })
+
+        // GET PRODUCT REVIEWS
+        builder.addCase(getReviews.pending, (state, action) => {
+            state.isLoading = true
+        })
+        builder.addCase(
+            getReviews.fulfilled,
+            (state, action: PayloadAction<Review[]>) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                state.productReviews = [...action.payload]
+            }
+        )
+        builder.addCase(getReviews.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.isSuccess = false
+            state.productReviews = []
             state.alert = {
                 show: true,
                 type: "error",

@@ -7,6 +7,7 @@ import {
     removeFromWishlist,
     addReview,
     deleteReview,
+    getReviews,
 } from "../controllers/userController"
 const router = express.Router()
 
@@ -17,5 +18,6 @@ router
     .post("/addToWishlist", addToWishlist)
     .delete("/removeFromWishlist", removeFromWishlist)
 router.post("/addReview", addReview).delete("/deleteReview", deleteReview)
+router.get("/getReviews", getReviews)
 
 export default router

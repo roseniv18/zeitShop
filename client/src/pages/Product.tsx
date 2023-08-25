@@ -5,7 +5,7 @@ import ProductTabs from "../components/Product/ProductTabs"
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { useNavigate, useParams } from "react-router"
-import { getProduct } from "../redux/productSlice"
+import { getProduct, getReviews } from "../redux/productSlice"
 import Spinner from "../components/Spinner"
 
 const Product = () => {
@@ -19,6 +19,12 @@ const Product = () => {
             dispatch(getProduct(nameId))
         }
     }, [nameId])
+
+    useEffect(() => {
+        if (product._id) {
+            dispatch(getReviews(product._id))
+        }
+    }, [product])
 
     if (isLoading) {
         return <Spinner />

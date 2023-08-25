@@ -7,6 +7,7 @@ import Overlay from "./Overlay"
 import { Product } from "../types/Product"
 
 const Reviews = ({ reviewingProduct }: { reviewingProduct: Product }) => {
+    const { productReviews } = useAppSelector((store) => store.products)
     const { isAddingReview } = useAppSelector((store) => store.misc)
     const dispatch = useAppDispatch()
 
@@ -29,11 +30,18 @@ const Reviews = ({ reviewingProduct }: { reviewingProduct: Product }) => {
             ) : (
                 <></>
             )}
-            <Review />
-            <Review />
-            <Review />
-            <Review />
-            <Review />
+
+            {productReviews.map((productReview) => {
+                const { productId, userName, rating, comment } = productReview
+                return (
+                    <Review
+                        key={productId}
+                        userName={userName}
+                        rating={rating}
+                        comment={comment}
+                    />
+                )
+            })}
         </section>
     )
 }
