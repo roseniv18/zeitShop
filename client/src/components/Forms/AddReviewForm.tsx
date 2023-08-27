@@ -12,11 +12,11 @@ import {
 } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import StarsIcon from "@mui/icons-material/Stars"
-import { useAppDispatch, useAppSelector } from "../redux/store"
-import { setIsAddingReview } from "../redux/miscSlice"
-import { Review } from "../types/Review"
-import { addReview, setUserAlert } from "../redux/userSlice"
-import { Product } from "../types/Product"
+import { useAppDispatch, useAppSelector } from "../../redux/store"
+import { setIsAddingReview } from "../../redux/miscSlice"
+import { Review } from "../../types/Review"
+import { addReview, setUserAlert } from "../../redux/userSlice"
+import { Product } from "../../types/Product"
 
 const AddReviewForm = ({
     reviewingProduct,

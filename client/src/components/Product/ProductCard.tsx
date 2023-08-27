@@ -8,11 +8,11 @@ import {
     Button,
     capitalize,
 } from "@mui/material"
-import { Product } from "../types/Product"
+import { Product } from "../../types/Product"
 import { useNavigate } from "react-router-dom"
-import { serverURL } from "../helpers/serverURL"
-import { useAppDispatch } from "../redux/store"
-import { addToCart } from "../redux/productSlice"
+import { serverURL } from "../../helpers/serverURL"
+import { useAppDispatch } from "../../redux/store"
+import { addToCart } from "../../redux/productSlice"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 import FavoriteIcon from "./FavoriteIcon"
 

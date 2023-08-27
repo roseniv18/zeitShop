@@ -2,7 +2,7 @@ import { Button } from "@mui/material"
 import Review from "./Review"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { setIsAddingReview } from "../redux/miscSlice"
-import AddReviewForm from "./AddReviewForm"
+import AddReviewForm from "./Forms/AddReviewForm"
 import Overlay from "./Overlay"
 import { Product } from "../types/Product"
 

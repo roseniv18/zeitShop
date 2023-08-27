@@ -1,7 +1,7 @@
 import { useState, useRef } from "react"
 import CategorySidebar from "../components/Sidebar/CategorySidebar"
 import { Grid, Container, Typography, Button, Box } from "@mui/material"
-import Item from "../components/Item"
+import Item from "../components/Product/ProductCard"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { useEffect } from "react"
 import { getProducts, loadMoreProducts, setFilters } from "../redux/productSlice"

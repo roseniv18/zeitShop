@@ -1,6 +1,6 @@
 import { Typography, Container, Button } from "@mui/material"
 import { Link } from "react-router-dom"
-import { serverURL } from "../helpers/serverURL"
+import { serverURL } from "../../helpers/serverURL"
 
 const Hero = () => {
     return (

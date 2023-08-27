@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react"
 import { Container, Typography, Box, Button, Rating } from "@mui/material"
 import Overlay from "../Overlay"
-import AddReviewForm from "../AddReviewForm"
+import AddReviewForm from "../Forms/AddReviewForm"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
 import { addToCart } from "../../redux/productSlice"
 import { Product } from "../../types/Product"
 import generateFullProductName from "../../helpers/generateFullProductName"
 import { setIsAddingReview } from "../../redux/miscSlice"
-import FavoriteIcon from "../FavoriteIcon"
+import FavoriteIcon from "./FavoriteIcon"
 import { Review } from "../../types/Review"
 
 const ProductInfo = ({ product }: { product: Product }) => {

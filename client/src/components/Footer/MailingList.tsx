@@ -1,5 +1,5 @@
 import { Container, Typography, Paper, Button, InputBase } from "@mui/material"
-import { serverURL } from "../helpers/serverURL"
+import { serverURL } from "../../helpers/serverURL"
 
 const MailingList = () => {
     return (

@@ -1,6 +1,6 @@
 import { Container } from "@mui/material"
-import Hero from "../components/Hero"
-import LandingDetails from "../components/LandingDetails"
+import Hero from "../components/Home/Hero"
+import LandingDetails from "../components/Home/LandingDetails"
 
 const LandingPage = () => {
     return (

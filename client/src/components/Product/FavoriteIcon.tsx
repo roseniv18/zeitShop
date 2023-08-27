@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from "../redux/store"
-import { addToWishlist, removeFromWishlist } from "../redux/userSlice"
+import { useAppDispatch, useAppSelector } from "../../redux/store"
+import { addToWishlist, removeFromWishlist } from "../../redux/userSlice"
 import { Link } from "react-router-dom"
 import { default as HeartBorderIcon } from "@mui/icons-material/FavoriteBorder"
 import { default as HeartIcon } from "@mui/icons-material/Favorite"

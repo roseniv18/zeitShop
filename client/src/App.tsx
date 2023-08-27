@@ -2,30 +2,29 @@ import { useState, useEffect } from "react"
 import { ToastContainer } from "react-toastify"
 import "./App.css"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import {
+    LandingPage,
+    Login,
+    Register,
+    Shop,
+    Product,
+    PrivatePath,
+    Profile,
+    Brands,
+    AboutUs,
+    ContactUs,
+    Blog,
+    Cart,
+    Checkout,
+    CheckoutSuccess,
+    NotFound,
+} from "./exports/pages"
 import Navbar from "./components/Nav/Navbar"
-import Login from "./pages/Login"
-import Register from "./pages/Register"
-import Shop from "./pages/Shop"
-import Product from "./pages/Product"
 import Header from "./components/Nav/Header"
-import LandingPage from "./pages/LandingPage"
-import Footer from "./components/Footer"
-import Cart from "./pages/Cart"
-import Checkout from "./pages/Checkout"
-import NotFound from "./pages/NotFound"
+import Footer from "./components/Footer/Footer"
 import { useAppSelector } from "./redux/store"
-import Profile from "./pages/Profile"
-import PrivatePath from "./pages/PrivatePath"
-import CheckoutSuccess from "./pages/CheckoutSuccess"
-import AboutUs from "./pages/AboutUs"
-import ContactUs from "./pages/ContactUs"
-import Blog from "./pages/Blog"
 import "react-toastify/dist/ReactToastify.css"
-import { setProductAlert } from "./redux/productSlice"
-import { setSearchAlert } from "./redux/searchSlice"
-import { setUserAlert } from "./redux/userSlice"
-import Footer2 from "./components/Footer2"
-import Brands from "./pages/Brands"
+import Footer2 from "./components/Footer/Footer2"
 import { handleAlert } from "./helpers/handleAlert"
 import StickyHeader from "./components/Nav/StickyHeader"
 
@@ -36,6 +35,7 @@ function App() {
     const { alert: userAlert } = useAppSelector((store) => store.user)
     const { alert: searchAlert } = useAppSelector((store) => store.search)
     const { cart } = useAppSelector((store) => store.products)
+
     const [posY, setPosY] = useState<number>(window.scrollY)
     const [isNavbarFixed, setIsNavbarFixed] = useState<boolean>(false)
 
@@ -61,49 +61,14 @@ function App() {
 
     useEffect(() => {
         handleAlert(productsAlert)
-        const alertTimeout: number = setTimeout(() => {
-            setProductAlert({
-                show: false,
-                msg: "",
-                type: "info",
-            })
-        }, alertOpenDuration)
-
-        return () => {
-            clearTimeout(alertTimeout)
-        }
     }, [productsAlert])
 
     useEffect(() => {
         handleAlert(userAlert)
-
-        const alertTimeout: number = setTimeout(() => {
-            setUserAlert({
-                show: false,
-                msg: "",
-                type: "info",
-            })
-        }, alertOpenDuration)
-
-        return () => {
-            clearTimeout(alertTimeout)
-        }
     }, [userAlert])
 
     useEffect(() => {
         handleAlert(searchAlert)
-
-        const alertTimeout: number = setTimeout(() => {
-            setSearchAlert({
-                show: false,
-                msg: "",
-                type: "info",
-            })
-        }, alertOpenDuration)
-
-        return () => {
-            clearTimeout(alertTimeout)
-        }
     }, [searchAlert])
 
     useEffect(() => {
