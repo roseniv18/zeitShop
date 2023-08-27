@@ -9,14 +9,22 @@ import { Product } from "../../types/Product"
 import generateFullProductName from "../../helpers/generateFullProductName"
 import { setIsAddingReview } from "../../redux/miscSlice"
 import FavoriteIcon from "../FavoriteIcon"
+import { Review } from "../../types/Review"
 
 const ProductInfo = ({ product }: { product: Product }) => {
     const { isAddingReview } = useAppSelector((store) => store.misc)
+    const { user } = useAppSelector((store) => store.user)
     const { _id, image_urls, brand, model, model_info, price } = product
     const dispatch = useAppDispatch()
     const name = generateFullProductName(brand, model, model_info)
 
-    const [rating, setRating] = useState<number | null>(0)
+    const userRatingExists: Review | undefined = user.reviews.find(
+        (review) => review.productId === product._id
+    )
+
+    const userRating: number = userRatingExists ? userRatingExists.rating : 0
+
+    const [rating, setRating] = useState<number>(userRating)
     const [reviewOverlay, setReviewOverlay] = useState<JSX.Element>(
         <Overlay
             children={<AddReviewForm reviewingProduct={product} rating={rating || 0} />}
@@ -48,15 +56,6 @@ const ProductInfo = ({ product }: { product: Product }) => {
     return (
         <Container sx={{ display: "flex", flexDirection: "column", p: 0 }}>
             {isAddingReview && reviewOverlay}
-            {/* {isAddingReview ? (
-                <Overlay
-                    children={
-                        <AddReviewForm reviewingProduct={product} rating={rating || 0} />
-                    }
-                />
-            ) : (
-                <></>
-            )} */}
             <Box
                 sx={{
                     display: "flex",

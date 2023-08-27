@@ -18,13 +18,11 @@ const Product = () => {
         if (nameId) {
             dispatch(getProduct(nameId))
         }
-    }, [nameId])
 
-    useEffect(() => {
         if (product._id) {
             dispatch(getReviews(product._id))
         }
-    }, [product])
+    }, [nameId])
 
     if (isLoading) {
         return <Spinner />
