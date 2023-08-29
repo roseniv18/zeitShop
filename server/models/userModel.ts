@@ -4,23 +4,18 @@ import bcrypt from "bcryptjs"
 const addressSchema = new mongoose.Schema({
     country: {
         type: String,
-        required: [true, "Country is required."],
     },
     city: {
         type: String,
-        required: [true, "City is required."],
     },
     street: {
         type: String,
-        required: [true, "Street is required."],
     },
     postal_code: {
         type: Number,
-        required: [true, "Postal code is required."],
     },
     phone: {
         type: String,
-        required: false,
     },
 })
 
