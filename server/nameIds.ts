@@ -1,17 +1,20 @@
-import Product from "./models/productModel"
 import products from "./products"
 
+// nameId will be a string containing brand, model, model_info.
 let nameIds: Map<string, string> = new Map([["", ""]])
 
-const generateNameIds = () => {
-    products.watches.forEach((watch) => {
-        const { brand, model, model_info } = watch
-        const nameId: string = `${brand}-${model}-${model_info}`.split(" ").join("-")
-        nameIds.set(model_info, nameId.toLocaleLowerCase())
-    })
+type fnType = () => Map<string, string>
 
-    // console.log(nameIds)
-    return nameIds
+const generateNameIds: fnType = () => {
+	products.watches.forEach((watch) => {
+		const { brand, model, model_info } = watch
+		const nameId: string = `${brand}-${model}-${model_info}`
+			.split(" ")
+			.join("-")
+		nameIds.set(model_info, nameId.toLocaleLowerCase())
+	})
+
+	return nameIds
 }
 
 export default generateNameIds

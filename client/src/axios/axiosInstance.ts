@@ -2,7 +2,7 @@ import axios from "axios"
 import { serverURL } from "../helpers/serverURL"
 
 const axiosInstance = axios.create({
-    baseURL: serverURL,
+	baseURL: serverURL,
 })
 
 export default axiosInstance
