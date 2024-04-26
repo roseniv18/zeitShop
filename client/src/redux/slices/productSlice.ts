@@ -1,16 +1,16 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { Product } from "../types/Product"
-import { CartProduct } from "../types/CartProduct"
-import { initialProduct } from "./initialStates/initialProduct"
-import { getProductThunk } from "./thunks/products/getProductThunk"
-import { getAllProductsThunk } from "./thunks/products/getAllProductsThunk"
-import { Filters } from "../types/Filters"
-import { initialFilters } from "./initialStates/initialFilters"
-import { Alert } from "../types/Alert"
-import { Sort } from "../types/Sort"
-import { loadMoreProductsThunk } from "./thunks/products/loadMoreProductsThunk"
-import { Review } from "../types/Review"
-import { getReviewsThunk } from "./thunks/products/getReviewsThunk"
+import { Product } from "../../types/ProductTypes/Product"
+import { CartProduct } from "../../types/ProductTypes/CartProduct"
+import { initialProduct } from "../initialStates/initialProduct"
+import { getProductThunk } from "../thunks/products/getProductThunk"
+import { getAllProductsThunk } from "../thunks/products/getAllProductsThunk"
+import { Filters } from "../../types/ProductTypes/Filters"
+import { initialFilters } from "../initialStates/initialFilters"
+import { Alert } from "../../types/MiscTypes/Alert"
+import { Sort } from "../../types/ProductTypes/Sort"
+import { loadMoreProductsThunk } from "../thunks/products/loadMoreProductsThunk"
+import { Review } from "../../types/UserTypes/Review"
+import { getReviewsThunk } from "../thunks/products/getReviewsThunk"
 
 type ProductState = {
 	products: {
@@ -181,7 +181,6 @@ const productSlice = createSlice({
 					totalCount: number
 				}>
 			) => {
-				console.log(action.payload)
 				state.isLoading = false
 				state.isSuccess = true
 				state.isError = false

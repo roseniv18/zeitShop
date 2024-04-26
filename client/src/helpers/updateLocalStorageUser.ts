@@ -1,5 +1,5 @@
-import { User } from "../types/User"
+import { User } from "../types/UserTypes/User"
 
 export const updateLocalStorageUser = (user: User) => {
-    localStorage.setItem("user", JSON.stringify(user))
+	localStorage.setItem("user", JSON.stringify(user))
 }

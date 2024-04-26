@@ -1,7 +1,8 @@
 import { formatError } from "../../../helpers/formatError"
-import { Filters } from "../../../types/Filters"
+import { Filters } from "../../../types/ProductTypes/Filters"
 import axiosInstance from "../../../axios/axiosInstance"
-import { Sort } from "../../../types/Sort"
+import { Sort } from "../../../types/ProductTypes/Sort"
+import { Queries } from "../../../types/ProductTypes/Queries"
 
 export const getAllProductsThunk = async (
 	{
@@ -11,7 +12,7 @@ export const getAllProductsThunk = async (
 	}: { filters?: Partial<Filters>; sort?: Sort; page?: number },
 	thunkAPI: any
 ) => {
-	const queries: any = {
+	const queries: Queries = {
 		page: page || 1,
 	}
 
