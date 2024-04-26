@@ -63,7 +63,6 @@ const getProducts = asyncHandler(
 
 			if (products && products.length > 0) {
 				res.status(200).send({ products, totalCount })
-				console.log(products)
 			}
 			res.status(404).send({ message: "No products found" })
 		}
@@ -90,7 +89,6 @@ const getSearchProducts = asyncHandler(
 					query: search,
 				})
 			}
-			console.log(products)
 			res.status(200).json(products)
 		} else {
 			res.status(400).send({ message: "Invalid query" })

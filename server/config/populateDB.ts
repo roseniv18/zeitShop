@@ -38,6 +38,7 @@ const imgUrlsMap: Map<string, number> = new Map([
 ])
 
 const populateDB: baseAsyncFn = async () => {
+	console.log("POPULATING DATABASE...")
 	// We are getting the watches array and nameIds (for dynamic img url generation)
 	const watches: Watch[] = products.watches
 	const nameIds = generateNameIds()
@@ -65,6 +66,7 @@ const populateDB: baseAsyncFn = async () => {
 				fullName,
 			})
 		})
+		console.log("POPULATING DATABASE COMPLETE!")
 	} catch (error) {
 		console.log(error)
 		process.exit(1)

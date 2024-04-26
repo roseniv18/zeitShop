@@ -1,7 +1,11 @@
-import { Response } from "express"
+import { NextFunction, Response, Request } from "express"
 
-// A basic error handler. It returns the status and a json object containing the message.
-const errorHandler = (err: any, res: Response) => {
+const errorHandler = (
+	err: any,
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
 	const statusCode = res.statusCode || 500
 	res.status(statusCode)
 	res.json({
