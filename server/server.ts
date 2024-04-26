@@ -1,12 +1,10 @@
 import express, { Express } from "express"
-import mongoose from "mongoose"
 import path from "node:path"
 import connectDB from "./config/connectDB"
 import errorHandler from "./middleware/errorHandler"
 import productRoutes from "./routes/productRoutes"
 import userRoutes from "./routes/userRoutes"
 import stripeRoutes from "./routes/stripeRoutes"
-import testRoutes from "./routes/testRoutes"
 import populateDB from "./config/populateDB"
 
 require("dotenv").config()
@@ -25,7 +23,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use("/products", productRoutes)
 app.use("/users", userRoutes)
 app.use("/checkout", stripeRoutes)
-app.use("/test", testRoutes)
 
 // Serve the static files from the public directory.
 const publicPath: string = path.join(__dirname, "public")
