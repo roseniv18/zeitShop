@@ -8,6 +8,7 @@ import {
 	GetSearchProductsQuery,
 } from "../types/ProductReqTypes"
 
+// Gets products on initial load and subsequent filtering
 const getProducts = asyncHandler(
 	async (req: Request<{}, {}, {}, GetProductsQuery>, res: Response) => {
 		let products
@@ -68,12 +69,19 @@ const getProducts = asyncHandler(
 	}
 )
 
+// Handles search queries from the search bar.
 const getSearchProducts = asyncHandler(
 	async (req: Request<{}, {}, {}, GetSearchProductsQuery>, res: Response) => {
+		// First, we decode the search query
 		const search: string = decodeURI(req.query.search as string)
+		/* 
+			Initialize a regex variable - only alphanumerical values
+		 	with hyphens will be valid 
+		*/
 		const regex: RegExp = new RegExp("^[a-zA-Z0-9- ]*$")
 		let products
 
+		// Test the search query string and attempt to find matching products in DB
 		if (regex.test(search)) {
 			if (req.query.search) {
 				products = await Product.find({

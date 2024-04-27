@@ -1,7 +1,7 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { Product } from "../../types/ProductTypes/Product"
-import { getSearchProductsThunk } from "../thunks/products/getSearchProductsThunk"
 import { Alert } from "../../types/MiscTypes/Alert"
+import { getSearchProducts } from "../thunks/thunksExport"
 
 type SearchState = {
 	searchProducts: Product[]
@@ -22,11 +22,6 @@ const initialState: SearchState = {
 		msg: "",
 	},
 }
-
-export const getSearchProducts = createAsyncThunk(
-	"search/getProducts",
-	getSearchProductsThunk
-)
 
 const miscSlice = createSlice({
 	name: "misc",

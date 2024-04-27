@@ -9,6 +9,8 @@ type MiscState = {
 	isAddingReview: false | Product
 }
 
+/* This slice handles the active tab in profile view, profile sidebar width 
+and whether the user is adding a review. */
 const initialState: MiscState = {
 	activeTab: "Personal Info",
 	drawerWidth: 240,

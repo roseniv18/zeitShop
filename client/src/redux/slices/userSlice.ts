@@ -1,33 +1,25 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { User } from "../../types/UserTypes/User"
 import { initialUser } from "../initialStates/initialUser"
-import { registerUserThunk } from "../thunks/user/registerUserThunk"
-import { loginUserThunk } from "../thunks/user/loginUserThunk"
-import { updateContactInfoThunk } from "../thunks/user/updateContactInfoThunk"
-import { addToWishlistThunk } from "../thunks/user/addToWishlistThunk"
-import { removeFromWishlistThunk } from "../thunks/user/removeFromWishListThunk"
 import { WishListProduct } from "../../types/ProductTypes/WishlistProduct"
 import { updateLocalStorageUser } from "../../helpers/updateLocalStorageUser"
-import { addReviewThunk } from "../thunks/user/addReviewThunk"
 import { Review } from "../../types/UserTypes/Review"
-import { deleteReviewThunk } from "../thunks/user/deleteReviewThunk"
 import { Alert } from "../../types/MiscTypes/Alert"
+import { getUserFromLocalStorage } from "../../helpers/getFromLocalStorage"
+import {
+	registerUser,
+	loginUser,
+	removeFromWishlist,
+	addToWishlist,
+	deleteReview,
+	addReview,
+	updateContactInfo,
+} from "../thunks/thunksExport"
 
 type UserState = {
 	user: User
 	isLoading: boolean
 	alert: Alert
-}
-
-const getUserFromLocalStorage = (): User => {
-	let user: User = initialUser
-
-	if (localStorage.getItem("user")) {
-		const lsUser: string = localStorage.getItem("user")!
-		user = JSON.parse(lsUser) as User
-	}
-
-	return user
 }
 
 const initialState: UserState = {
@@ -39,27 +31,6 @@ const initialState: UserState = {
 		msg: "",
 	},
 }
-
-// ASYNC THUNKS
-export const registerUser = createAsyncThunk("user/register", registerUserThunk)
-export const loginUser = createAsyncThunk("user/login", loginUserThunk)
-export const updateContactInfo = createAsyncThunk(
-	"user/updateContactInfo",
-	updateContactInfoThunk
-)
-export const addToWishlist = createAsyncThunk(
-	"user/addToWishlist",
-	addToWishlistThunk
-)
-export const removeFromWishlist = createAsyncThunk(
-	"user/removeFromWishlist",
-	removeFromWishlistThunk
-)
-export const addReview = createAsyncThunk("user/addReview", addReviewThunk)
-export const deleteReview = createAsyncThunk(
-	"user/deleteReview",
-	deleteReviewThunk
-)
 
 const userSlice = createSlice({
 	name: "user",

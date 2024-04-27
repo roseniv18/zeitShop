@@ -1,16 +1,19 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { Product } from "../../types/ProductTypes/Product"
 import { CartProduct } from "../../types/ProductTypes/CartProduct"
 import { initialProduct } from "../initialStates/initialProduct"
-import { getProductThunk } from "../thunks/products/getProductThunk"
-import { getAllProductsThunk } from "../thunks/products/getAllProductsThunk"
 import { Filters } from "../../types/ProductTypes/Filters"
 import { initialFilters } from "../initialStates/initialFilters"
 import { Alert } from "../../types/MiscTypes/Alert"
 import { Sort } from "../../types/ProductTypes/Sort"
-import { loadMoreProductsThunk } from "../thunks/products/loadMoreProductsThunk"
 import { Review } from "../../types/UserTypes/Review"
-import { getReviewsThunk } from "../thunks/products/getReviewsThunk"
+import { getCartFromLocalStorage } from "../../helpers/getFromLocalStorage"
+import {
+	getProducts,
+	loadMoreProducts,
+	getProduct,
+	getReviews,
+} from "../thunks/thunksExport"
 
 type ProductState = {
 	products: {
@@ -27,12 +30,6 @@ type ProductState = {
 	isSuccess: boolean
 	isError: boolean
 	alert: Alert
-}
-
-const getCartFromLocalStorage = () => {
-	if (localStorage.getItem("cart")) {
-		return JSON.parse(localStorage.getItem("cart") || "") as CartProduct[]
-	}
 }
 
 const initialState: ProductState = {
@@ -56,21 +53,6 @@ const initialState: ProductState = {
 	},
 }
 
-// ASYNC THUNK
-export const getProducts = createAsyncThunk(
-	"products/getAll",
-	getAllProductsThunk
-)
-export const loadMoreProducts = createAsyncThunk(
-	"products/loadMoreProducts",
-	loadMoreProductsThunk
-)
-export const getProduct = createAsyncThunk("products/get", getProductThunk)
-export const getReviews = createAsyncThunk(
-	"products/getReviews",
-	getReviewsThunk
-)
-
 const productSlice = createSlice({
 	name: "products",
 	initialState,
@@ -85,6 +67,7 @@ const productSlice = createSlice({
 			state.sort = action.payload
 		},
 		addToCart: (state, action: PayloadAction<CartProduct>) => {
+			// Check if item already exists in cart - if it does, only increment its quantity
 			const newItem = { ...action.payload, amount: 1 }
 			const itemExists = state.cart.find((el) => el._id === newItem._id)
 			if (itemExists) {
