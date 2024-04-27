@@ -17,9 +17,8 @@ const getProducts = asyncHandler(
 		let sortOrder: number = 1
 
 		if (req.query.sortBy && req.query.sortOrder) {
-			sortBy = req.query.sortBy as string
-			// @ts-ignore
-			sortOrder = parseInt(req.query.sortOrder as string)
+			sortBy = req.query.sortBy
+			sortOrder = req.query.sortOrder
 		}
 
 		// Handle pagination

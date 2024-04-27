@@ -32,7 +32,7 @@ const Shop = () => {
 			return
 		}
 
-		;async () => await dispatch(getProducts({ filters, sort }))
+		dispatch(getProducts({ filters, sort }))
 	}, [])
 
 	// Track window resize
