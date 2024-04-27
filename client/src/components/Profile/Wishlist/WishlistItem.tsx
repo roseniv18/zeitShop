@@ -1,6 +1,6 @@
 import { Typography, Button, Paper } from "@mui/material"
 import { useAppDispatch } from "../../../redux/store"
-import { removeFromWishlist } from "../../../redux/slices/userSlice"
+import { removeFromWishlist } from "../../../redux/thunks/thunksExport"
 import { serverURL } from "../../../helpers/serverURL"
 import { Link } from "react-router-dom"
 

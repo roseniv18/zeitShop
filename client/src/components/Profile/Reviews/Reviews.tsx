@@ -1,6 +1,6 @@
 import { Box, Typography, Container, Button, Rating } from "@mui/material"
 import { useAppDispatch, useAppSelector } from "../../../redux/store"
-import { deleteReview } from "../../../redux/slices/userSlice"
+import { deleteReview } from "../../../redux/thunks/thunksExport"
 import { serverURL } from "../../../helpers/serverURL"
 
 const Reviews = ({ drawerWidth }: { drawerWidth: number }) => {
