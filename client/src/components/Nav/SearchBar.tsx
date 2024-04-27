@@ -12,7 +12,7 @@ import { Product } from "../../types/ProductTypes/Product"
 import SearchIcon from "@mui/icons-material/Search"
 import SearchItem from "./SearchItem"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
-import { getSearchProducts } from "../../redux/slices/searchSlice"
+import { getSearchProducts } from "../../redux/thunks/thunksExport"
 import useIsFirstRender from "../../hooks/useIsFirstRender"
 import { Divider } from "@mui/material"
 
@@ -21,7 +21,7 @@ export default function SearchBar() {
 		(store) => store.search
 	)
 	const dispatch = useAppDispatch()
-	const [open, setOpen] = useState(false)
+	const [open, setOpen] = useState<boolean>(false)
 	const [options, setOptions] = useState<Product[]>(searchProducts)
 	const [searchValue, setSearchValue] = useState<string>("")
 	const [validString, setValidString] = useState<boolean>(true)

@@ -5,7 +5,7 @@ import ProductTabs from "../components/Product/ProductTabs"
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { useNavigate, useParams } from "react-router"
-import { getProduct, getReviews } from "../redux/slices/productSlice"
+import { getProduct, getReviews } from "../redux/thunks/thunksExport"
 import Spinner from "../components/Spinner"
 
 const Product = () => {

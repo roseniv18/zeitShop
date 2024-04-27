@@ -8,7 +8,8 @@ import {
 	SelectChangeEvent,
 } from "@mui/material"
 import { useAppDispatch, useAppSelector } from "../redux/store"
-import { getProducts, setSort } from "../redux/slices/productSlice"
+import { setSort } from "../redux/slices/productSlice"
+import { getProducts } from "../redux/thunks/thunksExport"
 // Avoid duplicate declaration
 import { Sort as SortType } from "../types/ProductTypes/Sort"
 import useIsFirstRender from "../hooks/useIsFirstRender"

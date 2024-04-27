@@ -15,7 +15,8 @@ import StarsIcon from "@mui/icons-material/Stars"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
 import { setIsAddingReview } from "../../redux/slices/miscSlice"
 import { Review } from "../../types/UserTypes/Review"
-import { addReview, setUserAlert } from "../../redux/slices/userSlice"
+import { setUserAlert } from "../../redux/slices/userSlice"
+import { addReview } from "../../redux/thunks/thunksExport"
 import { Product } from "../../types/ProductTypes/Product"
 
 const AddReviewForm = ({

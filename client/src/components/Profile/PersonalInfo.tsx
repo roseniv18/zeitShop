@@ -1,7 +1,7 @@
 import { Box, Grid, TextField, Button, Typography } from "@mui/material"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
 import { ChangeEvent, useState } from "react"
-import { updateContactInfo } from "../../redux/slices/userSlice"
+import { updateContactInfo } from "../../redux/thunks/thunksExport"
 
 type UserInfo = {
 	firstName: string

@@ -11,7 +11,7 @@ import {
 import { Link, useNavigate } from "react-router-dom"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import { useAppDispatch, useAppSelector } from "../../../redux/store"
-import { loginUser } from "../../../redux/slices/userSlice"
+import { loginUser } from "../../../redux/thunks/thunksExport"
 import { loginInputs } from "./loginInputs"
 import FormInput from "../FormInput"
 

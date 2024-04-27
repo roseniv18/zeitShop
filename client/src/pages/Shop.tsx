@@ -4,11 +4,8 @@ import { Grid, Container, Typography, Button, Box } from "@mui/material"
 import Item from "../components/Product/ProductCard"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { useEffect } from "react"
-import {
-	getProducts,
-	loadMoreProducts,
-	setFilters,
-} from "../redux/slices/productSlice"
+import { setFilters } from "../redux/slices/productSlice"
+import { getProducts, loadMoreProducts } from "../redux/thunks/thunksExport"
 import Spinner from "../components/Spinner"
 import { CategorySidebarMobile } from "../components/Sidebar/CategorySidebarMobile"
 import { useParams } from "react-router"
