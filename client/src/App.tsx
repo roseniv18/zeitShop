@@ -35,12 +35,13 @@ function App() {
 	const { cart } = useAppSelector((store) => store.products)
 
 	// Change navbar to fixed positioning, depending on scroll position.
-	const [posY, setPosY] = useState<number>(window.scrollY)
+	const [posY, setPosY] = useState<number>(0)
 	const [isNavbarFixed, setIsNavbarFixed] = useState<boolean>(false)
 
 	useEffect(() => {
 		const handleScrollY = () => {
 			setPosY(window.scrollY)
+			console.log(window.scrollY)
 		}
 
 		window.addEventListener("scroll", handleScrollY)

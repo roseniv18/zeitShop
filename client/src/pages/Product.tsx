@@ -14,6 +14,11 @@ const Product = () => {
 	const navigate = useNavigate()
 	const { nameId } = useParams()
 
+	// Prevent auto-scrolling to bottom of the page
+	useEffect(() => {
+		window.scrollTo(0, 0)
+	}, [])
+
 	useEffect(() => {
 		if (nameId) {
 			dispatch(getProduct(nameId))
