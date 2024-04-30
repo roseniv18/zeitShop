@@ -1,21 +1,24 @@
 import { ChangeEvent, useState } from "react"
 import { Container, Paper } from "@mui/material"
-import { ShippingDetails } from "../types/CheckoutTypes/ShippingDetails"
 import OrderTotal from "../components/OrderTotal"
 import ShippingForm from "../components/Forms/ShippingForm"
 import { useAppSelector } from "../redux/store"
-import { CheckoutError } from "../types/CheckoutTypes/CheckoutError"
+import { FormFields } from "../types/CheckoutTypes/Form"
 
 const Checkout = () => {
 	const { user } = useAppSelector((store) => store.user)
-	const [shippingDetails, setShippingDetails] = useState<ShippingDetails>({
+
+	// Store shipping details
+	const [shippingDetails, setShippingDetails] = useState<FormFields>({
 		fullName: user.firstName + " " + user.lastName,
 		streetAddress: user.address.street,
 		country: user.address.country,
 		city: user.address.city,
-		postalCode: user.address.postal_code,
+		postalCode: user.address.postal_code.toString(),
 	})
-	const [checkoutError, setCheckoutError] = useState<CheckoutError>({
+
+	// Store possible errors
+	const [checkoutError, setCheckoutError] = useState<FormFields>({
 		fullName: "",
 		streetAddress: "",
 		country: "",
@@ -23,6 +26,7 @@ const Checkout = () => {
 		postalCode: "",
 	})
 
+	// Helper style object
 	const defaultFlexStylesCol = {
 		display: "flex",
 		flexDirection: "column",

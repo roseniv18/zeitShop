@@ -1,21 +1,13 @@
-import {
-	Paper,
-	List,
-	ListItem,
-	Divider,
-	Container,
-	Typography,
-	Button,
-} from "@mui/material"
+import { Paper, List, ListItem, Divider, Container, Typography, Button } from "@mui/material"
 import { Link } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { clearCart } from "../redux/slices/productSlice"
 import axios from "axios"
-import { ShippingDetails } from "../types/CheckoutTypes/ShippingDetails"
 import { CheckoutError } from "../types/CheckoutTypes/CheckoutError"
 import { useState } from "react"
 import Spinner from "./Spinner"
 import { serverURL } from "../helpers/serverURL"
+import { FormFields } from "../types/CheckoutTypes/Form"
 
 const OrderTotal = ({
 	setCheckoutError,
@@ -23,20 +15,16 @@ const OrderTotal = ({
 	isCheckout,
 }: {
 	setCheckoutError: React.Dispatch<React.SetStateAction<CheckoutError>>
-	shippingDetails: ShippingDetails
+	shippingDetails: FormFields
 	isCheckout: boolean
 }) => {
 	const { user } = useAppSelector((store) => store.user)
 	const { cart } = useAppSelector((store) => store.products)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const { fullName, city, country, streetAddress, postalCode } =
-		shippingDetails
+	const { fullName, city, country, streetAddress, postalCode } = shippingDetails
 	const dispatch = useAppDispatch()
 
-	const subtotal: number = cart.reduce(
-		(acc, curr) => acc + curr.price * curr.amount,
-		0
-	)
+	const subtotal: number = cart.reduce((acc, curr) => acc + curr.price * curr.amount, 0)
 	const shipping_fee = 5.99
 	let isError = false
 
@@ -86,13 +74,10 @@ const OrderTotal = ({
 		}
 		if (!isError) {
 			try {
-				const res = await axios.post(
-					`${serverURL}/checkout/create-checkout-session`,
-					{
-						items: cart,
-						userId: user._id,
-					}
-				)
+				const res = await axios.post(`${serverURL}/checkout/create-checkout-session`, {
+					items: cart,
+					userId: user._id,
+				})
 				if (res.data.url) {
 					window.location.href = res.data.url
 				}
@@ -117,25 +102,19 @@ const OrderTotal = ({
 						<ListItem sx={{ px: 0, py: 0 }}>
 							<Container sx={defaultFlexStyling} disableGutters>
 								<Typography variant="h6">Subtotal: </Typography>
-								<Typography variant="h6">
-									€ {subtotal.toFixed(2)}{" "}
-								</Typography>
+								<Typography variant="h6">€ {subtotal.toFixed(2)} </Typography>
 							</Container>
 						</ListItem>
 						<ListItem sx={{ px: 0 }}>
 							<Container sx={defaultFlexStyling} disableGutters>
 								<Typography>Shipping fee: </Typography>
-								<Typography>
-									€ {shipping_fee.toFixed(2)}{" "}
-								</Typography>
+								<Typography>€ {shipping_fee.toFixed(2)} </Typography>
 							</Container>
 						</ListItem>
 						<Divider sx={{ my: 3 }} />
 						<ListItem sx={{ px: 0 }}>
 							<Container sx={defaultFlexStyling} disableGutters>
-								<Typography variant="h5">
-									Order Total:{" "}
-								</Typography>
+								<Typography variant="h5">Order Total: </Typography>
 								<Typography variant="h5">
 									€ {(subtotal + shipping_fee).toFixed(2)}
 								</Typography>
@@ -156,10 +135,7 @@ const OrderTotal = ({
 								</Link>
 							</Button>
 
-							<Button
-								onClick={handleCheckout}
-								variant="contained"
-							>
+							<Button onClick={handleCheckout} variant="contained">
 								Order
 							</Button>
 						</Container>

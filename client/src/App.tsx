@@ -41,7 +41,6 @@ function App() {
 	useEffect(() => {
 		const handleScrollY = () => {
 			setPosY(window.scrollY)
-			console.log(window.scrollY)
 		}
 
 		window.addEventListener("scroll", handleScrollY)
@@ -97,14 +96,8 @@ function App() {
 					<Route path="/blog" element={<Blog />} />
 					<Route path="/cart" element={<Cart />} />
 					<Route path="/checkout" element={<Checkout />}></Route>
-					<Route
-						path="/profile"
-						element={<PrivatePath component={<Profile />} />}
-					></Route>
-					<Route
-						path="/checkout-success"
-						element={<CheckoutSuccess />}
-					></Route>
+					<Route path="/profile" element={<PrivatePath component={<Profile />} />}></Route>
+					<Route path="/checkout-success" element={<CheckoutSuccess />}></Route>
 					<Route path="*" element={<NotFound />}></Route>
 				</Routes>
 				<Footer />
