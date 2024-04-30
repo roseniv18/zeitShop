@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import { clearCart } from "../redux/slices/productSlice"
 import axios from "axios"
-import { CheckoutError } from "../types/CheckoutTypes/CheckoutError"
 import { useState } from "react"
 import Spinner from "./Spinner"
 import { serverURL } from "../helpers/serverURL"
@@ -14,20 +13,20 @@ const OrderTotal = ({
 	shippingDetails,
 	isCheckout,
 }: {
-	setCheckoutError: React.Dispatch<React.SetStateAction<CheckoutError>>
+	setCheckoutError: React.Dispatch<React.SetStateAction<FormFields>>
 	shippingDetails: FormFields
 	isCheckout: boolean
 }) => {
 	const { user } = useAppSelector((store) => store.user)
 	const { cart } = useAppSelector((store) => store.products)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const { fullName, city, country, streetAddress, postalCode } = shippingDetails
+	const [isError, setIsError] = useState<boolean>(false)
 	const dispatch = useAppDispatch()
 
 	const subtotal: number = cart.reduce((acc, curr) => acc + curr.price * curr.amount, 0)
 	const shipping_fee = 5.99
-	let isError = false
 
+	// Helper style object
 	const defaultFlexStyling = {
 		display: "flex",
 		flexDirection: "row",
@@ -35,55 +34,48 @@ const OrderTotal = ({
 		justifyContent: "space-between",
 	}
 
+	// Handle checkout error for given field and error message
+	const handleCheckoutError = (field: string, error: string) => {
+		setCheckoutError((prev: FormFields) => ({
+			...prev,
+			[field]: error,
+		}))
+		setIsError(true)
+	}
+
+	// Given shippingDetails form values, check for possible empty values
+	const checkShippingDetailsErrors = (shippingDetails: FormFields): void => {
+		const fieldsToCheck = {
+			fullName: "Please provide your names",
+			streetAddress: "Please provide a street address",
+			city: "Please provide a city",
+			country: "Please provide a country",
+			postalCode: "Please provide a postal code",
+		}
+
+		Object.entries(fieldsToCheck).forEach(([field, message]) => {
+			if (!shippingDetails[field as keyof typeof shippingDetails]) {
+				handleCheckoutError(field, message)
+			}
+		})
+	}
+
 	const handleCheckout = async () => {
 		setIsLoading(true)
-		if (!fullName) {
-			setCheckoutError((prev) => ({
-				...prev,
-				fullName: "Please provide your names",
-			}))
-			isError = true
-		}
-		if (!streetAddress) {
-			setCheckoutError((prev) => ({
-				...prev,
-				streetAddress: "Please provide a street address",
-			}))
-			isError = true
-		}
-		if (!city) {
-			setCheckoutError((prev) => ({
-				...prev,
-				city: "Please provide a city",
-			}))
-			isError = true
-		}
-		if (!country) {
-			setCheckoutError((prev) => ({
-				...prev,
-				country: "Please provide a country",
-			}))
-			isError = true
-		}
-		if (!postalCode) {
-			setCheckoutError((prev) => ({
-				...prev,
-				postalCode: "Please provide a postal code",
-			}))
-			isError = true
-		}
+		checkShippingDetailsErrors(shippingDetails)
 		if (!isError) {
 			try {
 				const res = await axios.post(`${serverURL}/checkout/create-checkout-session`, {
 					items: cart,
 					userId: user._id,
 				})
+				// Navigate to checkout session url
 				if (res.data.url) {
 					window.location.href = res.data.url
 				}
 				setIsLoading(false)
 			} catch (error) {
-				console.log(error)
+				console.error(error)
 				setIsLoading(false)
 			}
 		}
