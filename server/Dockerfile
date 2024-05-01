@@ -23,6 +23,9 @@ RUN npm install
 
 COPY . . 
 
+# Run populateDB.ts
+RUN node ./config/populateDB.ts
+
 EXPOSE 5000 
 
 CMD npm run dev
