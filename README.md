@@ -45,7 +45,8 @@ STRIPE_TEST_KEY=YOUR_STRIPE_TEST_KEY
 ```
 
 3. Run `docker compose up` or `sudo docker compose up`.
-4. Done!
+4. In the `./server/server.ts` file, uncomment line 39 (_populateDB()_). This is only necessary on the first run of the project. You can comment it again after that.
+5. Done!
 
 ## How to install this project locally:
 
