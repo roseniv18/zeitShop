@@ -16,6 +16,16 @@ This project was built primarily for the purpose of practicing my React skills, 
 
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white) ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white) ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 
+## How to (fake) order a product:
+
+1. Select one or multiple products and add them to your cart.
+2. Click on the cart icon -> see cart.
+3. Click proceed to checkout.
+4. Enter some arbitrary data.
+5. Click order.
+6. Again, enter some arbitrary data. For the card number use 4242 4242 4242 4242 and some random CVC and expiry date.
+7. Click pay.
+
 ## How to install this project locally:
 
 1. Pull this repo and install dependencies:
@@ -55,13 +65,3 @@ VITE_NODE_ENV=development
 
 4. In the `./server/server.ts` file, uncomment line 39 (_populateDB()_). This is only necessary on the first run of the project. You can comment it again after that.
 5. Start the server and the client (using yarn or npm).
-
-## How to (fake) order a product:
-
-1. Select one or multiple products and add them to your cart.
-2. Click on the cart icon -> see cart.
-3. Click proceed to checkout.
-4. Enter some arbitrary data.
-5. Click order.
-6. Again, enter some arbitrary data. For the card number use 4242 4242 4242 4242 and some random CVC and expiry date.
-7. Click pay.
