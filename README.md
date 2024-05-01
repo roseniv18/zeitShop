@@ -26,6 +26,27 @@ This project was built primarily for the purpose of practicing my React skills, 
 6. Again, enter some arbitrary data. For the card number use 4242 4242 4242 4242 and some random CVC and expiry date.
 7. Click pay.
 
+## How to install with Docker:
+
+1. Pull this repo to your machine:
+
+```
+cd yourWorkingDir
+git init
+git pull https://github.com/roseniv18/zeitShop.git
+```
+
+2. Change the following env variables in compose.yaml file. You should have setup a Mongo database and Stripe Test mode (https://docs.stripe.com/keys):
+
+```
+MONGO_URI=YOUR_MONGO_URI
+JWT_SECRET=YOUR_JWT_SECRET
+STRIPE_TEST_KEY=YOUR_STRIPE_TEST_KEY
+```
+
+3. Run `docker compose up` or `sudo docker compose up`.
+4. Done!
+
 ## How to install this project locally:
 
 1. Pull this repo and install dependencies:
